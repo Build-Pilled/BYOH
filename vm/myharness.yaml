@@ -1,4 +1,4 @@
-# The supplied VM: one Lima instance named myharness. Spec: spec/vm.md. host-step.sh creates it.
+# The supplied VM: one Lima instance named myharness-vm. Spec: spec/vm.md. host-step.sh creates it.
 # Every provision step runs at every boot and is written check-then-act.
 # Root-managed files are rewritten from this template at boot, so drift inside the VM resets on restart.
 minimumLimaVersion: 2.3.0

@@ -39,4 +39,4 @@ sh vm/check.sh --host
 ```
 
 Before the real-login stage engine logins report INFO; pass `--login-stage` after it.
-Before a logout, restart, shutdown or macOS update: `~/.local/bin/limactl stop myharness`.
+Before a logout, restart, shutdown or macOS update: `~/.local/bin/limactl stop myharness-vm`.

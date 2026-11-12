@@ -169,7 +169,7 @@ the environment check, its resource warnings and the known-pitfalls list.
   | P2 | A configuration file is suddenly empty | A redirect into the live file truncated it before the producing command failed | Check the tool exists, write a temporary file, validate it, then rename | check H-tools; case [VM](vm.md) R1 |
   | P3 | The Mac disk fills although the VM freed space | VM disk files only grow; trimming in the guest returns nothing to the Mac | Size deliberately, measure with `du`, clean inside the VM; reclaiming means recreating the disk | check M-disk |
   | P4 | File-system recovery after a Mac logout or shutdown; interrupted turns | macOS quits the VM service without a guest shutdown | Stop the VM first ([VM](vm.md) R10); otherwise the journal and SQLite recover | check H-boot |
-  | P5 | The instance shows Broken after a Mac crash | A stale process file or dead host agent | `limactl stop --force myharness`, then `limactl start myharness` | check M-vm |
+  | P5 | The instance shows Broken after a Mac crash | A stale process file or dead host agent | `limactl stop --force myharness-vm`, then `limactl start myharness-vm` | check M-vm |
   | P6 | The Mac home is visible in the VM | A Lima template that mounts the home | Base on the image list only, no mounts | checks M-iso, H-mounts |
   | P7 | Mounts or forwards that the template lacks | A Lima-wide default or override file applies to every instance | Never create one; stop and show it if present | checks M-cfg, M-iso |
   | P8 | Slow first boot; containers running | Lima enables user containers for Linux guests by default | Containers off in the template | check M-iso |

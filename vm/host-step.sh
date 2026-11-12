@@ -35,8 +35,8 @@ remove() {
     [ "$answer" = yes ] || { say "Nothing was removed."; exit 0; }
   fi
   if [ -x "$LIMACTL" ]; then
-    "$LIMACTL" autostart disable myharness 2>/dev/null || true
-    "$LIMACTL" delete -f myharness 2>/dev/null || true
+    "$LIMACTL" autostart disable myharness-vm 2>/dev/null || true
+    "$LIMACTL" delete -f myharness-vm 2>/dev/null || true
   fi
   rm -f "$SSH_FILE" "$HOME/.ssh/myharness_known_hosts"
   drop_include
@@ -86,7 +86,7 @@ done
 for f in default.yaml override.yaml; do
   [ ! -e "$LIMA_DIR/_config/$f" ] || die "$LIMA_DIR/_config/$f applies to every Lima instance; remove it or decide with your agent (P7)"
 done
-if [ -e "$LIMA_DIR/myharness" ]; then die "a Lima instance named myharness already exists; nothing was replaced"; fi
+if [ -e "$LIMA_DIR/myharness-vm" ]; then die "a Lima instance named myharness-vm already exists; nothing was replaced"; fi
 
 ram=$(( $(sysctl -n hw.memsize) / 1073741824 ))
 if [ -z "$MEMORY" ]; then
@@ -123,13 +123,13 @@ if [ "$DISK" = data ]; then
   [ -e "$LIMA_DIR/_disks/mhhome" ] || "$LIMACTL" disk create mhhome --size 100GiB
   disk_set='.additionalDisks=[{"name":"mhhome","format":true,"fsType":"ext4"}] | .param.DATA_DISK="yes"'
 fi
-"$LIMACTL" create --name=myharness --tty=false --cpus="$CPUS" --memory="$MEMORY" \
+"$LIMACTL" create --name=myharness-vm --tty=false --cpus="$CPUS" --memory="$MEMORY" \
   --set ".ssh.localPort=$port | .param.ENGINES=\"$ENGINES\"${disk_set:+ | $disk_set}" "$HERE/myharness.yaml"
 say "step: start (the first start takes several minutes)"
-"$LIMACTL" start myharness --timeout=30m
+"$LIMACTL" start myharness-vm --timeout=30m
 
 say "step: ssh names"
-admin=$("$LIMACTL" shell --workdir / myharness id -un)
+admin=$("$LIMACTL" shell --workdir / myharness-vm id -un)
 mkdir -p "$HOME/.ssh"; chmod 700 "$HOME/.ssh"
 {
   for pair in "myharness myharness" "myharness-admin $admin"; do
@@ -147,13 +147,13 @@ if ! grep -qxF "$INCLUDE" "$HOME/.ssh/config" 2>/dev/null; then
 fi
 
 say "step: start at login"
-"$LIMACTL" autostart enable myharness --condition=login --keep-alive=false
+"$LIMACTL" autostart enable myharness-vm --condition=login --keep-alive=false
 
 if [ "$SLEEP" = yes ]; then
   say "step: prevent sleep (a sleeping Mac pauses the VM, so bots stop and routines are missed; on battery the Mac still sleeps; undo it in System Settings)"
   sudo pmset -c sleep 0 || say "The sleep setting was not changed; you can set it in System Settings."
 fi
-{ printf 'prevent_sleep=%s\n' "$SLEEP"; printf 'memory=%s\ncpus=%s\n' "$MEMORY" "$CPUS"; } > "$LIMA_DIR/myharness/myharness-host-step.env"
+{ printf 'prevent_sleep=%s\n' "$SLEEP"; printf 'memory=%s\ncpus=%s\n' "$MEMORY" "$CPUS"; } > "$LIMA_DIR/myharness-vm/myharness-host-step.env"
 
 say "step: check"
 sh "$HERE/check.sh" --mac

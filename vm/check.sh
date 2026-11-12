@@ -77,7 +77,7 @@ mac() {
     else line PASS M-cfg "no Lima-wide configuration"; fi
   fi
   if vm_only M-vm; then
-    st=$("$LIMACTL" list --json myharness 2>/dev/null)
+    st=$("$LIMACTL" list --json myharness-vm 2>/dev/null)
     status=$(printf '%s' "$st" | sed -n 's/.*"status":"\([^"]*\)".*/\1/p')
     vmtype=$(printf '%s' "$st" | sed -n 's/.*"vmType":"\([^"]*\)".*/\1/p')
     case "$status" in
@@ -87,7 +87,7 @@ mac() {
     esac
   fi
   if vm_only M-iso; then
-    y="$HOME/.lima/myharness/lima.yaml"; bad=""
+    y="$HOME/.lima/myharness-vm/lima.yaml"; bad=""
     if [ ! -r "$y" ]; then bad=" no instance file"; else
       grep -q '^mounts: \[\]' "$y" || bad="$bad mounts"
       grep -Eq '^ *forwardAgent: false' "$y" || bad="$bad agent-forwarding"
@@ -103,18 +103,18 @@ mac() {
     else line FAIL M-iso "not as the template says:$bad" P6; fi
   fi
   if vm_only M-auto; then
-    if ls "$HOME"/Library/LaunchAgents/*lima*myharness*.plist >/dev/null 2>&1; then line PASS M-auto "start at login is enabled"
+    if ls "$HOME"/Library/LaunchAgents/*lima*myharness-vm*.plist >/dev/null 2>&1; then line PASS M-auto "start at login is enabled"
     else line WARN M-auto "start at login is not enabled" P25; fi
   fi
   if vm_only M-sleep; then
-    want=$(sed -n 's/^prevent_sleep=//p' "$HOME/.lima/myharness/myharness-host-step.env" 2>/dev/null)
+    want=$(sed -n 's/^prevent_sleep=//p' "$HOME/.lima/myharness-vm/myharness-host-step.env" 2>/dev/null)
     if [ "$want" = yes ]; then
       if pmset -g custom 2>/dev/null | awk '/AC Power/{a=1} a&&/^ *sleep /{print $2; exit}' | grep -qx 0; then line PASS M-sleep "the prevent-sleep setting is on"
       else line WARN M-sleep "you chose prevent-sleep and it is off" P28; fi
     else line PASS M-sleep "prevent-sleep was not chosen"; fi
   fi
   if vm_only M-disk; then
-    f=$(df -g "$HOME" | awk 'NR==2 { print $4 }'); u=$(du -sg "$HOME/.lima/myharness" 2>/dev/null | cut -f1)
+    f=$(df -g "$HOME" | awk 'NR==2 { print $4 }'); u=$(du -sg "$HOME/.lima/myharness-vm" 2>/dev/null | cut -f1)
     if [ "${f:-0}" -ge 30 ] && [ "${u:-0}" -lt 80 ]; then line PASS M-disk "$f GiB free; VM disk at $u GiB"
     else line WARN M-disk "$f GiB free; VM disk at ${u:-unknown} GiB" P3; fi
   fi
@@ -182,7 +182,7 @@ host() {
   elif [ "$w" -lt 524288 ]; then line FAIL H-res "inotify limit is $w" P32
   elif [ "$OWN" = 0 ] && [ "$sw" != 4 ]; then line FAIL H-res "swap is $sw GiB, expected 4" P32
   elif [ "$swf" = high ] || [ "$oom" -gt 0 ]; then
-    line WARN H-res "memory pressure (swap $swf, $oom out-of-memory kills): stop the VM, run limactl edit --memory <next row of the sizing table> myharness, start it again" P32
+    line WARN H-res "memory pressure (swap $swf, $oom out-of-memory kills): stop the VM, run limactl edit --memory <next row of the sizing table> myharness-vm, start it again" P32
   else line PASS H-res "$free_g GiB free, swap $sw GiB, inotify $w"; fi
 
   bad=""

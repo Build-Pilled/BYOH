@@ -17,7 +17,7 @@ environment check.
 
 ## Required behaviour
 
-- **R1 — What the VM is.** One Lima instance named `myharness` on `vz`, from
+- **R1 — What the VM is.** One Lima instance named `myharness-vm` on `vz`, from
   the Debian 13 arm64 cloud image in the pinned Lima version's image list,
   checked by that list's digest. The base is the image list itself, never a
   Lima template that mounts the Mac home (P6). There are no mounts, no
@@ -74,7 +74,7 @@ environment check.
   fills spare memory with file cache, so over time the VM is charged its full
   size. Memory is sized to what programs need, because anything above that
   becomes cache. Changing it is the person's action: stop the VM, run
-  `limactl edit --memory <GiB> myharness`, start it again. The system disk is
+  `limactl edit --memory <GiB> myharness-vm`, start it again. The system disk is
   100 GiB sparse: the file on the Mac grows with use, never shrinks on its own
   and is capped at 100 GiB (P3). Swap is 4 GiB; inotify limits are raised for
   recursive watchers (P32).
@@ -121,7 +121,7 @@ environment check.
   of [host](host.md) R7 are systemd timers with catch-up after a missed run.
   Security updates install from Debian's daily timers.
 - **R8 — Start at login and sleep.** The VM starts when the person logs in to
-  the Mac (`limactl autostart enable myharness --condition=login`), and with it
+  the Mac (`limactl autostart enable myharness-vm --condition=login`), and with it
   the daemon. A VM the person stopped stays stopped until the next login or an
   explicit start; start at login never restarts it behind their back. The host
   step offers macOS's setting to prevent automatic sleep on the power adapter
@@ -145,7 +145,7 @@ environment check.
      with `busy: unknown (<reason>)`, because it cannot tell.
   4. `ask again` (skipped only with `--force`): immediately before stopping it
      asks once more exactly as in step 3, with the same outcomes.
-  5. `stop`: it runs `limactl stop myharness` and streams its output, with no
+  5. `stop`: it runs `limactl stop myharness-vm` and streams its output, with no
      shorter limit of its own; inside the VM the service manager stops the
      daemon with its drain.
   6. `stopped`: when the instance reports stopped it prints `result: stopped`
@@ -162,11 +162,11 @@ environment check.
   program action ([settings](settings.md) R5, [host](host.md) R8).
 - **R10 — The one habit.** Before a logout, restart, shutdown or macOS update
   the person stops the VM, with Shutdown VM in Settings or
-  `limactl stop myharness`. Otherwise macOS hard-stops the guest (P4):
+  `limactl stop myharness-vm`. Otherwise macOS hard-stops the guest (P4):
   running turns are interrupted, the file system and SQLite recover at the next
   boot, and the environment check reports the recovery as INFO. After a Mac
   crash the instance may show Broken (P5); the person runs
-  `limactl stop --force myharness`, then `limactl start myharness`.
+  `limactl stop --force myharness-vm`, then `limactl start myharness-vm`.
 - **R11 — Removal.** Trying it and judging is supported. Removal turns
   off start at login, deletes the instance, removes Lima's files under the Mac
   home and the `~/.local` install, the SSH file and its `Include` line, the
@@ -238,7 +238,7 @@ Not applicable; Shutdown VM's controls belong to [settings](settings.md).
 - **E1 — Busy Mac port.** Ports 7797, 4388 or 1455 held on the Mac stop the
   host step before creation (P24); the fixed ports are not changed silently.
 - **E2 — Existing instance or Lima-wide configuration.** An instance already
-  named `myharness`, or a Lima-wide default or override file, stops the host
+  named `myharness-vm`, or a Lima-wide default or override file, stops the host
   step and is shown to the person; nothing is replaced (P7).
 - **E3 — Hash mismatch.** A Lima archive, template or Node build that does not
   match its pinned hash stops the step with nothing installed.
