@@ -53,7 +53,7 @@ What sets BYOH apart?
 | BYOH opinion | If you want something different |
 | --- | --- |
 | Claude Code and Pi are enough. | Have your agent integrate other CLI agents. |
-| No permission prompts: they slow you down. Safety comes from the boundary instead: the bots never run on the computer you work on, only in a VM or machine of their own, as their own user, with no shared folders. You approve only the actions that cannot be undone, such as merge, deploy, send and delete. | This one is not optional. You can swap our VM for your own Linux machine (see Defaults). |
+| No permission prompts: they slow you down. Safety comes from the boundary instead: the bots never run on the computer you work on, only in a VM or machine of their own, as their own user, with no shared folders. You approve only the actions that cannot be undone, such as merge, deploy, send and delete. | Have your agent add permission gates. However, the VM is not optional. You can swap our VM for your own Linux machine (see Defaults). |
 | One VM shared by all bots. | Have your agent split bots across hosts. |
 | The bots get their own GitHub account, so their commits are theirs and your account keeps ownership. You can revoke their access at any time. | Skip it, or decide later during setup. |
 
