@@ -168,10 +168,8 @@ stateDiagram-v2
   s2: Connected
   s3: Shutting down the VM, run page shown
   s4: Token refused, pairing line shown
-  [*] --> s0: daemon answers, no acceptable token file
-  [*] --> s1: nothing answers
+  [*] --> s0
   [*] --> s2: daemon answers, pre-copied token accepted
-  [*] --> s4: daemon answers, token refused
   s0 --> s1: the daemon stops
   s0 --> s2: you run the pairing line
   s1 --> s0: the daemon starts, no acceptable token file

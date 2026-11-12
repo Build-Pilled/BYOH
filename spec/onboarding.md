@@ -147,8 +147,9 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
       person runs it in Terminal while the app stays closed. The copy succeeds
       and the local token file meets app pairing R3; no token enters the record
       or evidence. Connection is verified when the app opens in `first-use`.
-  14. `first-use`: open the installed app after pairing and verify `connected`.
-      The person's first window is the finished app with their choices applied.
+  14. `first-use`: the setup agent tells the person to open the installed app
+      after pairing and confirm that it is `connected`; the person opens it
+      and reports that confirmation. The person's first window is the finished app with their choices applied.
       They switch to Firstmate under R9, chat and
       see work done. Present the choices' Mac checks here; what the host cannot
       prove stays `mac-pending` until answered.
@@ -203,8 +204,10 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
 
 - **R9 — Switch to the harness.** At entry to `first-use` the live daemon is
   running, the app is installed and paired, and the suite is green on that
-  build. The setup agent opens the app only now, after the pairing line has
-  succeeded, and verifies that it is `connected` before the switch. A failure
+  build. Only now, after the pairing line has succeeded, the setup agent tells
+  the person to open the installed app on the Mac and confirm `connected`.
+  The person opens it and reports that confirmation before the switch; the
+  setup agent running in the host does not claim to open the desktop app on the Mac itself. A failure
   names the failed proof and does not advance recorded progress. The setup
   agent plainly says it is time to switch from that agent to
   the person's own harness. It prints a complete first message for
@@ -262,45 +265,50 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   does not advance the bar. Derive it again on resume; add no field, counter or
   separate progress store to the interview record.
 
-  The first time a component is named to the person, use its one-sentence
-  explanation from this glossary. Do not re-explain it at later mentions,
-  including across the R9 switch; the setup hand-over carries which terms
-  have already been explained as conversational context, not a record field.
+  Introduce each glossary component at its listed R4 state, using its
+  one-sentence explanation at first mention. Do not re-explain it later.
+  On resume or after the R9 switch, a term whose introduction state has passed
+  according to the record's `progress` counts as already explained; derive
+  that set from this table, not from shared conversation context or a new
+  record field. Re-explaining a term once after an interruption within its own
+  introduction state is acceptable. Whenever the default-look option named
+  Instrument is offered, name it as an option and show its mockup visual
+  alongside it; do not assume the person knows that name.
 
-  | Component | First-mention explanation |
-  | --- | --- |
-  | BYOH | BYOH is the blueprint your agent uses to build and check your own bot workspace. |
-  | Harness | Your harness is the workspace where you talk to bots and see the work they do. |
-  | Setup agent | Your setup agent is the coding assistant building your harness before its own crew takes over. |
-  | Lima | Lima runs the separate Linux computer inside your Mac so the bots do not work in your personal files. |
-  | VM | A virtual machine, or VM, is that separate computer inside your Mac, keeping the bots' workspace apart from yours. |
-  | Host | The host is the Linux computer running your bots, either our VM or a separate machine you provide. |
-  | SSH | SSH is the secure connection your Mac uses to reach that host without exposing the harness to the network. |
-  | Daemon | The daemon is the background program that keeps your bots, conversations and messages running on the host. |
-  | App | The desktop app is your window into the harness, connecting your Mac to the daemon on the host. |
-  | Engine | An engine is the program that connects a bot to its chosen AI model. |
-  | Model | A model is the AI doing a bot's thinking and writing, which you can change for each bot later. |
-  | Pi | Pi is an engine that connects your bots to OpenAI models or a provider you choose with an API key. |
-  | Claude Code | Claude Code is the official engine connecting your bots to Claude on your own login. |
-  | Mock model | The mock model gives scripted replies for safe repeatable checks, without using your real AI account. |
-  | Lavish | Lavish shows the interview and colour mockups as pages in your browser so you can choose comfortably. |
-  | Firstmate | Firstmate is the bot you talk to for coordinating work and getting the right bot to do it. |
-  | Bot Maker | Bot Maker creates and maintains bots so you can add a helper without wiring it up yourself. |
-  | Code Reviewer | Code Reviewer checks proposed source changes for defects before you decide whether to accept them. |
-  | Plain bot | Your plain bot answers quick questions and searches the web without managing projects or tasks. |
-  | Harness keeper | Your harness keeper is the bot that owns your harness source and handles its future maintenance. |
-  | Interview record | The interview record saves your choices and completed steps so setup can resume without asking everything again. |
-  | Suite | The conformance suite is the set of checks that decides whether your built harness meets the blueprint. |
-  | Verification kit | The verification kit gathers screenshots and other evidence from a separate test instance so your agent can inspect its work. |
-  | Virtual display | The virtual display lets your agent run and inspect the app on the host without showing you an unfinished window. |
-  | Palette | A palette is the set of colours used throughout the app, letting you choose its look without changing how it works. |
-  | Instrument option | Instrument is the name of this pictured default-look option, which you can keep or use as a starting point. |
-  | Mockup | A mockup is a fixed example of the app shell used to compare colours, not a picture of your own unfinished app. |
-  | Pairing | Pairing gives the desktop app the owner token it needs to access your daemon without exposing it to other pages. |
-  | Owner token | The owner token is the secret your app uses to prove it may access the daemon, so it is never put in your interview record. |
-  | GitHub | GitHub stores source and proposed changes, and a separate bot account lets you grant and revoke the bots' access independently of your own. |
-  | Pull request | A pull request presents a proposed source change for review before you approve merging it. |
-  | Rebuild line | The rebuild line is the command you choose to run to build and install an approved version of your harness. |
+  | Component | Introduction state | First-mention explanation |
+  | --- | --- | --- |
+  | BYOH | `host-step` | BYOH is the blueprint your agent uses to build and check your own bot workspace. |
+  | Harness | `host-step` | Your harness is the workspace where you talk to bots and see the work they do. |
+  | Setup agent | `host-step` | Your setup agent is the coding assistant building your harness before its own crew takes over. |
+  | Lima | `host-step` | Lima runs the separate Linux computer inside your Mac so the bots do not work in your personal files. |
+  | VM | `host-step` | A virtual machine, or VM, is that separate computer inside your Mac, keeping the bots' workspace apart from yours. |
+  | Host | `host-step` | The host is the Linux computer running your bots, either our VM or a separate machine you provide. |
+  | SSH | `host-step` | SSH is the secure connection your Mac uses to reach that host without exposing the harness to the network. |
+  | Daemon | `host-step` | The daemon is the background program that keeps your bots, conversations and messages running on the host. |
+  | App | `host-step` | The desktop app is your window into the harness, connecting your Mac to the daemon on the host. |
+  | Engine | `host-step` | An engine is the program that connects a bot to its chosen AI model. |
+  | Model | `host-step` | A model is the AI doing a bot's thinking and writing, which you can change for each bot later. |
+  | Pi | `host-step` | Pi is an engine that connects your bots to OpenAI models or a provider you choose with an API key. |
+  | Claude Code | `host-step` | Claude Code is the official engine connecting your bots to Claude on your own login. |
+  | Mock model | `stage-2-mock-chat` | The mock model gives scripted replies for safe repeatable checks, without using your real AI account. |
+  | Lavish | `interview-1` | Lavish shows the interview as pages in your browser so you can choose comfortably. |
+  | Firstmate | `interview-1` | Firstmate is the bot you talk to for coordinating work and getting the right bot to do it. |
+  | Bot Maker | `interview-1` | Bot Maker creates and maintains bots so you can add a helper without wiring it up yourself. |
+  | Code Reviewer | `interview-1` | Code Reviewer checks proposed source changes for defects before you decide whether to accept them. |
+  | Plain bot | `interview-1` | Your plain bot answers quick questions and searches the web without managing projects or tasks. |
+  | Harness keeper | `interview-1` | Your harness keeper will be the bot that owns your harness source and handles its future maintenance. |
+  | Interview record | `host-step` | The interview record saves your choices and completed steps so setup can resume without asking everything again. |
+  | Suite | `handoff` | The conformance suite is the set of checks that decides whether your built harness meets the blueprint. |
+  | Verification kit | `handoff` | The verification kit gathers screenshots and other evidence from a separate test instance so your agent can inspect its work. |
+  | Virtual display | `stage-5-ui` | The virtual display lets your agent run and inspect the app on the host without showing you an unfinished window. |
+  | Palette | `interview-2` | A palette is the set of colours used throughout the app, letting you choose its look without changing how it works. |
+  | Instrument option | `interview-2` | Instrument is the name of this pictured default-look option, which you can keep or use as a starting point. |
+  | Mockup | `interview-2` | A mockup is a fixed example of the app shell used to compare colours, not a picture of your own unfinished app. |
+  | Pairing | `paired` | Pairing gives the desktop app the owner token it needs to access your daemon without exposing it to other pages. |
+  | Owner token | `paired` | The owner token is the secret your app uses to prove it may access the daemon, so it is never put in your interview record. |
+  | GitHub | `host-step` | GitHub stores source and proposed changes, and a separate bot account lets you grant and revoke the bots' access independently of your own. |
+  | Pull request | `keeper-ready` | A pull request presents a proposed source change for review before you approve merging it. |
+  | Rebuild line | `first-install` | The rebuild line is the command you choose to run to build and install an approved version of your harness. |
 
 ## States
 
@@ -356,7 +364,7 @@ stateDiagram-v2
   s10 --> s11: the setup agent builds and proves your choices
   s11 --> s12: you paste the one initial rebuild line
   s12 --> s13: you pair in Terminal while the app stays closed
-  s13 --> s14: you open the connected finished app, switch to Firstmate and chat
+  s13 --> s14: you open the finished app, report connected, switch to Firstmate and chat
   s14 --> s15: Bot Maker signs on the keeper, which reports its scout
   s15 --> s16: the bots' GitHub account is done or deferred
   s16 --> s17: onboarding ends
@@ -378,6 +386,11 @@ stateDiagram-v2
   class s15 orange
   class s16 orange
   class s17 orange
+  classDef blue fill:#c3e0ff,color:#1c1c1c
+  classDef orange fill:#f0d3bf,color:#1c1c1c
+  classDef purple fill:#e3d5ff,color:#1c1c1c
+  classDef tan fill:#e5d9ce,color:#1c1c1c
+  classDef teal fill:#bfe3df,color:#1c1c1c
 ```
 
 The supplied VM. The chart hides only the completed-state self-loop. A failed
@@ -421,10 +434,7 @@ pages and chat: the setup agent's, then Firstmate's in the app from R9.
 | **T2 — Memory restart keeps page one** | Supplied VM and page-one answers selecting a different memory row | Before Mac commands, read record; restart as instructed and resume | Keep page one with progress interview-1 before showing stop/edit/start commands. After restart offer recorded defaults and resume at stage-1-daemon, without losing answers/resetting a home (R3, R5, R8). |
 | **T3 — Real login is not mock proof** | Each selected engine installed on the chosen host and the person's go-ahead | Prove stage-3-real-login in the real-host rehearsal | One real turn per selected engine uses the person's own native login under adapter terms; do not pass the stage on a mock turn or absent go-ahead. Keep credential/token bytes out of the record/evidence, and a failed proof stays in its stage (R4, R5, E4; [engine Pi](engine-pi.md) R5, R6; [Claude Code](engine-claude-code.md) R6, R7). |
 | **T4 — First use switches the coordinator** | Live daemon, installed/paired app, suite green on this build and R5 record | Setup agent gives the hand-over, then the person sends the complete first message to Firstmate | State the switch plainly, give the ready-to-send record/resume request and return-to-setup instructions. Firstmate's seeded skill reads actual answers/progress and first reply proves context/next state. Page two and choices precede the one install and pairing. Complete first-use proof, then keeper sign-on/scout and account inside the harness, preserving R8 resume and all gates (R4, R5, R8, R9; [starter bots](starter-bots.md) R7). |
-
-
-| **T5 — Narration and progress follow the record** | R1 through done, both Lavish pages and an R9 hand-over/resume | Observe step messages, a failure and a resume in the real-host rehearsal | Open with the plain-text R10 bar and one or two what/why lines; explain each component once using the glossary, without re-explaining at the switch. Show 0/17 before any pass, 7/17 = 41%, and 17/17 = 100%; failure does not advance progress and resume derives it from the record. Firstmate's first reply has the bar; no new record field or progress store (R4, R5, R8–R10). |
-| **T6 — First sight is the finished app** | UI stage complete, page two not yet answered | Choose a look, build choices, install once, pair and enter first-use | Keep all actual-app UI evidence agent-only until first-use, failures included. Page two uses fixed-shell colour mockups on Lavish, the pictured default-look option named Instrument first, iterating to acceptance; other choices stay plain questions. If Lavish fails, explicitly accept that named option alongside its mockup visual or wait for Lavish. Build choices before the sole initial install, keep the app closed through pairing and open it connected at first-use; the person's first app view has their accepted choices (R3, R4, R9, E4; [look and palette](look-and-palette.md) R1). |
-| **T7 — Keeper handover is resumable work** | First-use passed, source and record available | Firstmate tasks Bot Maker at keeper-ready, then the keeper reports its scout | Show brief/overlap/files/live check; keeper owns the source, maps source/build/test entry points and chosen features, runs existing safe local checks and reports one maintenance recommendation to Firstmate. No edits, pull request, install, real-login turn or deploy; only then pass keeper-ready and offer bot-account (R4, R8, R9). |
+| **T5 — Narration and progress follow the record** | R1 through done, both Lavish pages and an R9 hand-over/resume | Observe step messages, a failure and a resume in the real-host rehearsal | Open with the plain-text R10 bar and one or two what/why lines; introduce components at their glossary states and derive already-explained terms from progress on resume/switch, with no shared-conversation assumption; one repeat after interruption within the term's own introduction state is acceptable. Show 0/17 before any pass, 7/17 = 41%, and 17/17 = 100%; failure does not advance progress and resume derives it from the record. Firstmate's first reply has the bar; no new record field or progress store (R4, R5, R8–R10). |
+| **T6 — First sight is the finished app** | UI stage complete, page two not yet answered | Choose a look, build choices, install once, pair and enter first-use | Keep all actual-app UI evidence agent-only until first-use, failures included. Page two uses fixed-shell colour mockups on Lavish, the pictured default-look option named Instrument first, iterating to acceptance; other choices stay plain questions. If Lavish fails, explicitly accept that named option alongside its mockup visual or wait for Lavish. Build choices before the sole initial install, keep the app closed through pairing, then have the person open it at first-use and report connected; the person's first app view has their accepted choices (R3, R4, R9, E4; [look and palette](look-and-palette.md) R1). |
 
 Proof: `suite/onboarding.mjs` holds the mock stage smokes: daemon health against its discovery file; the plain bot installed and answering through each selected engine; the installed starter files contain no unresolved placeholders and include NOTICE.md; the crew wired as a led team, with a round trip that records bridges; and the real app on the virtual display showing the bots tree and opening a chat. Evidence: JSON, plus PNG and the accessibility tree for the window. Stage 3 real login, the host step on a fresh Mac, the Lavish pages, narration/progress, the interview record and the first-use hand-over are not suite cases: check them in the real-host rehearsal, where Mac items stay mac-pending until answered.

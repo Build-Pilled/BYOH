@@ -118,8 +118,11 @@ small; do not turn the plain bot into another project worker.
   remains available on the host. This adds neither the interview to the plain
   bot's blank prompt nor new daemon privileges; R2/R4 boundaries still apply.
   Every remaining step message follows onboarding R10, with progress derived
-  from the existing record and the same first-mention glossary, not a new
-  progress field or repeated explanations at the switch.
+  from the existing record and the same glossary introduction states. Terms
+  whose introduction states have passed count as already explained on resume
+  or after the switch, without a new record field or shared conversation.
+  One repeat after interruption within a term's own introduction state is
+  acceptable.
   Page two and its choice build are complete before the switch. At
   `keeper-ready`, Firstmate's first job is to task Bot Maker to sign on a harness
   keeper for `~/myharness-src` from the crewmate template. Firstmate shows the
