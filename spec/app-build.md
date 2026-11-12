@@ -75,16 +75,29 @@ half that pulls, checks and swaps the app, rollback and replacement errors.
   2. The bundle is assembled with Electron's symbolic links kept, Electron's
      default app removed and the built shell placed inside the bundle; nothing
      the app loads lies outside it, and no `._*` file enters it (P16).
-  3. The bundle's identifier is fixed, `local.myharness.app`; its name and
-     display name are the display name from the interview record
-     ([onboarding](onboarding.md) R5). Each helper's property list names its
-     own executable.
+  3. The bundle file stays `myharness.app` and its identifier stays
+     `local.myharness.app`. In its base `Info.plist`, `CFBundleName` and
+     `CFBundleDisplayName` are both `myharness`, matching the file's base name,
+     and `LSHasLocalizedDisplayName` is true. Before signing (step 4), every
+     `.lproj` folder in the assembled bundle receives an `InfoPlist.strings`
+     whose `CFBundleDisplayName` and `CFBundleName` both equal the display name
+     from the interview record ([onboarding](onboarding.md) R5); no language
+     folder is left with the fixed name. Quotes and backslashes in the display
+     name are escaped for the strings-file format, stored as UTF-8 or UTF-16
+     so macOS reads the exact name. The running Electron app also uses that
+     display name for its app name, native About panel and notification sender.
+     Each helper's property list names its own executable.
   4. The bundle is signed ad hoc, recursively, with rcodesign at its pinned
      version and hash; the build fails when the signer reports a nested
      bundle without a main executable. There is no hardened runtime, no
      entitlement and no notarisation.
   5. It is packed as one archive, `myharness.app.tar.gz`, with numeric owner and
      group 0, beside `myharness.app.tar.gz.sha256`.
+
+  Finder, Spotlight, Launchpad, Dock, menu bar and app switcher show the display
+  name; Terminal, paths, Get Info's Name field and the rebuild line show
+  `myharness.app`. If the person renames the file in Finder, Finder shows their
+  new name.
 
   The bundle carries the clean-stop program ([VM](vm.md) R9) and opens no
   testing connection: only a copy the kit starts inside the host does that
@@ -220,8 +233,13 @@ Not applicable; the line runs in the Mac's Terminal and has no app controls.
   installation (R5; [onboarding](onboarding.md) R4).
 - **E6 — Own host.** The same line runs through that host's admin name; an
   x86_64 host still builds the darwin-arm64 app from the same pinned inputs.
+- **E7 — Display-name escaping.** A display name containing a quote, a
+  backslash and non-ASCII letters round-trips exactly through every
+  `InfoPlist.strings`: reading either name key returns the interview value,
+  with no lost characters or literal escaping added to the visible name (R4).
 
 | Id | Given | When | Expect |
 | --- | --- | --- | --- |
 | **T1 — Second rebuild cannot overlap** | First person-started deploy holds exclusive lock and is paused in build, otherwise healthy | Start a second person-authorized run | Second reports another rebuild is running at probe and exits1 changing nothing; first retains its lock and can finish normally. Lock covers probe through exit; no bot/app/background job gains deploy permission (R2, R3). |
 | **T2 — Killed rebuild releases lock** | An owned deploy is in build under its exclusive lock | Kill only that test run and run the authorized line again | System releases lock when the program ends, including killed; new run gets past probe. Keep R3 post-stop failure/stopped-service rollback/retry rules, not a new automatic restart/deploy mechanism (R2, R3, R8). |
+| **T3 — Localized app name, fixed file name** | Built desktop app archive and the interview display name | Unpack and inspect the bundle on the build host; install on the person's Mac for the visible-name check | Build side (VM-provable): base Info.plist CFBundleName and CFBundleDisplayName are myharness, LSHasLocalizedDisplayName is true, every .lproj has an InfoPlist.strings whose two name keys equal the display name, and the signature verifies. Mac side stays mac-pending: Finder and Spotlight show the display name while `ls ~/Applications` shows myharness.app (R4). |

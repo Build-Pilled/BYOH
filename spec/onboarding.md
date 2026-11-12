@@ -178,9 +178,11 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   token or key. Settings that a section stores elsewhere stay there (for
   example `notify` in `myharness.toml`).
 - **R6 — Names.** `display_name` is the name the person gives their harness,
-  shown throughout the app and in the app's bundle name, never a command or
-  path; its default is `My Harness`. `plain_name` is the display name
-  of the plain bot, whose id stays `plain`; its default is `plain` ([starter bots](starter-bots.md) R1). Both are accepted when, after trimming
+  shown throughout the app and as its localized name in Finder, Spotlight and
+  Launchpad, never a command or path; the bundle file stays `myharness.app`
+  ([app build](app-build.md) R4). Its default is `My Harness`. `plain_name` is
+  the display name of the plain bot, whose id stays `plain`; its default is
+  `plain` ([starter bots](starter-bots.md) R1). Both are accepted when, after trimming
   leading and trailing white space, they hold 1 to 64 characters with no
   control character or line break. An invalid value keeps the page open with
   the reason beside the field and every other answer kept; nothing is written
