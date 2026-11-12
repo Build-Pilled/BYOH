@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# factory-db - run SQL against the crew's task database; never waits for input, never creates the file.
+# Usage: factory-db [sqlite3 flags ...] "<SQL>"   e.g. factory-db -json "SELECT * FROM tasks WHERE id='X'"
+db=${MYHARNESS_HOME:-$HOME/.myharness}/tasks/factory.db
+[ $# -ge 1 ] || { echo 'usage: factory-db [sqlite3 flags ...] "<SQL>"' >&2; exit 2; }
+[ -f "$db" ] || { echo "factory-db: no database at $db" >&2; exit 1; }
+exec sqlite3 -bail "${@:1:$#-1}" "$db" "${!#}" </dev/null

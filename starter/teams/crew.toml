@@ -1,0 +1,3 @@
+name = "Crew"
+lead = "firstmate"
+members = ["bot-maker", "code-reviewer"]

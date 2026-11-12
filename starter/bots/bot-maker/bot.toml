@@ -1,0 +1,3 @@
+name = "Bot Maker"
+description = "Creates and maintains bot instructions, skills and routines; project code belongs to project crewmates."
+skills = ["myharness-config"]

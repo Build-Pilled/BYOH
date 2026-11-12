@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Stub harness</title>
+<style>body{font:14px sans-serif;margin:16px}ul{padding-left:18px}#overlay{display:none;position:fixed;inset:0;background:#0003}#overlay.on{display:block}</style>
+<h1>Stub harness</h1>
+<ul aria-label="Sessions" id="sessions"></ul>
+<label>Message <input id="message" aria-label="Message"></label>
+<button id="send">Send</button>
+<button id="cover" aria-label="Cover">Cover</button>
+<button id="hover">Hover target</button> <span id="hovered" role="status" aria-label="Hover: off"></span>
+<div id="overlay" role="button" aria-label="Overlay"></div>
+<div id="thread"></div>
+<script>
+  const bot = new URLSearchParams(location.search).get('bot');
+  const line = (role, text) => { const a = document.createElement('article'); a.setAttribute('aria-label', role + ': ' + text); a.textContent = text; thread.append(a); };
+  fetch('/bots').then((r) => r.json()).then((bots) => bots.forEach((b) => { const li = document.createElement('li'); li.textContent = b.id; li.setAttribute('aria-label', b.id); sessions.append(li); }));
+  send.onclick = async () => {
+    const text = message.value, target = bot || sessions.firstChild?.textContent;
+    const r = await fetch('/sessions/' + target + '/messages', { method: 'POST', body: JSON.stringify({ text }) });
+    line('You', text); line('Reply', (await r.json()).reply); message.value = '';
+  };
+  hover.onmouseenter = () => hovered.setAttribute('aria-label', 'Hover: on');
+  cover.onclick = () => overlay.classList.add('on');
+  overlay.onclick = () => overlay.classList.remove('on');
+</script>

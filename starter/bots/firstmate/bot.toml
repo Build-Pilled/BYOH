@@ -1,0 +1,3 @@
+name = "Firstmate"
+description = "Coordinates the crew and records tasks and decisions; bot-maker owns bot files and code-reviewer reviews changes."
+skills = ["myharness-config"]
