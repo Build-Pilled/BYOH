@@ -39,9 +39,9 @@ environment check.
     release's SHA-256 list, installed under `~/.local` with neither Homebrew
     nor sudo; a different `limactl` already on the PATH is bypassed by its
     absolute path.
-  - The recipe: fetched from `Build-Pilled/BYOH` at `v1.1.0`, the release
-    named in the README. Check the SHA-256 of `vm/SHA256SUMS` against that
-    README, then check the template, host step and environment check against
+  - The recipe: fetched from `Build-Pilled/BYOH` at the release named in the
+    [top-level README](../README.md#release). Check the SHA-256 of `vm/SHA256SUMS`
+    against that README, then check the template, host step and environment check against
     `SHA256SUMS` before running them.
   - Node: the exact pinned version from the official Node build for
     the VM's architecture, checked against that release's `SHASUMS256.txt`,
