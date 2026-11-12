@@ -39,7 +39,7 @@ environment check.
     release's SHA-256 list, installed under `~/.local` with neither Homebrew
     nor sudo; a different `limactl` already on the PATH is bypassed by its
     absolute path.
-  - The recipe: fetched from `akshay-karanjkar/BYOH` at `v1.0.0`, the release
+  - The recipe: fetched from `Build-Pilled/BYOH` at `v1.0.0`, the release
     named in the README. Check the SHA-256 of `vm/SHA256SUMS` against that
     README, then check the template, host step and environment check against
     `SHA256SUMS` before running them.
