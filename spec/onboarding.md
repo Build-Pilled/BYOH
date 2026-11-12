@@ -284,8 +284,8 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   | VM | `host-step` | A virtual machine, or VM, is that separate computer inside your Mac, keeping the bots' workspace apart from yours. |
   | Host | `host-step` | The host is the Linux computer running your bots, either our VM or a separate machine you provide. |
   | SSH | `host-step` | SSH is the secure connection your Mac uses to reach that host without exposing the harness to the network. |
-  | Daemon | `host-step` | The daemon is the background program that keeps your bots, conversations and messages running on the host. |
-  | App | `host-step` | The desktop app is your window into the harness, connecting your Mac to the daemon on the host. |
+  | Daemon | `stage-1-daemon` | The daemon is the background program that keeps your bots, conversations and messages running on the host. |
+  | App | `stage-5-ui` | The desktop app is your window into the harness, connecting your Mac to the daemon on the host. |
   | Engine | `host-step` | An engine is the program that connects a bot to its chosen AI model. |
   | Model | `host-step` | A model is the AI doing a bot's thinking and writing, which you can change for each bot later. |
   | Pi | `host-step` | Pi is an engine that connects your bots to OpenAI models or a provider you choose with an API key. |
@@ -294,9 +294,9 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   | Lavish | `interview-1` | Lavish shows the interview as pages in your browser so you can choose comfortably. |
   | Firstmate | `interview-1` | Firstmate is the bot you talk to for coordinating work and getting the right bot to do it. |
   | Bot Maker | `interview-1` | Bot Maker creates and maintains bots so you can add a helper without wiring it up yourself. |
-  | Code Reviewer | `interview-1` | Code Reviewer checks proposed source changes for defects before you decide whether to accept them. |
+  | Code Reviewer | `stage-4-messaging` | Code Reviewer checks proposed source changes for defects before you decide whether to accept them. |
   | Plain bot | `interview-1` | Your plain bot answers quick questions and searches the web without managing projects or tasks. |
-  | Harness keeper | `interview-1` | Your harness keeper will be the bot that owns your harness source and handles its future maintenance. |
+  | Harness keeper | `keeper-ready` | Your harness keeper will be the bot that owns your harness source and handles its future maintenance. |
   | Interview record | `host-step` | The interview record saves your choices and completed steps so setup can resume without asking everything again. |
   | Suite | `handoff` | The conformance suite is the set of checks that decides whether your built harness meets the blueprint. |
   | Verification kit | `handoff` | The verification kit gathers screenshots and other evidence from a separate test instance so your agent can inspect its work. |
@@ -306,7 +306,7 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   | Mockup | `interview-2` | A mockup is a fixed example of the app shell used to compare colours, not a picture of your own unfinished app. |
   | Pairing | `paired` | Pairing gives the desktop app the owner token it needs to access your daemon without exposing it to other pages. |
   | Owner token | `paired` | The owner token is the secret your app uses to prove it may access the daemon, so it is never put in your interview record. |
-  | GitHub | `host-step` | GitHub stores source and proposed changes, and a separate bot account lets you grant and revoke the bots' access independently of your own. |
+  | GitHub | `bot-account` | GitHub stores source and proposed changes, and a separate bot account lets you grant and revoke the bots' access independently of your own. |
   | Pull request | `keeper-ready` | A pull request presents a proposed source change for review before you approve merging it. |
   | Rebuild line | `first-install` | The rebuild line is the command you choose to run to build and install an approved version of your harness. |
 
