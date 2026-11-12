@@ -6,8 +6,8 @@ Classification: Choice (look and palette). Prerequisites: [appearance mode](appe
 
 Let the person decide how their harness looks: the colours of its two variants
 (dark and light). This is the one place the
-interview asks about aesthetics, and it comes after the person has seen
-a working app. [Appearance mode](appearance-mode.md) owns the System,
+interview asks about aesthetics, using mockups before the person sees their
+finished app. [Appearance mode](appearance-mode.md) owns the System,
 Dark and Light selector, which every harness has whether or not this choice is
 made; this section owns what those modes look like. [Status](status.md),
 [callouts](callouts.md) and [conversation export](conversation-export.md) own
@@ -15,13 +15,31 @@ their own meaning and only borrow the colours defined here.
 
 ## Required behaviour
 
-- **R1 — The choice.** The default is the Instrument look in R3. "Go with the
+- **R1 — The choice.** The default-look option is named Instrument; R3
+  defines its colours and the fixed mockup shows what that name means. "Go with the
   default" is always offered and is the all-defaults path. The interview
-  asks one question: keep the default look, or describe a different one. A
-  person who describes one gets palettes proposed by their agent, shown in the
-  real app, and iterates until they accept one; the accepted palette is the
-  answer. The answer is recorded in the interview record that
-  [onboarding](onboarding.md) owns and is applied to the person's app. It adds no
+  opens on page two of Lavish with a few starting palette options, the default
+  option named Instrument first, each shown as a mockup of the same fixed app
+  shell. Never assume the person knows that name: whenever the agent offers
+  it, name it as an option and show its mockup visual alongside it. The person reacts and adds
+  ideas; the agent shows more mockups along what they like, repeating until
+  they accept a palette. The accepted palette is the answer, then the setup
+  agent builds it. These are never screenshots of the person's app: that app
+  is not shown until onboarding `first-use`.
+
+  BYOH ships the fixed [shell mockup page](assets/look-mockup.html), with the
+  R3 colour roles as CSS variables for dark and light variants. Look proposals
+  change only those colours, not layout, text or controls, so the mockups match
+  the shell the agent builds. The fixed page changes with the app layout; use
+  its same shell for each proposal rather than inventing different layouts
+  for different palettes. It is a colour preview, not a working harness.
+  Keep the other page-two choices as plain questions on the same Lavish page.
+  If Lavish cannot be served, questions fall back to chat, but the person must
+  explicitly accept the default-look option named Instrument alongside its
+  fixed mockup visual or wait for Lavish before choosing a custom look. If no
+  visual can be presented in chat, wait for Lavish; never substitute screenshots
+  of their app. The answer is recorded in
+  the interview record that [onboarding](onboarding.md) owns and is applied to the person's app. It adds no
   field to `myharness.toml` and no daemon route: `theme` stays an unknown field
   to `myharness validate`; like the mode, a look is not a field in the harness
   configuration ([appearance mode](appearance-mode.md) E3).
@@ -30,7 +48,8 @@ their own meaning and only borrow the colours defined here.
   restate any control, state or text, hide a status or callout label, or change
   what a control does. The accessibility tree of the app is the same under every
   palette.
-- **R3 — The default look.** The default is the Instrument look:
+- **R3 — The default look.** The option named Instrument is the default,
+  pictured in the [fixed mockup](assets/look-mockup.html):
   an opaque display, a darker or lighter chassis, orange backlit primary
   controls, square status lights and monospace labels. Its role colours are:
 
@@ -103,9 +122,12 @@ belong to [appearance mode](appearance-mode.md) and the Settings frame to
   Nothing is written to the daemon or to conversations.
 - **E5 — Missing font.** If a bundled font fails to load, text is drawn in the
   system stack, layout stays usable, and no request goes out to find another.
-- **E6 — Mac display.** Screenshots on the Linux test host judge the palette as
-  rendered in that run; they do not prove how the Mac's display profile or its
-  real appearance setting shows it. That check stays `mac-pending`.
+- **E6 — Mockups and the Mac display.** Lavish mockups select colours, not proof
+  that the person's app renders them correctly. App screenshots on the Linux
+  test host remain the agent's own proof until onboarding `first-use`; neither
+  they nor mockups prove how the Mac's display profile or real appearance
+  setting shows the built app. Present that check at `first-use`; it stays
+  `mac-pending` until answered.
 
 | Id | Given | When | Expect |
 | --- | --- | --- | --- |

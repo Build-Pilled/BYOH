@@ -30,6 +30,13 @@ program.
   Terminal; the not-paired window shows it exactly, with the bot SSH name
   ([host](host.md) R3) filled in:
   `( umask 077; d="$HOME/Library/Application Support/myharness"; mkdir -p "$d" && ssh -n <bot name> cat .myharness/secrets/owner-token > "$d/owner-token.new" && mv "$d/owner-token.new" "$d/owner-token" || { rm -f "$d/owner-token.new"; exit 1; } )`.
+  On first onboarding the setup agent prints this same line, with the bot SSH
+  name filled in, before the app is opened. The person runs it in Terminal;
+  a successful copy and an acceptable local token file (R3) pass onboarding
+  `paired`. The app stays closed until `first-use`, when it is opened and
+  verified `connected` ([onboarding](onboarding.md) R4, R9;
+  [app build](app-build.md) R5). The not-paired window remains the recovery
+  route for later missing or unacceptable tokens, not a required first screen.
   It runs in a subshell, so no umask stays behind; it moves the new file into
   place only after the copy succeeded, so a failed copy never empties a working
   token. It needs the host running with its daemon started once, which creates
@@ -161,7 +168,10 @@ stateDiagram-v2
   s2: Connected
   s3: Shutting down the VM, run page shown
   s4: Token refused, pairing line shown
-  [*] --> s0
+  [*] --> s0: daemon answers, no acceptable token file
+  [*] --> s1: nothing answers
+  [*] --> s2: daemon answers, pre-copied token accepted
+  [*] --> s4: daemon answers, token refused
   s0 --> s1: the daemon stops
   s0 --> s2: you run the pairing line
   s1 --> s0: the daemon starts, no acceptable token file
@@ -176,7 +186,9 @@ stateDiagram-v2
   s1 --> s4: the daemon starts, token refused
 ```
 
-Not shown: the reconnect timing of R7 and Shut down VM outcomes other than
+First onboarding copies the token before launch (R2), so a healthy supplied
+VM opens directly connected. Not shown: pre-launch copying, the reconnect
+timing of R7 and Shut down VM outcomes other than
 stopped ([VM](vm.md) R9).
 
 ## Controls

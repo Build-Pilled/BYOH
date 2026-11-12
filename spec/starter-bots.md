@@ -106,7 +106,8 @@ small; do not turn the plain bot into another project worker.
   On the person's hand-over/resume request it reads
   `~/myharness-src/interview.json`, uses the recorded answers and progress under
   onboarding R5/R8, and leads the remaining setup from inside the harness. Its
-  first reply demonstrates the record context and next unpassed stage; it
+  first reply opens with onboarding R10's progress line and plain what/why
+  narration, then demonstrates the record context and next unpassed stage; it
   does not invent remembered answers or bypass a stage proof. The hand-over
   message names the blueprint folder; Firstmate records that path as one line
   in its MEMORY.md the first time it reads it, so a later resume can find the
@@ -116,18 +117,25 @@ small; do not turn the plain bot into another project worker.
   rebuilding answers from memory. The setup agent
   remains available on the host. This adds neither the interview to the plain
   bot's blank prompt nor new daemon privileges; R2/R4 boundaries still apply.
-  At `choices-applied`, Firstmate tasks Bot Maker to sign on a harness keeper
-  for `~/myharness-src` from the crewmate template. Firstmate shows the captain
-  each step as it happens: the brief, Bot Maker's overlap check and files, and
-  the live check. The keeper builds the page-two choices as a ship task with
-  a Code Reviewer pass, a pull request and a merge only on the captain's word;
-  the captain runs the rebuild line and confirms the choices' Mac checks.
-  That keeper keeps owning the harness source after onboarding; it is signed
-  on during onboarding, not shipped as a fourth crew bot. The sign-on brief
-  includes the absolute blueprint path and its [verification skill](../verify/SKILL.md).
+  Every remaining step message follows onboarding R10, with progress derived
+  from the existing record and the same first-mention glossary, not a new
+  progress field or repeated explanations at the switch.
+  Page two and its choice build are complete before the switch. At
+  `keeper-ready`, Firstmate's first job is to task Bot Maker to sign on a harness
+  keeper for `~/myharness-src` from the crewmate template. Firstmate shows the
+  person each step as it happens: the brief, Bot Maker's overlap check and
+  files, and the live check. The keeper owns the source from sign-on and gets
+  a small read-only scout/handover audit: read the source and interview record,
+  identify source/build/test entry points and chosen features, run existing
+  safe local checks and report the source map plus one next-maintenance
+  recommendation to Firstmate. This first task has no edits, pull request,
+  installation, real-login turn or deploy. It does not rebuild page-two choices
+  or require a second initial installation. The keeper is signed on during
+  onboarding, not shipped as a fourth crew bot. The sign-on brief includes the
+  absolute blueprint path and its [verification skill](../verify/SKILL.md).
   The keeper records the skill path in its project context and reads that
-  canonical file for the choice build and later harness changes. No starter
-  copy is installed, and the existing Code Reviewer/merge policy is unchanged.
+  canonical file for later harness changes. No starter copy is installed, and
+  the existing Code Reviewer/merge policy for later ship tasks is unchanged.
 
 ## Controls
 

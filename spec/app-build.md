@@ -107,7 +107,14 @@ half that pulls, checks and swaps the app, rollback and replacement errors.
      moved into place. If that move fails the previous bundle is moved back and
      the half stops. After success the previous copy and the staging folder are
      removed.
-  5. `open`: it opens the app with no arguments.
+  5. `open`: on later rebuilds it opens the app with no arguments. On the
+     first onboarding only, the setup agent prints the initial line without
+     this final step: installation leaves the app closed. The person first
+     runs the unchanged pairing line in Terminal, then opens the installed
+     app at onboarding `first-use`, so its first window is the connected,
+     finished app with choices applied ([onboarding](onboarding.md) R4, R9;
+     [app pairing](app-pairing.md) R2). This changes no later rebuild line
+     and adds no setting or automatic deploy.
 
   Each failing step stops the line with its name and reason, and the installed
   app stays the previous working copy.
@@ -208,7 +215,9 @@ Not applicable; the line runs in the Mac's Terminal and has no app controls.
 - **E4 — Turns running.** Exit 3 lists them and changes nothing; the person
   waits or reruns with `--force`, which interrupts them at `stop`.
 - **E5 — First install.** With no installed app, `swap` moves the new bundle in
-  and has nothing to put aside.
+  and has nothing to put aside. During first onboarding the line leaves it
+  closed through pairing; opening it is the `first-use` step, not an extra
+  installation (R5; [onboarding](onboarding.md) R4).
 - **E6 — Own host.** The same line runs through that host's admin name; an
   x86_64 host still builds the darwin-arm64 app from the same pinned inputs.
 

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App shell colour mockup</title>
+<style>
+/* Change only these role values for a proposal. Keep both variants and the
+   fixed shell below; this is a preview, not a running harness. */
+.dark {
+  --display: #000000; --chassis: #1a1a1a; --text: #f2f2f2;
+  --muted-text: #9a9a9a; --accent: #ff5a1f; --accent-text: #ff7a45;
+  --working: #f9e2af; --waiting: #6aa8ff; --unread: #4ade80; --attention: #ff2d2d;
+  --note: #4a9bc2; --tip: #6cc3a0; --important: #f2a96b;
+  --warning: #f1bd59; --caution: #e46f8a;
+  --label-ink: 100%;
+  color-scheme: dark;
+}
+.light {
+  --display: #f4f4f2; --chassis: #cfd0d2; --text: #111111;
+  --muted-text: #4c4c4c; --accent: #ff5a1f; --accent-text: #c2410c;
+  --working: #df8e1d; --waiting: #2563eb; --unread: #16a34a; --attention: #dc2626;
+  --note: #4a9bc2; --tip: #6cc3a0; --important: #f2a96b;
+  --warning: #f1bd59; --caution: #e46f8a;
+  --label-ink: 45%;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px; font: 16px/1.5 system-ui, sans-serif; }
+h1 { font-size: 24px; margin: 0; }
+.intro { margin: 8px 0 24px; max-width: 80ch; }
+.variants { display: grid; gap: 24px; }
+.variant { margin: 0; }
+.variant > figcaption { margin-bottom: 8px; font-weight: 700; }
+.shell { color: var(--text); background: var(--display); border: 1px solid var(--muted-text);
+  display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 650px; }
+.sidebar, .header, .composer { background: var(--chassis); }
+.sidebar { padding: 18px; border-right: 1px solid var(--muted-text); }
+.brand { font: 700 17px ui-monospace, monospace; margin-bottom: 24px; }
+.section-label, .state, .timestamp, .menu, .composer, .header { font: 13px/1.5 ui-monospace, monospace; }
+.section-label, .state, .timestamp, .menu { color: var(--muted-text); }
+.section-label { text-transform: uppercase; margin: 18px 0 8px; }
+.bots { list-style: none; margin: 0; padding: 0; }
+.bots li { padding: 10px 0; }
+.bot { display: flex; align-items: center; gap: 8px; }
+.active .bot { color: var(--accent-text); font-weight: bold; }
+.state { display: block; margin-left: 20px; }
+.lamp { width: 12px; height: 12px; flex: 0 0 12px; background: var(--signal); }
+.working { --signal: var(--working); } .waiting { --signal: var(--waiting); }
+.unread { --signal: var(--unread); } .attention { --signal: var(--attention); }
+.menu { margin-top: 28px; }
+.conversation { display: flex; flex-direction: column; min-width: 0; }
+.header { padding: 18px; display: flex; justify-content: space-between; gap: 16px;
+  border-bottom: 1px solid var(--muted-text); }
+.transcript { padding: 24px; flex: 1; }
+.message { max-width: 72ch; margin-bottom: 20px; }
+.message p { margin: 8px 0; }
+.speaker { font-weight: bold; }
+a { color: var(--accent-text); }
+code { font-family: ui-monospace, monospace; }
+.callouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.callout { border-left: 3px solid var(--callout); padding: 8px 12px; }
+.callout strong { color: color-mix(in srgb, var(--callout) var(--label-ink), black);
+  font: 700 12px ui-monospace, monospace; }
+.callout p { font-size: 13px; margin: 6px 0; }
+.note { --callout: var(--note); } .tip { --callout: var(--tip); }
+.important { --callout: var(--important); } .warning { --callout: var(--warning); }
+.caution { --callout: var(--caution); }
+.composer { padding: 16px; border-top: 1px solid var(--muted-text); }
+.draft { background: var(--display); border: 1px solid var(--muted-text); padding: 12px; margin-bottom: 12px; }
+.actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.send { border: 0; background: var(--accent); color: var(--text); padding: 8px 20px; font: inherit; }
+@media (max-width: 650px) {
+  body { padding: 12px; } .shell { grid-template-columns: 155px minmax(0, 1fr); }
+  .sidebar, .transcript { padding: 12px; } .header { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+<h1>App shell colour mockup</h1>
+<p class="intro">Palette options are named on the interview page alongside this visual. A fixed example for comparing palettes in both variants. This is not your app or a working chat; the example content and layout stay the same while colours change.</p>
+<div class="variants">
+<figure class="variant">
+<figcaption>Dark variant</figcaption>
+<div class="shell dark" aria-label="Dark app shell mockup">
+  <aside class="sidebar" aria-label="Example bots and threads">
+    <div class="brand">My Harness</div>
+    <div class="section-label">Crew</div>
+    <ul class="bots">
+      <li class="active"><div class="bot"><span class="lamp working"></span>Firstmate</div><span class="state">Working</span></li>
+      <li><div class="bot"><span class="lamp waiting"></span>Bot Maker</div><span class="state">Waiting on a teammate</span></li>
+      <li><div class="bot"><span class="lamp attention"></span>Code Reviewer</div><span class="state">Needs attention</span></li>
+    </ul>
+    <div class="section-label">Bots</div>
+    <ul class="bots"><li><div class="bot"><span class="lamp unread"></span>plain</div><span class="state">Unread</span></li></ul>
+    <div class="menu">Tasks · Changes · Library<br>Settings</div>
+  </aside>
+  <section class="conversation" aria-label="Example conversation">
+    <header class="header"><strong>Firstmate / Welcome</strong><span>Configuration</span></header>
+    <div class="transcript">
+      <div class="message"><span class="speaker">You</span><p>Help me plan my next project.</p><span class="timestamp">10:30</span></div>
+      <div class="message"><span class="speaker">Firstmate</span><p>We can turn your idea into a small first task, then find the right bot for the work.</p><p>Keep the plan in <code>project.md</code>. <a href="#preview-notes">Read the preview notes</a>.</p><span class="timestamp">10:31</span></div>
+      <div class="callouts">
+        <div class="callout note"><strong>NOTE</strong><p>Start with the goal.</p></div>
+        <div class="callout tip"><strong>TIP</strong><p>Keep the first task small.</p></div>
+        <div class="callout important"><strong>IMPORTANT</strong><p>Review before merging.</p></div>
+        <div class="callout warning"><strong>WARNING</strong><p>Check before installing.</p></div>
+        <div class="callout caution"><strong>CAUTION</strong><p>Keep credentials private.</p></div>
+      </div>
+    </div>
+    <div class="composer"><div class="draft">Write a message…</div><div class="actions"><span>Attach files</span><button class="send" type="button" disabled>Send</button></div></div>
+  </section>
+</div>
+</figure>
+<figure class="variant">
+<figcaption>Light variant</figcaption>
+<div class="shell light" aria-label="Light app shell mockup">
+  <aside class="sidebar" aria-label="Example bots and threads">
+    <div class="brand">My Harness</div>
+    <div class="section-label">Crew</div>
+    <ul class="bots">
+      <li class="active"><div class="bot"><span class="lamp working"></span>Firstmate</div><span class="state">Working</span></li>
+      <li><div class="bot"><span class="lamp waiting"></span>Bot Maker</div><span class="state">Waiting on a teammate</span></li>
+      <li><div class="bot"><span class="lamp attention"></span>Code Reviewer</div><span class="state">Needs attention</span></li>
+    </ul>
+    <div class="section-label">Bots</div>
+    <ul class="bots"><li><div class="bot"><span class="lamp unread"></span>plain</div><span class="state">Unread</span></li></ul>
+    <div class="menu">Tasks · Changes · Library<br>Settings</div>
+  </aside>
+  <section class="conversation" aria-label="Example conversation">
+    <header class="header"><strong>Firstmate / Welcome</strong><span>Configuration</span></header>
+    <div class="transcript">
+      <div class="message"><span class="speaker">You</span><p>Help me plan my next project.</p><span class="timestamp">10:30</span></div>
+      <div class="message"><span class="speaker">Firstmate</span><p>We can turn your idea into a small first task, then find the right bot for the work.</p><p>Keep the plan in <code>project.md</code>. <a href="#preview-notes">Read the preview notes</a>.</p><span class="timestamp">10:31</span></div>
+      <div class="callouts">
+        <div class="callout note"><strong>NOTE</strong><p>Start with the goal.</p></div>
+        <div class="callout tip"><strong>TIP</strong><p>Keep the first task small.</p></div>
+        <div class="callout important"><strong>IMPORTANT</strong><p>Review before merging.</p></div>
+        <div class="callout warning"><strong>WARNING</strong><p>Check before installing.</p></div>
+        <div class="callout caution"><strong>CAUTION</strong><p>Keep credentials private.</p></div>
+      </div>
+    </div>
+    <div class="composer"><div class="draft">Write a message…</div><div class="actions"><span>Attach files</span><button class="send" type="button" disabled>Send</button></div></div>
+  </section>
+</div>
+</figure>
+</div>
+<p id="preview-notes">Preview only. The built app uses the accepted role colours; layout, words and behaviour do not change between palette proposals.</p>
+</body>
+</html>

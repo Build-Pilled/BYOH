@@ -7,7 +7,8 @@ Classification: Core. Prerequisites: [host](host.md),
 ## Purpose
 
 Take a person from a repository link to a harness they trust, in an order that
-shows it working before asking for anything that can wait. The person
+builds and proves it in small stages, then shows the person the finished app
+with their choices applied before handing coordination to its crew. The person
 gives the repository to their own agent and says they want their own harness;
 the agent interviews them and builds it. This section owns the
 questions asked before anything is installed, the interview pages, their order
@@ -71,17 +72,15 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   questions, each with its default visible and a "Go with the defaults" action
   for the whole page. There are two pages:
   1. Page one, before the first chat: `display_name`, `plain_name` (R6),
-     `model` (the default leaves the starter bots' model unset, so
-     [engine contract](engine-contract.md) R1 decides: with both engines that is
-     Pi's default model on the chosen route, and a Claude Code model is one
-     choice away in the [model picker](model-picker.md)), and for the
+     `model`, asked as "Which model should Firstmate run on?", and for the
      supplied VM `vm_memory`, the [VM](vm.md) R3 table with this Mac's row
      selected. Choosing another row gives the person the exact Mac commands to
      run (stop, edit memory, start), because that change happens on the Mac.
      The agent first records page one (R5, `progress` `interview-1`) and only
      then shows those commands, saying that after the restart the person starts
      the agent again in the host and onboarding resumes (R8).
-  2. Page two, after the person has used the app (R4): the release-one choices
+  2. Page two, after the agent proves the UI but before the person sees their
+     app (R4): the release-one choices
      in this order, each worded and defaulted by its own section:
      [look and palette](look-and-palette.md), [window behaviour](window-behaviour.md),
      [desktop notifications](desktop-notifications.md),
@@ -90,8 +89,29 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
      offered; keyboard shortcuts and the phone companion are
      not.
 
+  The `model` question says that every starter bot gets the same model and any
+  bot can be changed later in the [model picker](model-picker.md). The default
+  leaves their model unset, so [engine contract](engine-contract.md) R1 decides:
+  with both engines, Pi's default on the chosen route. The agent reads the
+  selected engines at run time and names the concrete model that default
+  resolves to; no model name is fixed here. BYOH suggests an intelligent
+  frontier model that communicates well, because Firstmate and Bot Maker give
+  the most leverage and extra intelligence there pays off most. Do not present
+  a full model list. If the person's named model maps to exactly one model on
+  their selected engines, use it; if ambiguous, show only the candidates the
+  agent cannot tell apart and ask the person to pick.
+
+  Page two's look question uses the fixed shell mockups and iteration in
+  [look and palette](look-and-palette.md) R1, never pictures of the person's app.
+  The other four choices remain plain questions on that same page. Both pages
+  have the R10 progress line as their header.
+
   If the page cannot be served, the agent asks the same questions in chat with
-  the same defaults and records the answers the same way.
+  the same defaults and records the answers the same way. For the look, the
+  person may explicitly accept the default-look option named Instrument only
+  alongside a visual of its fixed mockup. If no such visual can be presented,
+  or the person wants a custom look, look selection waits until Lavish works;
+  chat fallback never substitutes actual-app screenshots.
 - **R4 — Stages and gates.** Onboarding moves through these states in order;
   each state is entered only when the previous one's proof passes, and a
   failure stays in its state with what failed named:
@@ -108,24 +128,42 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
      required.
   8. `stage-4-messaging`: Firstmate reaches its two crew members and receives
      their replies on the mock model.
-  9. `stage-5-ui`: the real app runs on the host's virtual display and its
-     screenshots are shown to the person.
-  10. `first-install`: the person pastes the rebuild line ([app build](app-build.md)
-      R2); the live daemon runs and the app is in `~/Applications`.
-  11. `paired`: the person runs the pairing line ([app pairing](app-pairing.md)
-      R2) and the window is `connected`.
-  12. `first-use`: the person switches to Firstmate in the app under R9, chats
-      and sees work done.
-  13. `interview-2`: page two answered.
-  14. `choices-applied`: Firstmate tasks Bot Maker to sign on a harness keeper
-      for `~/myharness-src` from the crewmate template, showing the captain the
-      brief, overlap check, files and live check step by step. The keeper
-      builds the page-two choices with a Code Reviewer pass, a pull request
-      and a merge only on the captain's word. The captain runs the rebuild
-      line again and the choices' Mac checks are presented. The keeper keeps
-      owning the harness source after onboarding ([starter bots](starter-bots.md) R7).
-  15. `bot-account`: the bots' own GitHub account (R7), done or deferred.
-  16. `done`.
+  9. `stage-5-ui`: the real app runs on the host's virtual display. Its
+     screenshots and other UI evidence are the agent's own proof, not shown to
+     the person, including on a failure.
+  10. `interview-2`: page two answered, including an accepted look from Lavish
+      mockups or explicit acceptance of the pictured default-look option (R3).
+  11. `choices-applied`: the setup agent builds the page-two choices into
+      `~/myharness-src` and proves the resulting build with the suite. The
+      person's app is still not shown to them.
+  12. `first-install`: the person pastes the rebuild line ([app build](app-build.md)
+      R2); the live daemon runs and the finished app, with choices applied, is
+      in `~/Applications`. This is the one initial installation, not an
+      installation of defaults followed by another for choices. On this first
+      onboarding the line omits the final app-open step; the app stays closed
+      until pairing is complete and `first-use` begins (app build R5).
+  13. `paired`: the setup agent prints the unchanged pairing line ([app
+      pairing](app-pairing.md) R2), with the bot SSH name filled in, and the
+      person runs it in Terminal while the app stays closed. The copy succeeds
+      and the local token file meets app pairing R3; no token enters the record
+      or evidence. Connection is verified when the app opens in `first-use`.
+  14. `first-use`: open the installed app after pairing and verify `connected`.
+      The person's first window is the finished app with their choices applied.
+      They switch to Firstmate under R9, chat and
+      see work done. Present the choices' Mac checks here; what the host cannot
+      prove stays `mac-pending` until answered.
+  15. `keeper-ready`: Firstmate's first job after the switch is to task Bot
+      Maker to sign on a harness keeper for `~/myharness-src` from the crewmate
+      template. Show the person the brief, overlap check, files and live check
+      as they happen. The keeper owns the source from then on and completes
+      its small first task: a read-only scout/handover audit of the record and
+      source, identifying source/build/test entry points and chosen features,
+      running existing safe local checks and reporting the source map plus
+      one next-maintenance recommendation to Firstmate. No edits, pull request,
+      installation, real-login turn or deploy belongs to this task
+      ([starter bots](starter-bots.md) R7).
+  16. `bot-account`: the bots' own GitHub account (R7), done or deferred.
+  17. `done`.
 - **R5 — The interview record.** Answers live in `interview.json` at the root of
   the harness source repository ([app build](app-build.md) R1) and are
   committed with it, so every build uses the answers of its own commit. It is
@@ -165,7 +203,10 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
 
 - **R9 — Switch to the harness.** At entry to `first-use` the live daemon is
   running, the app is installed and paired, and the suite is green on that
-  build. The setup agent plainly says it is time to switch from that agent to
+  build. The setup agent opens the app only now, after the pairing line has
+  succeeded, and verifies that it is `connected` before the switch. A failure
+  names the failed proof and does not advance recorded progress. The setup
+  agent plainly says it is time to switch from that agent to
   the person's own harness. It prints a complete first message for
   the person to paste to Firstmate in the app, with no unfilled placeholders:
   ask Firstmate to read `~/myharness-src/interview.json`, establish the recorded
@@ -185,19 +226,81 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   to read R5's record rather than ask the person to repeat completed questions
   or pretend its minimal charter contains the answers. Its first reply proves
   that context by identifying actual recorded answers, the last passed state
-  and the next unpassed state. First-use work and the remaining gates still
+  and the next unpassed state, opening with the R10 progress line and plain
+  what/why narration. First-use work and the remaining gates still
   need their R4 proof; neither a greeting nor the switch alone advances them.
-  From this switch onward, the agent in R3, R7 and R8 is Firstmate inside the
-  harness: it leads page two, choices-applied and the bots' GitHub account.
-  For choices-applied it initiates Bot Maker's harness-keeper sign-on and
-  narrates each step to the captain; the keeper, not Firstmate or Bot Maker,
-  builds the choices with a Code Reviewer pass and keeps owning the source
-  (R4, [starter bots](starter-bots.md) R7). Firstmate includes the absolute
-  blueprint path and its `verify/SKILL.md` in the keeper sign-on brief. The keeper
-  records that skill path in its project context and uses it for this build and
-  later harness changes, without a duplicate skill installation or a new gate.
-  Resume remains R8's first state after recorded progress; no new progress
-  state, interview field, reset, privilege or automatic deploy is introduced.
+  From this switch onward, the agent in R7 and R8 is Firstmate inside the
+  harness. Page two and its choice build are already complete. Firstmate's
+  first job is the `keeper-ready` sign-on and scout task (R4); it then leads
+  the bots' GitHub account. Firstmate narrates each step under R10. The sign-on
+  brief includes the absolute blueprint path and its `verify/SKILL.md`. The
+  keeper records that skill path in its project context and uses it for later
+  harness changes without a duplicate skill installation or a new gate.
+  Resume remains R8's first state after recorded progress; no new interview
+  field, reset, privilege or automatic deploy is introduced.
+
+- **R10 — Explain the journey.** From R1 on the Mac through `done`, the setup
+  agent, then Firstmate after R9, treats the person as an intern on their first
+  day, with no assumed knowledge of BYOH. Every step message opens with the
+  plain-text progress line below, followed by one or two plain lines saying
+  what is happening now and why it matters to the person. Use it in chat and
+  as the header on both Lavish pages, including during look iterations and on
+  failure/resume messages. Firstmate's first reply after the switch also opens
+  this way ([starter bots](starter-bots.md) R7).
+
+  For example, after `stage-3-real-login` has passed:
+  `▓▓▓▓▓▓▓░░░░░░░░░░ 41% · step 7 of 17 · now: checking the crew can talk · next: proving the window`.
+  The number of completed steps is the one-based index of the last passed R4
+  state, taken from the existing record's `progress`; percent is that index
+  divided by 17, times 100, rounded to the nearest integer. Use 17 character
+  cells, one filled per passed state. Before `host-step` passes there is no
+  passed state: show 0%, step 0 of 17, and empty cells, without creating a new
+  record state. At `done` show 100%, step 17 of 17, all cells filled, and
+  `now: setup complete · next: use your harness`. Otherwise `now` names the
+  next unpassed state in plain words and `next` the one after it. While working
+  on `done`, use `next: use your harness`. A failed proof or interrupted stage
+  does not advance the bar. Derive it again on resume; add no field, counter or
+  separate progress store to the interview record.
+
+  The first time a component is named to the person, use its one-sentence
+  explanation from this glossary. Do not re-explain it at later mentions,
+  including across the R9 switch; the setup hand-over carries which terms
+  have already been explained as conversational context, not a record field.
+
+  | Component | First-mention explanation |
+  | --- | --- |
+  | BYOH | BYOH is the blueprint your agent uses to build and check your own bot workspace. |
+  | Harness | Your harness is the workspace where you talk to bots and see the work they do. |
+  | Setup agent | Your setup agent is the coding assistant building your harness before its own crew takes over. |
+  | Lima | Lima runs the separate Linux computer inside your Mac so the bots do not work in your personal files. |
+  | VM | A virtual machine, or VM, is that separate computer inside your Mac, keeping the bots' workspace apart from yours. |
+  | Host | The host is the Linux computer running your bots, either our VM or a separate machine you provide. |
+  | SSH | SSH is the secure connection your Mac uses to reach that host without exposing the harness to the network. |
+  | Daemon | The daemon is the background program that keeps your bots, conversations and messages running on the host. |
+  | App | The desktop app is your window into the harness, connecting your Mac to the daemon on the host. |
+  | Engine | An engine is the program that connects a bot to its chosen AI model. |
+  | Model | A model is the AI doing a bot's thinking and writing, which you can change for each bot later. |
+  | Pi | Pi is an engine that connects your bots to OpenAI models or a provider you choose with an API key. |
+  | Claude Code | Claude Code is the official engine connecting your bots to Claude on your own login. |
+  | Mock model | The mock model gives scripted replies for safe repeatable checks, without using your real AI account. |
+  | Lavish | Lavish shows the interview and colour mockups as pages in your browser so you can choose comfortably. |
+  | Firstmate | Firstmate is the bot you talk to for coordinating work and getting the right bot to do it. |
+  | Bot Maker | Bot Maker creates and maintains bots so you can add a helper without wiring it up yourself. |
+  | Code Reviewer | Code Reviewer checks proposed source changes for defects before you decide whether to accept them. |
+  | Plain bot | Your plain bot answers quick questions and searches the web without managing projects or tasks. |
+  | Harness keeper | Your harness keeper is the bot that owns your harness source and handles its future maintenance. |
+  | Interview record | The interview record saves your choices and completed steps so setup can resume without asking everything again. |
+  | Suite | The conformance suite is the set of checks that decides whether your built harness meets the blueprint. |
+  | Verification kit | The verification kit gathers screenshots and other evidence from a separate test instance so your agent can inspect its work. |
+  | Virtual display | The virtual display lets your agent run and inspect the app on the host without showing you an unfinished window. |
+  | Palette | A palette is the set of colours used throughout the app, letting you choose its look without changing how it works. |
+  | Instrument option | Instrument is the name of this pictured default-look option, which you can keep or use as a starting point. |
+  | Mockup | A mockup is a fixed example of the app shell used to compare colours, not a picture of your own unfinished app. |
+  | Pairing | Pairing gives the desktop app the owner token it needs to access your daemon without exposing it to other pages. |
+  | Owner token | The owner token is the secret your app uses to prove it may access the daemon, so it is never put in your interview record. |
+  | GitHub | GitHub stores source and proposed changes, and a separate bot account lets you grant and revoke the bots' access independently of your own. |
+  | Pull request | A pull request presents a proposed source change for review before you approve merging it. |
+  | Rebuild line | The rebuild line is the command you choose to run to build and install an approved version of your harness. |
 
 ## States
 
@@ -210,14 +313,16 @@ stateDiagram-v2
     lg0: on the Mac
     lg1: setup and page one
     lg2: build stages
-    lg3: the app
-    lg4: after first use
+    lg3: choices before the app
+    lg4: the app
+    lg5: after first use
   }
   class lg0 tan
   class lg1 purple
   class lg2 blue
-  class lg3 teal
-  class lg4 orange
+  class lg3 purple
+  class lg4 teal
+  class lg5 orange
   s0: host-step
   s1: host-ready
   s2: handoff
@@ -228,13 +333,14 @@ stateDiagram-v2
   s7: stage-3-real-login
   s8: stage-4-messaging
   s9: stage-5-ui
-  s10: first-install
-  s11: paired
-  s12: first-use
-  s13: interview-2
-  s14: choices-applied
-  s15: bot-account
-  s16: done
+  s10: interview-2
+  s11: choices-applied
+  s12: first-install
+  s13: paired
+  s14: first-use
+  s15: keeper-ready
+  s16: bot-account
+  s17: done
   [*] --> s0
   s0 --> s1: the host exists and its check is green
   s1 --> s2: you sign in on the host and start your agent there
@@ -245,14 +351,15 @@ stateDiagram-v2
   s5 --> s6: the plain bot answers on the mock
   s6 --> s7: one real turn per engine, with your go-ahead
   s7 --> s8: Firstmate reaches its crew on the mock
-  s8 --> s9: you see the app's screenshots
-  s9 --> s10: you paste the rebuild line
-  s10 --> s11: you run the pairing line and the window connects
-  s11 --> s12: suite green on this build, switch to Firstmate and chat
-  s12 --> s13: you answer page two
-  s13 --> s14: sign on the keeper, review and build the choices
-  s14 --> s15: the bots' GitHub account is done or deferred
-  s15 --> s16: onboarding ends
+  s8 --> s9: the agent proves the window privately
+  s9 --> s10: you choose on Lavish mockups and answer page two
+  s10 --> s11: the setup agent builds and proves your choices
+  s11 --> s12: you paste the one initial rebuild line
+  s12 --> s13: you pair in Terminal while the app stays closed
+  s13 --> s14: you open the connected finished app, switch to Firstmate and chat
+  s14 --> s15: Bot Maker signs on the keeper, which reports its scout
+  s15 --> s16: the bots' GitHub account is done or deferred
+  s16 --> s17: onboarding ends
   class s0 tan
   class s1 purple
   class s2 purple
@@ -263,21 +370,18 @@ stateDiagram-v2
   class s7 blue
   class s8 blue
   class s9 blue
-  class s10 teal
-  class s11 teal
+  class s10 purple
+  class s11 purple
   class s12 teal
-  class s13 orange
-  class s14 orange
+  class s13 teal
+  class s14 teal
   class s15 orange
   class s16 orange
-  classDef blue fill:#c3e0ff,color:#1c1c1c
-  classDef orange fill:#f0d3bf,color:#1c1c1c
-  classDef purple fill:#e3d5ff,color:#1c1c1c
-  classDef tan fill:#e5d9ce,color:#1c1c1c
-  classDef teal fill:#bfe3df,color:#1c1c1c
+  class s17 orange
 ```
 
-The supplied VM. A failed stage proof stays in its state (R4), so it has no
+The supplied VM. The chart hides only the completed-state self-loop. A failed
+stage proof stays in its state (R4), so it has no
 arrow; on an own host there is no memory change.
 
 ## Controls
@@ -296,7 +400,9 @@ pages and chat: the setup agent's, then Firstmate's in the app from R9.
   the setup at `host-step`; the agent offers the supplied VM and never installs
   the harness on the Mac ([host](host.md) E2).
 - **E4 — A stage fails.** A failed stage proof stops onboarding in that state,
-  shows the evidence and does not skip ahead to the app.
+  names the failed proof and does not skip ahead. Before `first-use`, all
+  real-app UI evidence stays agent-only, including on failure; the person gets
+  a plain failure summary, not screenshots or other views of their app.
 - **E5 — The power answer changes later.** A changed `power` answer changes
   which adapter sections apply; keys of an adapter no longer chosen stop being
   valid configuration ([bots](bots.md) R2), and the change takes effect through
@@ -314,6 +420,11 @@ pages and chat: the setup agent's, then Firstmate's in the app from R9.
 | **T1 — Host answers precede page one** | Host-step answers and both SSH names, no credentials, handed from Mac to host | Before showing page one, inspect the source-root interview record | Record R1 answers and both SSH names in R5 interview.json before page one. Preserve the outcome without requiring a particular transport file/mechanism or sending a credential (R1, R5). |
 | **T2 — Memory restart keeps page one** | Supplied VM and page-one answers selecting a different memory row | Before Mac commands, read record; restart as instructed and resume | Keep page one with progress interview-1 before showing stop/edit/start commands. After restart offer recorded defaults and resume at stage-1-daemon, without losing answers/resetting a home (R3, R5, R8). |
 | **T3 — Real login is not mock proof** | Each selected engine installed on the chosen host and the person's go-ahead | Prove stage-3-real-login in the real-host rehearsal | One real turn per selected engine uses the person's own native login under adapter terms; do not pass the stage on a mock turn or absent go-ahead. Keep credential/token bytes out of the record/evidence, and a failed proof stays in its stage (R4, R5, E4; [engine Pi](engine-pi.md) R5, R6; [Claude Code](engine-claude-code.md) R6, R7). |
-| **T4 — First use switches the coordinator** | Live daemon, installed/paired app, suite green on this build and R5 record | Setup agent gives the hand-over, then the person sends the complete first message to Firstmate | State the switch plainly, give the ready-to-send record/resume request and return-to-setup instructions. Firstmate's seeded skill reads actual answers/progress and first reply proves context/next state. Complete first-use proof, then page two/choices/account inside the harness, preserving R8 resume and all gates (R4, R5, R8, R9; [starter bots](starter-bots.md) R7). |
+| **T4 — First use switches the coordinator** | Live daemon, installed/paired app, suite green on this build and R5 record | Setup agent gives the hand-over, then the person sends the complete first message to Firstmate | State the switch plainly, give the ready-to-send record/resume request and return-to-setup instructions. Firstmate's seeded skill reads actual answers/progress and first reply proves context/next state. Page two and choices precede the one install and pairing. Complete first-use proof, then keeper sign-on/scout and account inside the harness, preserving R8 resume and all gates (R4, R5, R8, R9; [starter bots](starter-bots.md) R7). |
 
-Proof: `suite/onboarding.mjs` holds the mock stage smokes: daemon health against its discovery file; the plain bot installed and answering through each selected engine; the installed starter files contain no unresolved placeholders and include NOTICE.md; the crew wired as a led team, with a round trip that records bridges; and the real app on the virtual display showing the bots tree and opening a chat. Evidence: JSON, plus PNG and the accessibility tree for the window. Stage 3 real login, the host step on a fresh Mac, the Lavish pages, the interview record and the first-use hand-over are not suite cases: check them in the real-host rehearsal, where Mac items stay mac-pending until answered.
+
+| **T5 — Narration and progress follow the record** | R1 through done, both Lavish pages and an R9 hand-over/resume | Observe step messages, a failure and a resume in the real-host rehearsal | Open with the plain-text R10 bar and one or two what/why lines; explain each component once using the glossary, without re-explaining at the switch. Show 0/17 before any pass, 7/17 = 41%, and 17/17 = 100%; failure does not advance progress and resume derives it from the record. Firstmate's first reply has the bar; no new record field or progress store (R4, R5, R8–R10). |
+| **T6 — First sight is the finished app** | UI stage complete, page two not yet answered | Choose a look, build choices, install once, pair and enter first-use | Keep all actual-app UI evidence agent-only until first-use, failures included. Page two uses fixed-shell colour mockups on Lavish, the pictured default-look option named Instrument first, iterating to acceptance; other choices stay plain questions. If Lavish fails, explicitly accept that named option alongside its mockup visual or wait for Lavish. Build choices before the sole initial install, keep the app closed through pairing and open it connected at first-use; the person's first app view has their accepted choices (R3, R4, R9, E4; [look and palette](look-and-palette.md) R1). |
+| **T7 — Keeper handover is resumable work** | First-use passed, source and record available | Firstmate tasks Bot Maker at keeper-ready, then the keeper reports its scout | Show brief/overlap/files/live check; keeper owns the source, maps source/build/test entry points and chosen features, runs existing safe local checks and reports one maintenance recommendation to Firstmate. No edits, pull request, install, real-login turn or deploy; only then pass keeper-ready and offer bot-account (R4, R8, R9). |
+
+Proof: `suite/onboarding.mjs` holds the mock stage smokes: daemon health against its discovery file; the plain bot installed and answering through each selected engine; the installed starter files contain no unresolved placeholders and include NOTICE.md; the crew wired as a led team, with a round trip that records bridges; and the real app on the virtual display showing the bots tree and opening a chat. Evidence: JSON, plus PNG and the accessibility tree for the window. Stage 3 real login, the host step on a fresh Mac, the Lavish pages, narration/progress, the interview record and the first-use hand-over are not suite cases: check them in the real-host rehearsal, where Mac items stay mac-pending until answered.
