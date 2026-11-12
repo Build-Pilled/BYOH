@@ -156,7 +156,7 @@ the environment check, its resource warnings and the known-pitfalls list.
   | H-listen | host | all | nothing listens on a non-loopback address except sshd | FAIL on the VM, WARN on an own host | P10, P15 |
   | H-boot | host | all | journal: a file-system journal recovery is INFO, other boot errors WARN | INFO or WARN | P4, P5 |
   | H-login | host | all | each selected engine's login file is present with mode 0600 and the expected provider key and type; after its setup, the bot GitHub login answers as the bots' account; names only | INFO before the real-login stage, FAIL after | P21, P22 |
-  | H-build | host | all | the `Build-Pilled/BYOH` checkout is at `v1.0.0`, the release named in the README; the live daemon runs the commit the last rebuild line deployed | FAIL | R6 |
+  | H-build | host | all | the `Build-Pilled/BYOH` checkout is at `v1.1.0`, the release named in the README; the live daemon runs the commit the last rebuild line deployed | FAIL | R6 |
   | H-disk2 | host | VM, data disk | the data disk is mounted at the bot home before the daemon starts, and its file-system creation time equals the baseline recorded at creation | FAIL | P1, P13 |
 
 - **R12 — Known pitfalls.** Each pitfall names the check or the spec rule whose

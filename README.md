@@ -18,8 +18,8 @@ It tells you what the harness needs, sets up the VM, asks you a few questions, t
 
 ## Release
 
-v1.0.0
-SHA-256 of vm/SHA256SUMS: fcdbb771e28a59f67a3534868cabe68bd7f23d1f2d57fd529787cf918542d121
+v1.1.0
+SHA-256 of vm/SHA256SUMS: 98d9128ceab4ee72cf8577e7ba717c2ce030a4036ed1fbef18e4a5cca8704f8c
 
 ## For those who
 

@@ -25,7 +25,7 @@ A version change is a reviewed change on its own. Prove an engine pin through th
 
 ## Run it
 
-Fetch all four files from `vm/` in `Build-Pilled/BYOH` at `v1.0.0`, the
+Fetch all four files from `vm/` in `Build-Pilled/BYOH` at `v1.1.0`, the
 release named in the top-level README. Check `SHA256SUMS` against the hash
 published in that README, then verify the three files with
 `shasum -a 256 -c SHA256SUMS` before running anything. On the Mac:
