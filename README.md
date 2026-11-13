@@ -1,5 +1,7 @@
 # Build Your Own Harness
 
+[View screenshots](screenshots/README.md)
+
 ![Firstmate conversation with IMPORTANT, CAUTION and NOTE callouts](screenshots/hero.png)
 
 <details>
