@@ -6,7 +6,7 @@ Classification: Choice (look and palette). Prerequisites: [appearance mode](appe
 
 Let the person decide how their harness looks: the colours of its two variants
 (dark and light). This is the one place the
-interview asks about aesthetics, using mockups before the person sees their
+interview asks about aesthetics, using screenshots and mockups before the person sees their
 finished app. [Appearance mode](appearance-mode.md) owns the System,
 Dark and Light selector, which every harness has whether or not this choice is
 made; this section owns what those modes look like. [Status](status.md),
@@ -16,15 +16,19 @@ their own meaning and only borrow the colours defined here.
 ## Required behaviour
 
 - **R1 — The choice.** The default-look option is named Instrument; R3
-  defines its colours and the fixed mockup shows what that name means. "Go with the
+  defines its colours. The [screenshot gallery](../screenshots/README.md)
+  shows the default look with the four starter bots in real app views,
+  including [dark](../screenshots/hero.png) and
+  [light](../screenshots/main-chat-light.png) conversations. "Go with the
   default" is always offered and is the all-defaults path. The interview
   opens on page two of Lavish with a few starting palette options, the default
-  option named Instrument first, each shown as a mockup of the same fixed app
-  shell. Never assume the person knows that name: whenever the agent offers
-  it, name it as an option and show its mockup visual alongside it. The person reacts and adds
+  option named Instrument first, shown with the gallery screenshots.
+  Other palette proposals use mockups of the same fixed app shell. Never assume
+  the person knows that name: whenever the agent offers it, name it as an option
+  and show the gallery screenshots alongside it. The person reacts and adds
   ideas; the agent shows more mockups along what they like, repeating until
   they accept a palette. The accepted palette is the answer, then the setup
-  agent builds it. These are never screenshots of the person's app: that app
+  agent builds it. The gallery and mockups never show the person's app: that app
   is not shown until onboarding `first-use`.
 
   BYOH ships the fixed [shell mockup page](assets/look-mockup.html), with the
@@ -36,7 +40,7 @@ their own meaning and only borrow the colours defined here.
   Keep the other page-two choices as plain questions on the same Lavish page.
   If Lavish cannot be served, questions fall back to chat, but the person must
   explicitly accept the default-look option named Instrument alongside its
-  fixed mockup visual or wait for Lavish before choosing a custom look. If no
+  gallery screenshots or wait for Lavish before choosing a custom look. If no
   visual can be presented in chat, wait for Lavish; never substitute screenshots
   of their app. The answer is recorded in
   the interview record that [onboarding](onboarding.md) owns and is applied to the person's app. It adds no
@@ -49,7 +53,7 @@ their own meaning and only borrow the colours defined here.
   what a control does. The accessibility tree of the app is the same under every
   palette.
 - **R3 — The default look.** The option named Instrument is the default,
-  pictured in the [fixed mockup](assets/look-mockup.html):
+  pictured in the [screenshot gallery](../screenshots/README.md):
   an opaque display, a darker or lighter chassis, orange backlit primary
   controls, square status lights and monospace labels. Its role colours are:
 

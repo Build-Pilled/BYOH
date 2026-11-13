@@ -6,13 +6,13 @@ Classification: Core. Prerequisites: [bots](bots.md), [teams](teams.md), selecte
 
 Provide a small working crew instead of an empty bot list. These roles are bot
 instructions, not daemon privileges or a new task service. Keep starter context
-small; do not turn the plain bot into another project worker.
+small; do not turn the Plain bot into another project worker.
 
 ## Required behaviour
 
 - **R1 — Core crew.** The starter set contains Firstmate, Bot Maker and Code
-  Reviewer in a led crew, with Firstmate as lead, plus a plain general-purpose
-  bot, at the addresses and wiring in this single table. The ids are the
+  Reviewer in a led crew, with Firstmate as lead, plus a general-purpose
+  bot named Plain, at the addresses and wiring in this single table. The ids are the
   release-one contract; scenarios read this table rather than
   repeating address literals. These roles are core, not interview toggles. The
   three crew bots ship seeded from [`starter/`](../starter/), whose paths mirror
@@ -32,10 +32,10 @@ small; do not turn the plain bot into another project worker.
   | Code Reviewer | `code-reviewer` | `crew` | Member |
   | Plain bot | `plain` | none | Unteamed, no default bridges |
 
-  The person names the plain bot in the interview, and
+  The person names the Plain bot in the interview, and
   [onboarding](onboarding.md) R6 records that display name in its `bot.toml`
-  `name`; on the all-defaults path the name is `plain`. Its address is
-  `plain` whatever the answer. The plain bot is for quick questions and
+  `name`; on the all-defaults path the name is `Plain`. Its address is
+  `plain` whatever the answer. The Plain bot is for quick questions and
   web search, with almost no background context and no task-management remit.
   Its system prompt is completely blank: its `SYSTEM.md` is empty and
   no starter text is written into it; the engine contract's own framing still
@@ -57,7 +57,7 @@ small; do not turn the plain bot into another project worker.
   person's behalf merely by existing.
 - **R3 — Installation and preservation.** `myharness init --examples` supplies
   the starter material through [home](home.md)'s initialization path;
-  [onboarding](onboarding.md) configures the selected engine/model/account and the plain name
+  [onboarding](onboarding.md) configures the selected engine/model/account and the Plain bot's name
   before first chat. Preserve existing files on repeated initialization; fill
   missing starter files rather than replacing edited charters or conversations.
   Do not install an unselected adapter's keys or an unsupported default model.
@@ -72,7 +72,7 @@ small; do not turn the plain bot into another project worker.
   substituted into starter files.
   The starter set is these four roles; no extra demonstration workers ship.
 - **R4 — Minimal context and reach.** Use the engine contract's framing and
-  roster instead of duplicating it in every charter. The plain bot gets no
+  roster instead of duplicating it in every charter. The Plain bot gets no
   task ledger, project history or general crew roster by default, and its prompt
   stays blank (R1). Any messaging
   reach comes only from actual teams/bridges, never a charter sentence. Skills
@@ -92,7 +92,7 @@ small; do not turn the plain bot into another project worker.
   the home root with the files, not in each prompt or skill. The repository's
   own licence does not replace that notice.
 - **R6 — Working first use.** A new default crew validates, Firstmate can reach
-  its two crew members and receives their explicit replies, and the plain bot
+  its two crew members and receives their explicit replies, and the Plain bot
   can answer a simple question through a selected adapter. Establish this with
   the fake model before the separate native-login/real-chat check. Guide the
   person through a bots' own GitHub account in [onboarding](onboarding.md) R7; no
@@ -115,7 +115,7 @@ small; do not turn the plain bot into another project worker.
   `host` in the interview record, never guessed defaults. If the record is
   missing or unreadable, the resume skill stops and names the error, without
   rebuilding answers from memory. The setup agent
-  remains available on the host. This adds neither the interview to the plain
+  remains available on the host. This adds neither the interview to the Plain
   bot's blank prompt nor new daemon privileges; R2/R4 boundaries still apply.
   Every remaining step message follows onboarding R10, with progress derived
   from the existing record and the same glossary introduction states. Terms
@@ -155,9 +155,9 @@ editors own instruction controls. Starter roles introduce no special app control
   finish before that material is distributed. The bundled assets do not by
   themselves prove a built harness installs them or completes onboarding.
 - **E3 — No tasks for plain chat.** Do not silently install task routines or
-  project charters into the plain bot in order to make it resemble the crew.
+  project charters into the Plain bot in order to make it resemble the crew.
   A later explicit customization is not the core default.
 
 | Id | Given | When | Expect |
 | --- | --- | --- | --- |
-| **T1 — Minimal charter, explicit resume context** | Seeded Firstmate resume skill, known interview record and unchanged plain-bot blank prompt | Person asks Firstmate to resume onboarding at the switch | Read the record and demonstrate actual answers/progress/next stage, not invented minimal-charter memory. Lead the remaining work within R2 permissions and onboarding gates. Do not place interview/task context in the plain bot by default (R1, R2, R4, R7; [onboarding](onboarding.md) R5, R8, R9). |
+| **T1 — Minimal charter, explicit resume context** | Seeded Firstmate resume skill, known interview record and unchanged Plain-bot blank prompt | Person asks Firstmate to resume onboarding at the switch | Read the record and demonstrate actual answers/progress/next stage, not invented minimal-charter memory. Lead the remaining work within R2 permissions and onboarding gates. Do not place interview/task context in the Plain bot by default (R1, R2, R4, R7; [onboarding](onboarding.md) R5, R8, R9). |

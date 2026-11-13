@@ -53,6 +53,6 @@ choices applied, at `first-use`. Do not repeat the interview or choice build.
 ## Do not
 
 - Do not reset the home, rename a bot or overwrite an edited charter.
-- Do not put the interview or any task context into the plain bot.
+- Do not put the interview or any task context into the Plain bot.
 - Do not store a credential, token or key in the record.
 - Do not deploy or restart the harness yourself; the captain runs the rebuild line.

@@ -1,5 +1,7 @@
 # Build Your Own Harness
 
+![Firstmate conversation with annotations and callouts](screenshots/hero.png)
+
 ## Vision
 
 Building and maintaining a custom harness is now convenient, fast and cheap.
@@ -14,7 +16,7 @@ Anyone who wants to can tailor a harness to their needs, work and ideas.
 
 Give this repository to your coding agent and say: "Build me my own harness from this."
 
-It tells you what the harness needs, sets up the VM, asks you a few questions, then builds and tests your harness. Your agent explains each step and shows your progress. You choose the look on colour mockups before seeing your finished app; then Firstmate takes over inside it and helps create its keeper.
+It tells you what the harness needs, sets up the VM, asks you a few questions, then builds and tests your harness. Your agent explains each step and shows your progress. You choose the look from the [default-look screenshots](screenshots/README.md) and colour mockups before seeing your finished app; then Firstmate takes over inside it and helps create its keeper.
 
 ## Release
 
@@ -46,7 +48,8 @@ What sets BYOH apart?
 | `suite/` | Test cases your agent runs against the harness it built |
 | `verify/` | The verification skill and shared kit: real-window driving and a scripted model, no credentials needed |
 | `vm/` | The virtual machine recipe |
-| `starter/` | The starter crew: orchestrator, bot maker, code reviewer |
+| `starter/` | Firstmate, Bot Maker, Code Reviewer and Plain, a general-purpose bot you can rename |
+| `screenshots/` | [Default-look gallery](screenshots/README.md), with the four starter bots |
 
 ## Opinions
 

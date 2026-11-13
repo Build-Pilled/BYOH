@@ -48,7 +48,7 @@ release-one interview.
 
 | File | Classification | Scope |
 | --- | --- | --- |
-| [onboarding.md](onboarding.md) | Core | Host-step questions, interview pages, stages and gates, the interview record, display and plain-bot names. |
+| [onboarding.md](onboarding.md) | Core | Host-step questions, interview pages, stages and gates, the interview record, display and Plain-bot names. |
 | [home.md](home.md) | Core | Home layout, configuration, validation and last-good bot configuration. |
 | [daemon.md](daemon.md) | Core | Daemon lifecycle, discovery, health and API credentials. |
 | [cli.md](cli.md) | Core | Offline help, validation, command outputs and client failures. |
@@ -60,7 +60,7 @@ release-one interview.
 | [turns.md](turns.md) | Core | Chat turns, durable queue, steering, Stop, Retry and recovery. |
 | [messaging.md](messaging.md) | Core | Explicit messages, routing, delivery, bridge connection controls and the Bot threads view. |
 | [teams.md](teams.md) | Core | Led teams, leadless teams, unteamed bots and permitted reach. |
-| [starter-bots.md](starter-bots.md) | Core | Seeded Firstmate, Bot Maker and Code Reviewer, and the user-named plain bot with a blank prompt. |
+| [starter-bots.md](starter-bots.md) | Core | Seeded Firstmate, Bot Maker and Code Reviewer, and the user-named Plain bot with a blank prompt. |
 | [routines.md](routines.md) | Core | Cron and one-shot routines, time zones and missed runs. |
 | [instruction-history.md](instruction-history.md) | Core | Attributed history and reversal of prompt-bearing configuration. |
 | [failure-alerts.md](failure-alerts.md) | Core | Failure reports to the team lead and leadless exclusions. |

@@ -13,7 +13,7 @@ gives the repository to their own agent and says they want their own harness;
 the agent interviews them and builds it. This section owns the
 questions asked before anything is installed, the interview pages, their order
 and defaults, the stages and their gates, the interview record, the display
-name and the plain bot's name. Each choice section owns its own question and
+name and the Plain bot's name. Each choice section owns its own question and
 default; [host](host.md) and [VM](vm.md) own what the host step installs;
 [app build](app-build.md) and [app pairing](app-pairing.md) own the app steps.
 
@@ -101,7 +101,10 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   their selected engines, use it; if ambiguous, show only the candidates the
   agent cannot tell apart and ask the person to pick.
 
-  Page two's look question uses the fixed shell mockups and iteration in
+  Page two's look question shows the default-look option named Instrument
+  with the [gallery screenshots](../screenshots/README.md), including
+  [dark](../screenshots/hero.png) and [light](../screenshots/main-chat-light.png)
+  conversations. Other proposals use the fixed shell mockups and iteration in
   [look and palette](look-and-palette.md) R1, never pictures of the person's app.
   The other four choices remain plain questions on that same page. Both pages
   have the R10 progress line as their header.
@@ -109,9 +112,9 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   If the page cannot be served, the agent asks the same questions in chat with
   the same defaults and records the answers the same way. For the look, the
   person may explicitly accept the default-look option named Instrument only
-  alongside a visual of its fixed mockup. If no such visual can be presented,
+  alongside the gallery screenshots. If no such visual can be presented,
   or the person wants a custom look, look selection waits until Lavish works;
-  chat fallback never substitutes actual-app screenshots.
+  chat fallback never substitutes screenshots of the person's app.
 - **R4 — Stages and gates.** Onboarding moves through these states in order;
   each state is entered only when the previous one's proof passes, and a
   failure stays in its state with what failed named:
@@ -121,7 +124,7 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   4. `interview-1`: page one answered.
   5. `stage-1-daemon`: the built daemon starts on an isolated instance and
      answers health ([verifiability](verifiability.md)).
-  6. `stage-2-mock-chat`: the plain bot answers through each selected adapter
+  6. `stage-2-mock-chat`: the Plain bot answers through each selected adapter
      against the mock model ([starter bots](starter-bots.md) R6).
   7. `stage-3-real-login`: one real turn per selected engine on the person's
      own login, with the person's go-ahead; from here the environment check treats logins as
@@ -181,14 +184,14 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   shown throughout the app and as its localized name in Finder, Spotlight and
   Launchpad, never a command or path; the bundle file stays `myharness.app`
   ([app build](app-build.md) R4). Its default is `My Harness`. `plain_name` is
-  the display name of the plain bot, whose id stays `plain`; its default is
-  `plain` ([starter bots](starter-bots.md) R1). Both are accepted when, after trimming
+  the display name of the Plain bot, whose id stays `plain`; its default is
+  `Plain` ([starter bots](starter-bots.md) R1). Both are accepted when, after trimming
   leading and trailing white space, they hold 1 to 64 characters with no
   control character or line break. An invalid value keeps the page open with
   the reason beside the field and every other answer kept; nothing is written
-  until the page is valid. The plain name is written as the plain bot's
+  until the page is valid. The plain name is written as the Plain bot's
   `bot.toml` `name`, escaped as a TOML string. A later change of the display
-  name is a record change and a rebuild; a later change of the plain name is an
+  name is a record change and a rebuild; a later change of the Plain bot's name is an
   ordinary bot edit ([config editors](config-editors.md)).
 - **R7 — The bots' own GitHub account.** The agent offers to guide the person
   through creating the bots' account: one machine account the person is
@@ -274,7 +277,7 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   that set from this table, not from shared conversation context or a new
   record field. Re-explaining a term once after an interruption within its own
   introduction state is acceptable. Whenever the default-look option named
-  Instrument is offered, name it as an option and show its mockup visual
+  Instrument is offered, name it as an option and show its gallery screenshots
   alongside it; do not assume the person knows that name.
 
   | Component | Introduction state | First-mention explanation |
@@ -297,14 +300,14 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   | Firstmate | `interview-1` | Firstmate is the bot you talk to for coordinating work and getting the right bot to do it. |
   | Bot Maker | `interview-1` | Bot Maker creates and maintains bots so you can add a helper without wiring it up yourself. |
   | Code Reviewer | `stage-4-messaging` | Code Reviewer checks proposed source changes for defects before you decide whether to accept them. |
-  | Plain bot | `interview-1` | Your plain bot answers quick questions and searches the web without managing projects or tasks. |
+  | Plain bot | `interview-1` | Your Plain bot answers quick questions and searches the web without managing projects or tasks. |
   | Harness keeper | `keeper-ready` | Your harness keeper will be the bot that owns your harness source and handles its future maintenance. |
   | Interview record | `host-step` | The interview record saves your choices and completed steps so setup can resume without asking everything again. |
   | Suite | `handoff` | The conformance suite is the set of checks that decides whether your built harness meets the blueprint. |
   | Verification kit | `handoff` | The verification kit gathers screenshots and other evidence from a separate test instance so your agent can inspect its work. |
   | Virtual display | `stage-5-ui` | The virtual display lets your agent run and inspect the app on the host without showing you an unfinished window. |
   | Palette | `interview-2` | A palette is the set of colours used throughout the app, letting you choose its look without changing how it works. |
-  | Instrument option | `interview-2` | Instrument is the name of this pictured default-look option, which you can keep or use as a starting point. |
+  | Instrument option | `interview-2` | Instrument is the name of the default-look option pictured in the gallery, which you can keep or use as a starting point. |
   | Mockup | `interview-2` | A mockup is a fixed example of the app shell used to compare colours, not a picture of your own unfinished app. |
   | Pairing | `paired` | Pairing gives the desktop app the owner token it needs to access your daemon without exposing it to other pages. |
   | Owner token | `paired` | The owner token is the secret your app uses to prove it may access the daemon, so it is never put in your interview record. |
@@ -358,7 +361,7 @@ stateDiagram-v2
   s2 --> s4: you answer page one
   s3 --> s4: the VM starts and onboarding resumes
   s4 --> s5: the built daemon answers health
-  s5 --> s6: the plain bot answers on the mock
+  s5 --> s6: the Plain bot answers on the mock
   s6 --> s7: one real turn per engine, with your go-ahead
   s7 --> s8: Firstmate reaches its crew on the mock
   s8 --> s9: the agent proves the window privately
@@ -406,7 +409,7 @@ pages and chat: the setup agent's, then Firstmate's in the app from R9.
 
 ## Edge cases
 
-- **E1 — Invalid name.** A display or plain name that is empty after trimming,
+- **E1 — Invalid name.** A harness or Plain bot display name that is empty after trimming,
   longer than 64 characters or holding a control character is refused with the
   reason, and the person retries on the same page.
 - **E2 — Stopping midway.** The record keeps `progress` and the answers so far;
@@ -425,7 +428,7 @@ pages and chat: the setup agent's, then Firstmate's in the app from R9.
 - **E6 — Defaults all the way.** The all-defaults path produces both engines
   (Claude Code on the person's Claude login, Pi signed in with ChatGPT), the
   supplied VM with one disk and prevent-sleep on, the display name
-  `My Harness`, the plain bot named `plain`, the starter bots' model unset (R3),
+  `My Harness`, the Plain bot named `Plain`, the starter bots' model unset (R3),
   this Mac's memory row, every choice at its section's default and the GitHub
   account deferred. Both engines then need their sign-in before
   `stage-3-real-login`.
@@ -437,6 +440,6 @@ pages and chat: the setup agent's, then Firstmate's in the app from R9.
 | **T3 — Real login is not mock proof** | Each selected engine installed on the chosen host and the person's go-ahead | Prove stage-3-real-login in the real-host rehearsal | One real turn per selected engine uses the person's own native login under adapter terms; do not pass the stage on a mock turn or absent go-ahead. Keep credential/token bytes out of the record/evidence, and a failed proof stays in its stage (R4, R5, E4; [engine Pi](engine-pi.md) R5, R6; [Claude Code](engine-claude-code.md) R6, R7). |
 | **T4 — First use switches the coordinator** | Live daemon, installed/paired app, suite green on this build and R5 record | Setup agent gives the hand-over, then the person sends the complete first message to Firstmate | State the switch plainly, give the ready-to-send record/resume request and return-to-setup instructions. Firstmate's seeded skill reads actual answers/progress and first reply proves context/next state. Page two and choices precede the one install and pairing. Complete first-use proof, then keeper sign-on/scout and account inside the harness, preserving R8 resume and all gates (R4, R5, R8, R9; [starter bots](starter-bots.md) R7). |
 | **T5 — Narration and progress follow the record** | R1 through done, both Lavish pages and an R9 hand-over/resume | Observe step messages, a failure and a resume in the real-host rehearsal | Open with the plain-text R10 bar and one or two what/why lines; introduce components at their glossary states and derive already-explained terms from progress on resume/switch, with no shared-conversation assumption; one repeat after interruption within the term's own introduction state is acceptable. Show 0/17 before any pass, 7/17 = 41%, and 17/17 = 100%; failure does not advance progress and resume derives it from the record. Firstmate's first reply has the bar; no new record field or progress store (R4, R5, R8–R10). |
-| **T6 — First sight is the finished app** | UI stage complete, page two not yet answered | Choose a look, build choices, install once, pair and enter first-use | Keep all actual-app UI evidence agent-only until first-use, failures included. Page two uses fixed-shell colour mockups on Lavish, the pictured default-look option named Instrument first, iterating to acceptance; other choices stay plain questions. If Lavish fails, explicitly accept that named option alongside its mockup visual or wait for Lavish. Build choices before the sole initial install, keep the app closed through pairing, then have the person open it at first-use and report connected; the person's first app view has their accepted choices (R3, R4, R9, E4; [look and palette](look-and-palette.md) R1). |
+| **T6 — First sight is the finished app** | UI stage complete, page two not yet answered | Choose a look, build choices, install once, pair and enter first-use | Keep all actual-app UI evidence agent-only until first-use, failures included. Page two shows the gallery screenshots for the default-look option named Instrument first, then fixed-shell colour mockups for other proposals on Lavish, iterating to acceptance; other choices stay plain questions. If Lavish fails, explicitly accept that named option alongside the gallery screenshots or wait for Lavish. Build choices before the sole initial install, keep the app closed through pairing, then have the person open it at first-use and report connected; the person's first app view has their accepted choices (R3, R4, R9, E4; [look and palette](look-and-palette.md) R1). |
 
-Proof: `suite/onboarding.mjs` holds the mock stage smokes: daemon health against its discovery file; the plain bot installed and answering through each selected engine; the installed starter files contain no unresolved placeholders and include NOTICE.md; the crew wired as a led team, with a round trip that records bridges; and the real app on the virtual display showing the bots tree and opening a chat. Evidence: JSON, plus PNG and the accessibility tree for the window. Stage 3 real login, the host step on a fresh Mac, the Lavish pages, narration/progress, the interview record and the first-use hand-over are not suite cases: check them in the real-host rehearsal, where Mac items stay mac-pending until answered.
+Proof: `suite/onboarding.mjs` holds the mock stage smokes: daemon health against its discovery file; the Plain bot installed and answering through each selected engine; the installed starter files contain no unresolved placeholders and include NOTICE.md; the crew wired as a led team, with a round trip that records bridges; and the real app on the virtual display showing the bots tree and opening a chat. Evidence: JSON, plus PNG and the accessibility tree for the window. Stage 3 real login, the host step on a fresh Mac, the Lavish pages, narration/progress, the interview record and the first-use hand-over are not suite cases: check them in the real-host rehearsal, where Mac items stay mac-pending until answered.
