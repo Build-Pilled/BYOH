@@ -10,7 +10,8 @@ or proof of a live model run.
 
 | Screenshot | What it shows |
 | --- | --- |
-| [Firstmate conversation](hero.png) | Dark theme, three annotations in different colours, IMPORTANT and NOTE callouts, two green bot lights, one blue and one yellow. |
+| [Firstmate conversation](hero.png) | Dark theme, IMPORTANT, CAUTION and NOTE callouts, two green bot lights, one blue and one yellow. |
+| [Annotations](annotations.png) | Three decisions, three annotations in different colours, the hover list open on the annotations chip, and a typed reply in the message box; no callouts. |
 | [Bot actions](bots-tree-menu.png) | The four-bot sidebar and Firstmate's actions menu. |
 | [Tasks](tasks.png) | Task list, status and kind chips, project and gate controls. |
 | [Task detail](task-detail.png) | An example implementation task's prompt, fields, result and actions. |
@@ -20,4 +21,4 @@ or proof of a live model run.
 | [Model picker](model-picker.png) | Model settings filtered to 5.5 models, with Opus 5.5 selected. |
 | [Thread search](search.png) | Sidebar search for reading, with one result. |
 | [Find in conversation](thread-search.png) | A highlighted match for milestone. |
-| [Light conversation](main-chat-light.png) | The Firstmate conversation in the light theme. |
+| [Light conversation](main-chat-light.png) | Light theme, IMPORTANT, CAUTION and NOTE callouts, two green bot lights, one blue and one yellow. |
