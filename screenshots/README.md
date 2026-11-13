@@ -1,6 +1,6 @@
 # Default look
 
-These screenshots show the default-look option named Instrument, with Firstmate,
+These screenshots show the default-look, with Firstmate,
 Bot Maker, Code Reviewer and Plain. You can keep this look or use it as a starting
 point for your own palette during [onboarding](../spec/onboarding.md).
 
