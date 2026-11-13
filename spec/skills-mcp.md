@@ -1,17 +1,17 @@
-# Library and shared skills
+# Skills & MCP
 
 Classification: Core. Prerequisites: initialized [home](home.md), owner API and app; [engine contract](engine-contract.md).
 
 ## Purpose
 
 Keep reusable skill instructions and MCP definitions in one inspectable place.
-The Library is not an online package store or a grant of tool authority. Shared
+Skills & MCP is not an online package store or a grant of tool authority. Shared
 file-editor operations belong to [config-editors](config-editors.md); [MCP](mcp.md) owns
 server semantics and connections.
 
 ## Required behaviour
 
-- **R1 — Page and files.** The Library reached through the [Tools](tools.md) menu
+- **R1 — Page and files.** The Skills & MCP page reached through the [Tools](tools.md) menu
   has `Shared skills` and `MCP servers` regions. List files, including nested
   skill files, in sorted relative-path order within each root. Selecting a row
   opens that home-relative file in the shared editor. A root with no files shows
@@ -68,9 +68,9 @@ server semantics and connections.
 
 ## Controls
 
-The [Tools](tools.md) section owns the Library entry; config-editors owns the
+The [Tools](tools.md) section owns the Skills & MCP entry; config-editors owns the
 shared editor text surface, Save, Reload, file actions and conflict UI. No
-Library-specific delete, install, download or skill-run button is introduced.
+Skills & MCP-specific delete, install, download or skill-run button is introduced.
 
 | Role | Accessible name | Scope, action and observable state |
 | --- | --- | --- |
@@ -89,7 +89,7 @@ Library-specific delete, install, download or skill-run button is introduced.
 
 - **E1 — Existing name.** Both New actions refuse an existing path without
   changing its bytes; the error names that path. Open the existing row to edit
-  it instead. Instruction history covers Library skill/MCP files, but recovery
+  it instead. Instruction history covers Skills & MCP skill/MCP files, but recovery
   history does not substitute for this create-only refusal. Test simultaneous
   same-name creations too: at most one creates the file, the other cannot
   replace it.

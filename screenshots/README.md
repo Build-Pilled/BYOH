@@ -14,7 +14,7 @@ or proof of a live model run.
 | [Bot actions](bots-tree-menu.png) | The four-bot sidebar and Firstmate's actions menu. |
 | [Tasks](tasks.png) | Task list, status and kind chips, project and gate controls. |
 | [Task detail](task-detail.png) | An example implementation task's prompt, fields, result and actions. |
-| [Library](library.png) | A shared project-outline skill in Skills & MCP. |
+| [Skills & MCP](skills-mcp.png) | A shared project-outline skill in Skills & MCP. |
 | [Team map](team-map.png) | The led Crew and standalone Plain. |
 | [Team configuration](team-configuration.png) | Crew's lead, members and roster. |
 | [Model picker](model-picker.png) | Model settings filtered to 5.5 models, with Opus 5.5 selected. |

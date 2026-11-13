@@ -6,7 +6,7 @@ Classification: Core. Prerequisites: owner app/API, [home](home.md), [bots](bots
 
 Inspect and edit the actual instruction/configuration files, with visible drafts,
 validation and conflict resolution. This section owns the bot panel and shared
-file editor used by Settings, Library, routines and team-map. It does not make
+file editor used by Settings, Skills & MCP, routines and team-map. It does not make
 editing an OS permission boundary or promise atomic multi-file transactions.
 
 ## Required behaviour
@@ -77,7 +77,7 @@ editing an OS permission boundary or promise atomic multi-file transactions.
 - **R6 — Local files and creation.** List nested local skill/note files by sorted
   relative path; selecting a row opens the shared editor. New skill creates
   `bots/<id>/skills/<name>/SKILL.md` with the same scaffold properties as
-  [Library](library.md); New note creates empty `bots/<id>/notes/<name>.md`.
+  [Skills & MCP](skills-mcp.md); New note creates empty `bots/<id>/notes/<name>.md`.
   New routine asks File name and Schedule (default `0 9 * * *`), creating a
   disabled routine with that name/schedule and a placeholder message body.
   The [routines](routines.md) section owns the routine form and run rules. There is no routine Delete button; ordinary generic

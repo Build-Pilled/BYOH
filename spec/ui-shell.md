@@ -14,7 +14,9 @@ This section owns navigation and content safety; [turns](turns.md),
 
 - **R1 — Shell.** Show a persistent bot/thread sidebar, conversation header and
   transcript/composer area. Group bots by team with the lead first, and put
-  unteamed bots in Bots. Bot threads represents bridges, not person sessions.
+  unteamed bots in Bots. The Bot threads sidebar section represents bridges, not person sessions;
+  each row opens its pair directly. Its header + opens Connect two bots, also
+  available in the top New (+) menu.
   Selecting a bot opens its chat; selecting a session opens that exact UUID.
   On an unselected home route prefer the first team's lead, else the first bot.
   With no bots show a welcome/empty state and New bot, not a fake conversation.
@@ -100,7 +102,7 @@ This section owns navigation and content safety; [turns](turns.md),
   the person input. Merely previewing/removing is not a send. Typing a leading
   `/skill:` offers discovered skills (including manual ones); selecting a
   suggestion inserts its command into the composer, not an immediate run.
-  [Library](library.md) owns expansion. Transcript Copy copies literal message
+  [Skills & MCP](skills-mcp.md) owns expansion. Transcript Copy copies literal message
   text. Worked groups and individual tool results can expand to show notes,
   arguments/results and failures without executing them; find may expose them.
 - **R9 — Host paths become links.** In assistant Markdown (R3), stored or
@@ -137,8 +139,8 @@ Save button to [conversation export](conversation-export.md).
 | region | Bot <id> | Bot row and its actions. |
 | treeitem | Bot <id> | Select bot; selected/expanded state; display name remains visible. |
 | button | Show sessions / Hide sessions | Bot row; toggles session expansion. |
-| button | <section-name> | Sidebar section heading; expanded state, including Bots and team names; Bot threads is messaging-owned. |
-| button | New | Opens menu New. |
+| button | <section-name> | Sidebar section heading; expanded state, including Bots and team names; Bot threads and its header + are [messaging](messaging.md)-owned. |
+| button | New | Top +; opens menu New. |
 | menu | New | Creation destinations; dismiss by outside click. |
 | menuitem | New bot | Opens dialog New bot. |
 | menuitem | New team | Opens Team map; team-map owns creation. |

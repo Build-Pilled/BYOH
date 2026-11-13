@@ -43,7 +43,7 @@ launch and account details. This is an outward contract, not a required class la
   `GET /bots/<id>/prompt` expose the harness-assembled system prompt offline and
   online. Join nonempty parts with one blank line: the bot's `SYSTEM.md` with
   trailing whitespace removed; a small harness identity/framing block; then
-  available automatic skills from [Library](library.md). Missing/empty SYSTEM
+  available automatic skills from [Skills & MCP](skills-mcp.md). Missing/empty SYSTEM
   contributes no substitute persona. The identity block states bot id, display
   name, bot directory, notes directory (not implicitly loaded), and
   `MYHARNESS_WORKSPACE`. A lead with a nonempty roster gets its members sorted

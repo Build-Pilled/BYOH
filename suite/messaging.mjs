@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { botSends, cliOk, detail, firstEngine, lastUserText, mockBot, newSession, openBotThreads, refuseRecipientStart, restartDaemon, running, saveJson, sessionIds,
+import { botSends, cliOk, detail, firstEngine, lastUserText, mockBot, newSession, openBotThread, refuseRecipientStart, restartDaemon, running, saveJson, sessionIds,
   sleep, startRunDaemon, stopRunDaemon, until, windowStep, writeTeam } from './lib.mjs';
 
 const A = 'ma'; const B = 'mb'; const TEAM = 'mt';
@@ -24,9 +24,9 @@ async function teammatesBridged(kit, ev) {
   return { engine, sid };
 }
 
-// model:messaging 2. Teammates A and B; A's first message to B leaves a first-message bridge, shown in Bot threads; after B leaves
+// model:messaging 2. Teammates A and B; A's first message to B leaves a first-message bridge, shown in the Bot threads sidebar; after B leaves
 // the team, A still reaches B.
-const firstMessageBridge = { id: 'messaging-model-first-message-bridge-survives-team-move', title: 'messaging R4, R5, teams E2: a first message between led teammates creates a first-message bridge, Bot threads lists it, and after the member leaves the team the lead still reaches it', run: async (kit) => {
+const firstMessageBridge = { id: 'messaging-model-first-message-bridge-survives-team-move', title: 'messaging R4, R5, teams E2: a first message between led teammates creates a first-message bridge, the Bot threads sidebar lists it, and after the member leaves the team the lead still reaches it', run: async (kit) => {
   const ev = { commands: [], steps: {} };
   try {
     const { engine, sid } = await teammatesBridged(kit, ev);
@@ -36,7 +36,7 @@ const firstMessageBridge = { id: 'messaging-model-first-message-bridge-survives-
     assert.match(ev.steps.link, new RegExp(`^by\\s*=\\s*"${A}"\\s*$`, 'm'), `link.toml by is not the sender ${A}`);
     assert.ok(ev.steps.log.length >= 1, 'log.jsonl holds no message');
     await windowStep(kit, ev, 'messaging-model-first-message-bridge-survives-team-move', async (w) => {
-      await openBotThreads(w); await w.waitFor('button', `Thread ${A} and ${B}`);
+      await openBotThread(w, A, B); await w.waitFor('button', 'Bridge actions');
     });
     // B leaves the team (now unteamed): the bridge keeps A's reach (teams E2)
     writeTeam(kit, TEAM, A, []); await cliOk(kit, ['validate'], ev.commands); await sleep(1500);
@@ -45,9 +45,9 @@ const firstMessageBridge = { id: 'messaging-model-first-message-bridge-survives-
   } finally { saveJson(kit, 'messaging-model-first-message-bridge-survives-team-move', ev); }
 } };
 
-// model:messaging 2 (second path). After that move, the person disconnects A and B in Bot threads: A no longer reaches B, and the
+// model:messaging 2 (second path). After that move, the person disconnects A and B from their sidebar pair: A no longer reaches B, and the
 // message log stays.
-const disconnectEndsReach = { id: 'messaging-model-disconnect-ends-reach', title: 'messaging R4, R5, R7, teams E2: disconnecting the bridge in Bot threads after the member left the team removes link.toml but not log.jsonl, and the lead no longer reaches that bot', run: async (kit) => {
+const disconnectEndsReach = { id: 'messaging-model-disconnect-ends-reach', title: 'messaging R4, R5, R7, teams E2: disconnecting the bridge opened from the sidebar after the member left the team removes link.toml but not log.jsonl, and the lead no longer reaches that bot', run: async (kit) => {
   const ev = { commands: [], steps: {} };
   try {
     let engine = firstEngine(kit); let sid;
@@ -55,7 +55,7 @@ const disconnectEndsReach = { id: 'messaging-model-disconnect-ends-reach', title
     else sid = (await newSession(kit, A, 'messaging after move lead', ev.commands));
     const before = logLines(kit).length; ev.steps.logBefore = before;
     await windowStep(kit, ev, 'messaging-model-disconnect-ends-reach', async (w) => {
-      await openBotThreads(w); await w.click('button', `Thread ${A} and ${B}`);
+      await openBotThread(w, A, B);
       await w.click('button', 'Bridge actions'); await w.click('menuitem', 'Disconnect');
       await w.waitFor('dialog', 'Disconnect bots'); await w.click('button', 'Disconnect', { in: { role: 'dialog', name: 'Disconnect bots' } });
       await until('link.toml removed', async () => !link(kit), { timeout: 20000, every: 300 });

@@ -58,7 +58,7 @@ release-one interview.
 | [engine-pi.md](engine-pi.md) | Core (selected adapter) | Pi adapter and chosen provider login, with mock and real-login proof. |
 | [engine-claude-code.md](engine-claude-code.md) | Core (selected adapter) | Claude Code adapter, unmodified engine and chosen login. |
 | [turns.md](turns.md) | Core | Chat turns, durable queue, steering, Stop, Retry and recovery. |
-| [messaging.md](messaging.md) | Core | Explicit messages, routing, delivery, bridge connection controls and the Bot threads view. |
+| [messaging.md](messaging.md) | Core | Explicit messages, routing, delivery, bridge connection controls and sidebar Bot threads. |
 | [teams.md](teams.md) | Core | Led teams, leadless teams, unteamed bots and permitted reach. |
 | [starter-bots.md](starter-bots.md) | Core | Seeded Firstmate, Bot Maker and Code Reviewer, and the user-named Plain bot with a blank prompt. |
 | [routines.md](routines.md) | Core | Cron and one-shot routines, time zones and missed runs. |
@@ -80,11 +80,11 @@ release-one interview.
 | [callouts.md](callouts.md) | Core | Outward rendering of callout boxes in replies. |
 | [tasks.md](tasks.md) | Core | Tasks view over the shared task table and its narrow editing surface. |
 | [changes.md](changes.md) | Core | Changes view, diffs and reversal. |
-| [library.md](library.md) | Core | Shared skills and the Library view. |
+| [skills-mcp.md](skills-mcp.md) | Core | Shared skills, MCP definitions and the Skills & MCP page. |
 | [terminal-chat.md](terminal-chat.md) | Core | Native terminal chat, Pi mailbox delivery and safe Claude ownership. |
 | [session-tidy.md](session-tidy.md) | Core | Archive after 15 idle days and restore at any time. |
 | [ui-shell.md](ui-shell.md) | Core | Electron conversation shell, safe rendering, links and remote files. |
-| [tools.md](tools.md) | Core | Tools menu and access to its core pages, including Bot threads. |
+| [tools.md](tools.md) | Core | Tools menu and its five core pages; Settings is separate. |
 | [settings.md](settings.md) | Core | Settings entry, Connections, Daemon, About and clean Shutdown VM. |
 | [appearance-mode.md](appearance-mode.md) | Core | Core System, dark and light modes, independent of palette choices. |
 | [host.md](host.md) | Core | Host requirements, SSH names, persistence, scheduled host jobs, own-host administration, environment check and known pitfalls. |

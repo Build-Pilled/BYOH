@@ -76,7 +76,7 @@ small; do not turn the Plain bot into another project worker.
   task ledger, project history or general crew roster by default, and its prompt
   stays blank (R1). Any messaging
   reach comes only from actual teams/bridges, never a charter sentence. Skills
-  required for configuration are supplied through [Library](library.md); notes
+  required for configuration are supplied through [Skills & MCP](skills-mcp.md); notes
   are not automatically prompt-loaded. Starter routines, if supplied, use the
   grammar in [routines](routines.md), not extra scheduling infrastructure.
 - **R5 — Credit and notices.** Give explicit credit to Kun Chen and
