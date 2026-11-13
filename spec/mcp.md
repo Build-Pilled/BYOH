@@ -5,7 +5,7 @@ Classification: Core. Prerequisites: selected [engine adapter](engine-contract.m
 ## Purpose
 
 Connect a bot to explicitly selected external tools, without conflating a tool
-server with permission to message arbitrary bots. [Library](library.md) owns
+server with permission to message arbitrary bots. [Skills & MCP](skills-mcp.md) owns
 server-file creation; [config-editors](config-editors.md) owns bot selection controls.
 
 ## Required behaviour
@@ -66,7 +66,7 @@ server-file creation; [config-editors](config-editors.md) owns bot selection con
 
 ## Controls
 
-Not applicable; Library owns `New MCP server` and file rows; [config-editors](config-editors.md) owns the bot's server selections and shared editor controls.
+Not applicable; Skills & MCP owns `New MCP server` and file rows; [config-editors](config-editors.md) owns the bot's server selections and shared editor controls.
 
 ## Edge cases
 

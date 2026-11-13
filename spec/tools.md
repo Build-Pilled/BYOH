@@ -9,12 +9,12 @@ system. This section owns the Tools group, not the contents of its pages.
 
 ## Required behaviour
 
-- **R1 — Inventory.** Tools offers Team map, Tasks, Routines, Bot threads,
-  Library and Changes to every user. Opening a page makes it the main content
+- **R1 — Inventory.** Tools offers Team map, Tasks, Routines,
+  Skills & MCP and Changes to every user. Opening a page makes it the main content
   and identifies the selected destination. These are not optional interview
-  features. Routines, [Library](library.md), [Team map](team-map.md) and
-  [Bot threads](messaging.md) own their content, as do [Tasks](tasks.md) and
-  [Changes](changes.md); this section adds no data editor of its own.
+  features. [Routines](routines.md), [Skills & MCP](skills-mcp.md),
+  [Team map](team-map.md), [Tasks](tasks.md) and [Changes](changes.md) own
+  their content; this section adds no data editor of its own.
 - **R2 — State.** Tools is a collapsible sidebar group. Its expanded/collapsed
   state is local to app profile and daemon origin and survives reopening when
   profile storage is available. Collapsing does not leave the current page,
@@ -34,8 +34,7 @@ system. This section owns the Tools group, not the contents of its pages.
 | button | Team map | Tools region; opens team-map, pressed when current. |
 | button | Tasks | Tools region; opens Tasks, pressed when current. |
 | button | Routines | Tools region; opens routines, pressed when current. |
-| button | Bot threads | Tools region; opens bridge list, pressed when current. |
-| button | Library | Tools region; opens shared files, pressed when current. |
+| button | Skills & MCP | Tools region; opens shared files, pressed when current. |
 | button | Changes | Tools region; opens change history, pressed when current. |
 
 ## Edge cases
@@ -44,4 +43,4 @@ system. This section owns the Tools group, not the contents of its pages.
   must follow successful reads, not conceal an unreachable daemon.
 - **E2 — Reopen.** Reopening the same profile/origin preserves group collapse;
   another profile/origin may use the default expanded state. No global config
-  write is involved. Choice features do not remove these six destinations.
+  write is involved. Choice features do not remove these five destinations.

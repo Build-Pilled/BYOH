@@ -36,7 +36,7 @@ forwarded as a bot reply. [Teams](teams.md) determines implicit reach;
   it cannot create permission to reach an otherwise unreachable bot. This holds
   between led teammates too: their first message creates a bridge, which keeps
   the two bots in reach after either leaves the team until the person
-  disconnects it in Bot threads. Owner
+  disconnects it in the pair opened from the Bot threads sidebar section. Owner
   `POST /bridges` with `{a,b,note?}` connects two different existing bots,
   including unteamed/leadless bots; repeated connect preserves creation/origin
   and changes only a supplied changed note. DELETE `/bridges/<a>/<b>` removes
@@ -69,9 +69,10 @@ forwarded as a bot reply. [Teams](teams.md) determines implicit reach;
   Messages to a busy bot are delivered in arrival order.
 - **R7 — Inspection and cancellation.** Owner GET `/bridges` lists current
   links and last-message summaries; GET `/bridges/<a>/<b>` returns link/null
-  and recent merged log (up to 500 messages by default). The Bot threads view
-  has one row and one combined conversation per bridge, showing both directions,
-  sender, time, delivery state and note/origin. It updates on new messages.
+  and recent merged log (up to 500 messages by default). The Bot threads sidebar
+  section has one row per bridge; opening a row shows its combined conversation
+  with both directions, sender, time, delivery state and note/origin. It updates
+  on new messages.
   Owner POST `/sessions/<bot>/<sid>/incoming/<id>/dismiss` can cancel an unknown
   pickup or an errored pending message, recording person/time/prior state;
   it cannot erase a picked-up message. Intentional resend uses a new id.
@@ -152,14 +153,17 @@ disconnect them.
 
 ## Controls
 
-The [Tools](tools.md)/[shell](ui-shell.md) sections own entering/leaving Bot threads. Repeated
-bridge rows are named by sorted bot ids, not potentially duplicate display names.
+The [shell](ui-shell.md) owns the Bot threads sidebar section; each row opens
+its pair directly. Bot threads is not in Tools and has no separate bridge-list
+page. The section header carries a + that opens Connect two bots, also offered
+in the top New (+) menu. Repeated bridge rows are named by sorted bot ids, not
+potentially duplicate display names.
 Control names below are fixed by this spec.
 
 | Role | Accessible name | Scope, action and observable state |
 | --- | --- | --- |
-| button | Connect two bots | Bot threads page, including empty state; opens dialog. |
-| button | Thread <a> and <b> | One bridge row; opens its combined conversation. |
+| button | Connect two bots | + on the Bot threads sidebar section header, including empty state; opens dialog. |
+| button | Thread <a> and <b> | Bot threads sidebar row; opens its combined conversation. |
 | dialog | Connect two bots | Has bot ids, optional note, validation errors. |
 | textbox | First bot id | Dialog; existing id required. |
 | textbox | Second bot id | Dialog; different existing id required. |
@@ -171,7 +175,7 @@ Control names below are fixed by this spec.
 | menuitem | Open bot <id> | One per endpoint; navigates to that bot. |
 | menuitem | Disconnect | Opens disconnect confirmation. |
 | dialog | Disconnect bots | Warns the log stays and team reach may remain. |
-| button | Disconnect | Confirmation; removes link and returns to list. |
+| button | Disconnect | Confirmation; removes link and returns home. |
 | button | Cancel | Confirmation; no change. |
 | button | Delete notice | Conversation's `Bot input notice <id>` region; cancels eligible incoming notice, not transcript text. |
 
@@ -190,8 +194,8 @@ can still show the retained log plus “not connected”; it is not an active li
   local history records the link removal. There is no automatic introduction
   or forwarding between bots.
 - **E4 — Effects before the screen.** A case checks routing, the bridge log
-  and delivery state through the API and files first, and the Bot threads
-  screen by role and accessible name second.
+  and delivery state through the API and files first, and the pair opened from
+  the Bot threads sidebar by role and accessible name second.
 
 | Id | Given | When | Expect |
 | --- | --- | --- | --- |
@@ -202,4 +206,4 @@ can still show the retained log plus “not connected”; it is not an active li
 | **T5 — Live or missing continuation** | A reply route follows continuation lineage, or the continuation target is missing | Resolve the old address | Follow live lineage; a missing continuation leaves the old session readable but never silently resumes it on an incompatible engine. In the old session view, state the target is gone and offer New session; do not loop through broken chains (R3; [sessions](sessions.md) R6, E3). |
 | **T6 — Reply address across continuation** | A recipient session exchanged messages with the sender, including a person-created fork | Reply explicitly after compatible continuation lineage changes or after the old process exits and the configured engine changes | Existing exchange permits that reply target; engine changes use a new UUID preserving title/reply address, not incompatible native resume (R2; [sessions](sessions.md) R6). |
 
-Proof: `suite/messaging.mjs` checks: a first message between led teammates creates a bridge that Bot threads lists and that survives the member leaving the team; disconnecting removes `link.toml`, keeps `log.jsonl` and ends the reach; a turn ending in plain text, a model error or an abort sends nothing back and adds no log entry; a message to a recipient that cannot start stays pending with its error, tells the sender, and is delivered once at the next start after the fix. Evidence: JSON.
+Proof: `suite/messaging.mjs` checks: a first message between led teammates creates a bridge listed in the Bot threads sidebar and that survives the member leaving the team; disconnecting removes `link.toml`, keeps `log.jsonl` and ends the reach; a turn ending in plain text, a model error or an abort sends nothing back and adds no log entry; a message to a recipient that cannot start stays pending with its error, tells the sender, and is delivered once at the next start after the fix. Evidence: JSON.

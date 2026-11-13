@@ -287,9 +287,11 @@ export async function windowStep(kit, ev, name, body) {
     if (!bodyFailed && (ev.shotError || ev.treeError)) throw new Error(`evidence capture failed: ${[ev.shotError && `screenshot: ${ev.shotError}`, ev.treeError && `accessibility tree: ${ev.treeError}`].filter(Boolean).join('; ')}`);
   }
 }
-// Tools > Bot threads (tools R1 and its Controls): expand Tools when its region is not shown, then open Bot threads.
-export async function openBotThreads(w) {
-  const shown = await w.read('region', 'Tools').then(() => true, () => false);
-  if (!shown) await w.click('button', 'Tools');
-  await w.click('button', 'Bot threads', { in: { role: 'region', name: 'Tools' } });
+// The Bot threads sidebar section (messaging Controls, ui-shell R1): expand if collapsed,
+// then open the pair directly. There is no Tools entry or bridge-list page.
+export async function openBotThread(w, a, b) {
+  const heading = await w.read('button', 'Bot threads', { in: { role: 'tree', name: 'Bots and threads' } });
+  if (!heading.states.expanded) await w.click('button', 'Bot threads', { in: { role: 'tree', name: 'Bots and threads' } });
+  const [first, second] = [a, b].sort();
+  await w.click('button', `Thread ${first} and ${second}`, { in: { role: 'tree', name: 'Bots and threads' } });
 }
