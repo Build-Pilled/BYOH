@@ -16,7 +16,7 @@ Anyone who wants to can tailor a harness to their needs, work and ideas.
 
 Give this repository to your coding agent and say: "Build me my own harness from this."
 
-It tells you what the harness needs, sets up the VM, asks you a few questions, then builds and tests your harness. Your agent explains each step and shows your progress. You choose the look from the [default-look screenshots](screenshots/README.md) and colour mockups before seeing your finished app; then Firstmate takes over inside it and helps create its keeper.
+It tells you what the harness needs, sets up the VM, asks you a few questions, then builds and tests your harness. Your agent tells you when you can switch over to your new harness.
 
 ## Release
 
