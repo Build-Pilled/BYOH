@@ -1,6 +1,13 @@
 # Build Your Own Harness
 
-![Firstmate conversation with annotations and callouts](screenshots/hero.png)
+![Firstmate conversation with IMPORTANT, CAUTION and NOTE callouts](screenshots/hero.png)
+
+<details>
+<summary>See it in the light theme</summary>
+
+![Firstmate conversation in the light theme](screenshots/main-chat-light.png)
+
+</details>
 
 ## Vision
 
