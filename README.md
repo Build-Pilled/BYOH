@@ -1,7 +1,5 @@
 # Build Your Own Harness
 
-[View screenshots](screenshots/README.md)
-
 ![Firstmate conversation with IMPORTANT, CAUTION and NOTE callouts](screenshots/hero.png)
 
 <details>
@@ -26,6 +24,8 @@ Anyone who wants to can tailor a harness to their needs, work and ideas.
 Give this repository to your coding agent and say: "Build me my own harness from this."
 
 It tells you what the harness needs, sets up the VM, asks you a few questions, then builds and tests your harness. Your agent tells you when you can switch over to your new harness.
+
+[View screenshots](screenshots/README.md)
 
 ## Release
 
