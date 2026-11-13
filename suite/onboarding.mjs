@@ -29,7 +29,7 @@ const s1 = { id: 'onboarding-stage-1-daemon', title: 'onboarding R4 stage 1, dae
 } };
 
 // --- S2 -----------------------------------------------------------------------------------------------------------------------
-const s2installed = { id: 'onboarding-stage-2-plain-installed', title: 'starter-bots R1, R3, R6: init --examples installs the plain bot at its fixed address, unteamed, with an empty SYSTEM.md', run: async (kit) => {
+const s2installed = { id: 'onboarding-stage-2-plain-installed', title: 'starter-bots R1, R3, R6: init --examples installs the Plain bot at its fixed address, unteamed, with an empty SYSTEM.md', run: async (kit) => {
   const log = []; const ev = { commands: log };
   try {
     await examples(kit, log);
@@ -67,7 +67,7 @@ const s2starterFiles = { id: 'onboarding-stage-2-starter-files', title: 'starter
 } };
 
 // One mock turn through each selected adapter, on a new person session (sessions R1, cli R6).
-const s2chat = (engine) => ({ id: `onboarding-stage-2-mock-chat-${engine}`, title: `onboarding R4 stage 2, starter-bots R6, engine-contract R1: the plain bot answers a simple question through ${engine === 'pi' ? 'Pi' : 'Claude Code'} against the mock model`, run: async (kit) => {
+const s2chat = (engine) => ({ id: `onboarding-stage-2-mock-chat-${engine}`, title: `onboarding R4 stage 2, starter-bots R6, engine-contract R1: the Plain bot answers a simple question through ${engine === 'pi' ? 'Pi' : 'Claude Code'} against the mock model`, run: async (kit) => {
   if (!selectedEngines(kit).includes(engine)) throw new NotRun(`${engine} is not a selected adapter of this run`);
   const plain = byRole('Plain bot').id; const log = []; const ev = { commands: log };
   try {
@@ -153,12 +153,12 @@ const s4roundTrip = { id: 'onboarding-stage-4-crew-round-trip', title: 'onboardi
 // --- S5 -----------------------------------------------------------------------------------------------------------------------
 // The real app on the host's virtual display, with screenshots and the accessibility tree (onboarding R4 stage 5, ui-shell R1,
 // verifiability). Effect first: the daemon's bot list and the bot's sessions, then the window. Mac checks stay mac-pending.
-const s5 = { id: 'onboarding-stage-5-ui', title: 'onboarding R4 stage 5, ui-shell R1, bots R4, sessions R5: the real app runs on the virtual display, shows the bots and threads tree with the plain bot, and opens its chat on one of its sessions', run: async (kit) => {
+const s5 = { id: 'onboarding-stage-5-ui', title: 'onboarding R4 stage 5, ui-shell R1, bots R4, sessions R5: the real app runs on the virtual display, shows the bots and threads tree with the Plain bot, and opens its chat on one of its sessions', run: async (kit) => {
   if (!kit.desc.app?.length) throw new NotRun('the harness descriptor has no "app" command');
   const plain = byRole('Plain bot').id; const log = []; const ev = { commands: log, mac: { 'Mac window, menu bar and notarised app': 'mac-pending' } };
   try {
     await examples(kit, log);
-    // effect first: the daemon lists the plain bot (bots R4) before any window is driven
+    // effect first: the daemon lists the Plain bot (bots R4) before any window is driven
     const bots = await kit.api('GET', '/bots'); ev.bots = { status: bots.status, json: bots.json };
     assert.equal(bots.status, 200, `GET /bots returned ${bots.status}`);
     const entry = bots.json.bots.find((b) => b.id === plain); assert.ok(entry, `GET /bots does not list ${plain}`); ev.plainEntry = entry;

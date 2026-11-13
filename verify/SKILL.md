@@ -157,11 +157,11 @@ agent session that may be stopped. Run each command in the foreground.
 ## Drive, then inspect the evidence
 
 Drive the entry point the change concerns, not a convenient substitute. Examples
-for the installed plain bot (adapt the composer name to its recorded display name):
+for the installed Plain bot (adapt the composer name to its recorded display name):
 
 ```bash
 record 08-cli node "$V" cli --run "$R" bots
-record 09-fill node "$V" ui --run "$R" fill textbox "Message plain" "hello"
+record 09-fill node "$V" ui --run "$R" fill textbox "Message Plain" "hello"
 record 10-send node "$V" ui --run "$R" click button "Send"
 ```
 
