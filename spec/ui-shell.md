@@ -139,8 +139,7 @@ Save button to [conversation export](conversation-export.md).
 | region | Bot <id> | Bot row and its actions. |
 | treeitem | Bot <id> | Select bot; selected/expanded state; display name remains visible. |
 | button | Show sessions / Hide sessions | Bot row; toggles session expansion. |
-| button | <section-name> | Sidebar section heading; expanded state, including Bots and team names; Bot threads is messaging-owned. |
-| button | Connect two bots | + on the Bot threads section heading; opens the messaging-owned dialog. |
+| button | <section-name> | Sidebar section heading; expanded state, including Bots and team names; Bot threads and its header + are [messaging](messaging.md)-owned. |
 | button | New | Top +; opens menu New. |
 | menu | New | Creation destinations; dismiss by outside click. |
 | menuitem | New bot | Opens dialog New bot. |
