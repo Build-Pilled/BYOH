@@ -1,5 +1,7 @@
 # Build Your Own Harness
 
+[View screenshots](screenshots/README.md)
+
 ![Firstmate conversation with IMPORTANT, CAUTION and NOTE callouts](screenshots/hero.png)
 
 <details>
@@ -98,30 +100,51 @@ Notice: [starter/NOTICE.md](starter/NOTICE.md).
 
 ## FAQ
 
-**Is BYOH compliant with Anthropic's and OpenAI's terms of service?**
+<details>
+<summary>Is BYOH compliant with Anthropic's and OpenAI's terms of service?</summary>
 
 BYOH runs Claude subscriptions only through the official Claude Code, and OpenAI sign-in only through Pi, which OpenAI lists as a supported integration.
 
-**Which coding agent do I need?**
+</details>
+
+<details>
+<summary>Which coding agent do I need?</summary>
 
 You can use any coding agent, but we recommend one running a frontier model. It starts on your computer, then continues the interview and build inside the isolated Linux host.
 
-**Do I need to be a developer? What do I have to do by hand?**
+</details>
+
+<details>
+<summary>Do I need to be a developer? What do I have to do by hand?</summary>
 
 You name your harness, answer a few questions and sign in to each engine you choose (Claude Code on your Claude login, Pi signed in with ChatGPT etc.). Your agent also gives you the setup commands and messages to paste.
 
-**Do I need both Anthropic and OpenAI subscriptions?**
+</details>
+
+<details>
+<summary>Do I need both Anthropic and OpenAI subscriptions?</summary>
 
 No. Both engines are the default, but you can choose just one, or use an API key for a named provider through Pi instead. Claude subscriptions go through Claude Code; ChatGPT sign-in goes through Pi.
 
-**With no permission prompts, what stops a bot from doing damage?**
+</details>
+
+<details>
+<summary>With no permission prompts, what stops a bot from doing damage?</summary>
 
 The boundary limits the damage: bots run on a separate machine or VM, as a user without admin rights, with none of your personal folders shared in. They can still read, change, delete or send out anything available to their user, including the harness data and its credentials; this is not a guarantee against damage.
 
-**In the default Lima VM setup, can a bot reach my Mac?**
+</details>
+
+<details>
+<summary>In the default Lima VM setup, can a bot reach my Mac?</summary>
 
 Bots cannot read your Mac's files or keys, and the VM's firewall blocks access to private networks and your Mac's loopback services. There are still trust edges: the desktop app shows content from the bots' side, and app updates run code built from source the bots can change, but nothing new is installed until you approve it.
 
-**Will my harness match someone else's?**
+</details>
+
+<details>
+<summary>Will my harness match someone else's?</summary>
 
 Every harness is generated from scratch, so two builds will have different code. The suite is the only thing that makes them consistent.
+
+</details>
