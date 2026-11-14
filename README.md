@@ -42,9 +42,9 @@ SHA-256 of vm/SHA256SUMS: 98d9128ceab4ee72cf8577e7ba717c2ce030a4036ed1fbef18e4a5
 
 ## What is BYOH?
 
-BYOH is a blueprint for your AI agent to build you a harness. It is a specification, a test suite and a verification kit. Your coding agent builds the harness from them, checks it against the suite, and hands you the source to keep.
+BYOH is a blueprint for your AI agent to build you a harness. It is a specification, a test suite and a verification kit. Your coding agent builds the harness from them, checks it against the suite, and hands you the source code to keep.
 
-You end up with an orchestrator bot (named Firstmate) you talk to. It leads a team of bots that it can create, each one running on Claude Code or Pi. The bots run in a VM, apart from the computer you work on, and you work with them through a desktop app. It has the same shape as Grok Bot, OpenAI Dots and Claude Duet. You choose the name of your harness.
+You end up with an orchestrator bot (named Firstmate) you talk to. It leads a team of bots that it can create, each one running on Claude Code or Pi. The bots run in a VM, separate from the computer you work on, and you work with them through a desktop app. It has the same shape as Grok Bot, OpenAI Dots and Claude Duet. You choose the name of your harness.
 
 What sets BYOH apart?
 
