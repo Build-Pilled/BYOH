@@ -24,7 +24,7 @@ Anyone who wants to can tailor a harness to their needs, work and ideas.
 Give your coding agent a request like one of these:
 
 - "Build me my own harness from https://github.com/Build-Pilled/BYOH."
-- "Build me my own harness from https://github.com/Build-Pilled/BYOH, but only Claude Code, no Pi."
+- "Build me my own harness from https://github.com/Build-Pilled/BYOH, but only Pi, no Claude Code."
 - "Build me my own harness from https://github.com/Build-Pilled/BYOH on my own Linux server instead of the VM, and add desktop notifications."
 
 It tells you what the harness needs, sets up the isolated host, asks you a few questions, then builds and tests your harness. Your agent tells you when you can switch over to your new harness.
