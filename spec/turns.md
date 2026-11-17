@@ -23,9 +23,10 @@ separate command path.
   an item exists, has at least the item's `id` and its R5 `state`; a request
   that creates no item (R2) answers without `item`.
   Accepted app input is stored before dispatch; receipt is not model completion.
-- **R2 — Queue.** `followUp` is accepted only during a running turn; otherwise
-  it creates no item. At most three queued items per session; a fourth is a
-  conflict and keeps the draft. Queue order is acceptance order. The head is
+- **R2 — Queue.** `followUp` is accepted only during a running turn or
+  [compaction](compaction.md); otherwise it creates no item. A message sent
+  during compaction is a queued follow-up, sent as soon as compaction succeeds.
+  At most three queued items per session; a fourth is a conflict and keeps the draft. Queue order is acceptance order. The head is
   the first queued item; it is free unless a window holds an edit on it (R3).
   After a successful settlement a free head starts the next turn; a head under
   edit blocks later queued items rather than letting them overtake it. While
@@ -192,8 +193,8 @@ These accessible names are fixed by this spec, independent of optional keyboard 
 | Role | Accessible name | Scope, action and observable state |
 | --- | --- | --- |
 | textbox | Message | Open conversation's multiline composer; draft remains on failed send. |
-| button | Send | Sends/steers; disabled if empty or terminal-attached. |
-| button | Queue | Adds follow-up, or saves the current queue edit; disabled with no content or no running turn/edit. |
+| button | Send | Sends/steers, or queues a follow-up during compaction; disabled if empty or terminal-attached. |
+| button | Queue | Adds follow-up, or saves the current queue edit; disabled with no content or no running turn/compaction/edit. |
 | button | Stop | Interrupts active operation; available during a turn/compaction. |
 | button | Edit | Queue card; acquires edit ownership, loads draft. |
 | button | Steer | Queue card; promotes; disabled while attached or card held by an edit. |
