@@ -31,8 +31,10 @@ honest token-count provenance and explicit missing-history limits.
   annotation blocks, with 400 and keep the draft. `/compact` cannot be saved,
   promoted or dispatched as a follow-up queue card. It never becomes queued
   ordinary input. During compaction show busy/compacting state; Stop cancels the
-  operation through the native engine. Finish clears the transient state and
-  allows normal pending-work processing. Errors remain visible; a failed or
+  operation through the native engine. A message the person sends while
+  compaction runs is accepted as a queued follow-up, not refused. Send queued
+  messages as soon as the compaction succeeds. Finish clears the transient
+  state and allows normal pending-work processing. Errors remain visible; a failed or
   interrupted request does not claim that context was shortened.
 - **R4 — Native operation.** Pi uses native RPC compaction with custom
   instructions, preserving native summary wrapping and kept-entry boundary;
@@ -147,4 +149,4 @@ session and transcript entry in regions named `Context compacted <entry>`.
 | **T3 — Native compact record after a fork** | A Claude branch has a native compact boundary, summary and command records | Continue the branch and reload its transcript | Present one compact record for the native boundary in native order, with the full native summary and command records, not fabricated ordinary person/assistant text (R4, R5; [engine-claude-code](engine-claude-code.md) R6). |
 | **T4 — Folded proof and count provenance** | Native compact records from selected engines, including absent fields/history | Expand/fold and search inside a record | Show Context compacted separately, full summary/known engine/version/instructions/trigger and count sources. Pi after-count is estimated; missing data is not reported/recorded, not zero or invented. Keep earlier readable messages and disclose missing history. Search owns matching expansion and restores the person's fold state on clear (R4, R5, E2, Controls). |
 
-Proof: While a compaction is held, `suite/compaction.mjs` reads a 409 from the terminal handoff and exit 1 from terminal chat on that session, then reads that the compaction finishes ok. Evidence: JSON.
+Proof: While a compaction is held, `suite/compaction.mjs` reads a 409 from the terminal handoff and exit 1 from terminal chat on that session, then reads that the compaction finishes ok. In a separate case, it sends durable person input through the API, reads its queued follow-up receipt and ledger state while compaction is held, then reads successful compaction, model delivery and confirmed pickup. These are API, ledger and mock reads, not window checks. Evidence: JSON.

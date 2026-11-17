@@ -1,7 +1,7 @@
 // compaction: the model-found case of a compaction that only ends by finishing, Stop or failure. Effect first: what the
 // model's summarizer received (the mock), the compaction reply (compaction R1) and the terminal command's exit (terminal-chat R2).
 import assert from 'node:assert/strict';
-import { NotRun, detail, mockBot, mockSaw, newSession, cliOk, openTerminal, saveJson, selectedEngines, sleep, until } from './lib.mjs';
+import { NotRun, detail, durable, mockBot, mockSaw, newSession, cliOk, openTerminal, outboundItem, saveJson, selectedEngines, sleep, until } from './lib.mjs';
 
 // model:compaction 6. Opening a terminal on a session during a held compaction is refused, and the compaction runs to its end.
 const terminalDuringCompaction = { id: 'compaction-model-terminal-refused-while-compacting', title: 'compaction R2, R3, terminal-chat R2, cli R4: while a compaction is held, the terminal handoff is refused with 409 and terminal chat on that session exits 1 without attaching, and the compaction still finishes and reports ok', run: async (kit) => {
@@ -32,4 +32,53 @@ const terminalDuringCompaction = { id: 'compaction-model-terminal-refused-while-
   } finally { if (term) await term.close(); saveJson(kit, 'compaction-model-terminal-refused-while-compacting', ev); }
 } };
 
-export default { section: 'compaction', cases: [terminalDuringCompaction] };
+// Catches: refusing Send while compacting, accepting it as immediate steering instead of a queued follow-up,
+// dispatching it before compaction succeeds, or leaving it queued afterward without confirmed pickup.
+const sendDuringCompaction = { id: 'compaction-send-queues-until-success', title: 'compaction R3, turns R1, R2, R5: a person Send during held compaction is accepted as a queued follow-up and picked up after compaction succeeds', run: async (kit) => {
+  const ev = { runs: [] };
+  try {
+    for (const engine of selectedEngines(kit)) {
+      const bot = `csend${engine}`; const run = { engine, commands: [], steps: {} }; ev.runs.push(run);
+      let pending; let compactFinished = false;
+      try {
+        await mockBot(kit, bot, engine, run.commands);
+        const sid = run.session = await newSession(kit, bot, 'send during compaction', run.commands);
+        for (const n of ['one', 'two', 'three', 'four', 'five']) await cliOk(kit, ['say', bot, '--session', sid, `compaction ${n} ${'filler words '.repeat(2500)}`], null, { timeout: 300000 });
+        const marker = `compaction-send-hold-${engine}`; const text = `person-message-after-compaction-${engine}`;
+        pending = kit.api('POST', `/sessions/${bot}/${sid}/say`, { text: `/compact ${marker}\nMOCK_SLOW 25000` }).then((r) => {
+          compactFinished = true;
+          run.steps.compact = { status: r.status, json: r.json ?? null };
+          return r;
+        }).catch((e) => { compactFinished = true; run.steps.compactError = e.message; return null; });
+        run.steps.summarizer = await until('the held summarizer request', async () => {
+          const requests = await mockSaw(kit, marker); return requests.length ? requests : null;
+        }, { timeout: 60000, every: 300 });
+        assert.equal(compactFinished, false, 'compaction finished before the person could send');
+        // The ordinary durable Send path uses steer, not a caller-selected followUp that would bypass conversion.
+        const sent = run.steps.send = await durable(kit, bot, sid, 'steer', text, run.commands);
+        run.steps.whileHeld = await outboundItem(kit, bot, sid, sent.id);
+        run.steps.modelWhileHeld = await mockSaw(kit, text);
+        assert.equal(compactFinished, false, 'compaction finished before queued acceptance was observed');
+        assert.equal(sent.status, 200, `Send during compaction was refused: ${sent.status} ${JSON.stringify(sent.json)}`);
+        assert.equal(sent.json?.session, sid);
+        assert.equal(sent.json?.item?.id, sent.id, 'Send did not return its durable item');
+        assert.equal(sent.json?.item?.state, 'queued', 'Send during compaction was not accepted as queued');
+        assert.equal(run.steps.whileHeld?.mode, 'followUp', 'the ledger did not classify Send as a follow-up');
+        assert.equal(run.steps.whileHeld?.state, 'queued', 'the ledger did not hold the input queued');
+        assert.equal(run.steps.modelWhileHeld.length, 0, 'the model received the message before compaction succeeded');
+        const compact = await pending;
+        assert.equal(compact?.status, 200, 'compaction did not succeed');
+        assert.equal(compact.json?.compact?.ok, true, 'compaction did not report ok');
+        // No second Send, queue action or other input releases the item.
+        run.steps.modelAfterSuccess = await until('the queued message at the model after compaction', async () => {
+          const requests = await mockSaw(kit, text); return requests.length ? requests : null;
+        }, { timeout: 60000, every: 300 });
+        run.steps.pickedUp = await until('confirmed pickup of the queued message', async () => {
+          const item = await outboundItem(kit, bot, sid, sent.id); return item && ['picked_up', 'handled'].includes(item.state) ? item : null;
+        }, { timeout: 60000, every: 300 });
+      } finally { if (pending) await pending; }
+    }
+  } finally { saveJson(kit, 'compaction-send-queues-until-success', ev); }
+} };
+
+export default { section: 'compaction', cases: [terminalDuringCompaction, sendDuringCompaction] };
