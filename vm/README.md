@@ -28,7 +28,7 @@ A version change is a reviewed change on its own. Prove an engine pin through th
 Fetch all four files from `vm/` in `Build-Pilled/BYOH` at the release named in
 the [top-level README](../README.md#release). Check `SHA256SUMS` against the hash
 published in that README, then verify the three files with
-`shasum -a 256 -c SHA256SUMS` before running anything. On the Mac:
+`shasum -a 256 -c SHA256SUMS` before running anything.
 
 The setup agent explains every command it hands you, including what its
 names refer to ([onboarding](../spec/onboarding.md) R10). The Lima instance is

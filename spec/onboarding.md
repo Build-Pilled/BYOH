@@ -123,10 +123,9 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   conversations. Other proposals use the fixed shell mockups and iteration in
   [look and palette](look-and-palette.md) R1, never pictures of the person's app.
   The other four choices remain plain questions on that same page. Both pages
-  have the R10 progress line as their header. Show look screenshots one per
-  row at the full content width of the page, preserving their aspect ratio;
-  never put two side by side or shrink them into a half-width option card.
-  Each has a clearly named link or control to open the original at full size.
+  have the R10 progress line as their header. Present look screenshots at full
+  content width with full-size opening as [look and palette](look-and-palette.md)
+  R1 requires.
 
   Before giving the person a link to any interview page, including a revised
   look proposal, the agent checks the actual page it will serve:
