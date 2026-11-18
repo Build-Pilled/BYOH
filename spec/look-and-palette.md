@@ -23,6 +23,13 @@ their own meaning and only borrow the colours defined here.
   default" is always offered and is the all-defaults path. The interview
   opens on page two of Lavish with a few starting palette options, the default
   option named Instrument first, shown with the gallery screenshots.
+  On the choice page, show look screenshots one per row at the page's full
+  content width with their aspect ratio kept, not side by side or nested in
+  half-width cards. Give each a clearly named full-size link or control to
+  open the original image. Apply this to every look's screenshot previews,
+  including dark and light. Before sharing any page or revision, follow
+  [onboarding](onboarding.md) R3's script and real-browser click checks,
+  including image loading and full-size opening.
   Other palette proposals use mockups of the same fixed app shell. Never assume
   the person knows that name: whenever the agent offers it, name it as an option
   and show the gallery screenshots alongside it. The person reacts and adds

@@ -14,7 +14,9 @@ launch and account details. This is an outward contract, not a required class la
 - **R1 — Selection and identity.** At least one adapter is present. Models with
   the `claude-code/` prefix select Claude Code; other model ids select Pi. An
   omitted model uses the selected adapter's native default; a Claude-only build
-  must not silently select an absent Pi adapter. Unselected adapters add no
+  must not silently select an absent Pi adapter. [Onboarding](onboarding.md)
+  R3 explicitly sets a selected model on the starter bots instead of relying
+  on that native default. Unselected adapters add no
   keys, dependencies or tests. A session records its engine when first
   run; transcript reading uses that engine even after the bot's model changes.
   Cross-engine continuation follows [sessions](sessions.md), never native resume

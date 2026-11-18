@@ -122,7 +122,11 @@ small; do not turn the Plain bot into another project worker.
   whose introduction states have passed count as already explained on resume
   or after the switch, without a new record field or shared conversation.
   One repeat after interruption within a term's own introduction state is
-  acceptable.
+  acceptable. Every command or name handed to the person still needs R10's
+  plain explanation of its effect and referent, even when a glossary term
+  counts as already introduced. Continue through agent-only work under R4
+  without ending a turn to ask permission at a stage boundary; stop only for
+  genuinely person-needed input or an unresolved blocker.
   Page two and its choice build are complete before the switch. At
   `keeper-ready`, Firstmate's first job is to task Bot Maker to sign on a harness
   keeper for `~/myharness-src` from the crewmate template. Firstmate shows the

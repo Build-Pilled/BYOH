@@ -30,15 +30,53 @@ the [top-level README](../README.md#release). Check `SHA256SUMS` against the has
 published in that README, then verify the three files with
 `shasum -a 256 -c SHA256SUMS` before running anything. On the Mac:
 
+The setup agent explains every command it hands you, including what its
+names refer to ([onboarding](../spec/onboarding.md) R10). The Lima instance is
+`myharness-vm`; the SSH connection name `myharness` reaches its bot user, while
+`myharness-admin` reaches its admin account. They connect to the same VM but
+are not its instance name. The `myharness` CLI runs the harness itself.
+
+Run this on the Mac to install the pinned Lima, create/start `myharness-vm`,
+set up its SSH connections and start-at-login, and enable prevent-sleep on
+power. Defaults are both engines and one disk:
+
 ```sh
-sh host-step.sh                                  # the defaults: both engines, one disk, prevent sleep on
+sh host-step.sh
+```
+
+Alternatively, this Mac command creates the VM with Pi only, the separate
+`mhhome` data disk, prevent-sleep off and 6 GiB of memory. `mhhome` is the
+optional disk's Lima name, not an SSH connection. Choose one creation command,
+not both:
+
+```sh
 sh host-step.sh --engines pi --disk data --prevent-sleep no --memory 6
+```
+
+This Mac command reads the environment checks without changing the setup:
+
+```sh
 sh check.sh --mac
-ssh myharness                                    # then, inside the host, with the repository cloned:
+```
+
+This Mac command opens a shell inside `myharness-vm` as the bot user through
+the SSH connection named `myharness`:
+
+```sh
+ssh myharness
+```
+
+Then, inside that host with the repository cloned, run this from its root to
+read the host-side environment checks:
+
+```sh
 sh vm/check.sh --host
 ```
 
-To remove the supplied VM and app:
+To remove the supplied VM and app, run one of these on the Mac. The first
+asks for confirmation, then deletes the harness's VM and data; the second
+keeps only its optional data disk named `mhhome`. Neither removes other Lima
+instances:
 
 ```sh
 sh host-step.sh --remove                         # confirms before deleting harness data
@@ -58,4 +96,7 @@ rather than reinstalling Lima or deleting the disk itself. You may delete that
 folder yourself when you no longer want its data.
 
 Before the real-login stage engine logins report INFO; pass `--login-stage` after it.
-Before a logout, restart, shutdown or macOS update: `~/.local/bin/limactl stop myharness-vm`.
+Before a logout, restart, shutdown or macOS update, run
+`~/.local/bin/limactl stop myharness-vm` on the Mac. This uses the pinned Lima
+control program to stop the VM instance named `myharness-vm`; it is not an SSH
+connection or a command to rename the harness.

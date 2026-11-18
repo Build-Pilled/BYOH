@@ -90,16 +90,32 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
      not.
 
   The `model` question says that every starter bot gets the same model and any
-  bot can be changed later in the [model picker](model-picker.md). The default
-  leaves their model unset, so [engine contract](engine-contract.md) R1 decides:
-  with both engines, Pi's default on the chosen route. The agent reads the
-  selected engines at run time and names the concrete model that default
-  resolves to; no model name is fixed here. BYOH suggests an intelligent
+  bot can be changed later in the [model picker](model-picker.md). Read the
+  maintainer-owned [frontier models file](../frontier-models.md) before naming
+  any model as a default or an option: only names in that file may be suggested.
+  Do not infer current models from the agent's training, an engine's saved
+  settings or labels in gallery screenshots. BYOH suggests an intelligent
   frontier model that communicates well, because Firstmate and Bot Maker give
-  the most leverage and extra intelligence there pays off most. Do not present
-  a full model list. If the person's named model maps to exactly one model on
-  their selected engines, use it; if ambiguous, show only the candidates the
-  agent cannot tell apart and ask the person to pick.
+  the most leverage and extra intelligence there pays off most.
+
+  The default is explicit, not an unset model following the engine's native
+  default. Use the per-engine default named in the frontier models file:
+  Pi's when Pi is selected (including both engines), Claude Code's for a
+  Claude-only build. Resolve that display name against the selected engines'
+  runtime model catalog and the person's chosen provider/account route. Use only a uniquely
+  resolved, available model id; never invent an API id. If the default cannot
+  be resolved uniquely or is unavailable on that route, stop and ask the person
+  rather than silently substituting an old or unlisted default. Record the
+  resolved selection as `model` in R5, including when defaulted, and set it
+  explicitly on all four starter bots before first chat. This onboarding
+  selection does not change engine contract R1 for other bots with no model.
+
+  Keep the question open-ended, not a full model list. A person's explicit
+  request for an unlisted model is allowed; the file restricts the agent's
+  suggestions and defaults, not the person's own choice. If their named model
+  maps to exactly one available model on the selected route, use it. If it is
+  ambiguous, ask for clarification without offering unlisted candidates as
+  model options; if unavailable, explain that and ask for another choice.
 
   Page two's look question shows the default-look option named Instrument
   with the [gallery screenshots](../screenshots/README.md), including
@@ -107,7 +123,30 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   conversations. Other proposals use the fixed shell mockups and iteration in
   [look and palette](look-and-palette.md) R1, never pictures of the person's app.
   The other four choices remain plain questions on that same page. Both pages
-  have the R10 progress line as their header.
+  have the R10 progress line as their header. Show look screenshots one per
+  row at the full content width of the page, preserving their aspect ratio;
+  never put two side by side or shrink them into a half-width option card.
+  Each has a clearly named link or control to open the original at full size.
+
+  Before giving the person a link to any interview page, including a revised
+  look proposal, the agent checks the actual page it will serve:
+  - Syntax-check every executable script, including inline scripts, event
+    handlers and any loaded script files, with a JavaScript parser appropriate
+    to its script/module context. Refuse raw non-ASCII characters in those
+    scripts, including U+2028 and U+2029; encode needed characters with ASCII
+    escapes instead. This restricts script source only, not visible prose or
+    the Unicode names R6 accepts; do not strip or reject those names.
+  - Load the served page in a real browser engine, inspect its console and
+    script/load errors, and click-test its controls. Check name validation,
+    defaults, choice selection, screenshots and full-size opening, and
+    submission/confirmation on disposable form state without recording test
+    answers as the person's choices. Static inspection alone is not a click
+    test. Fix failures and repeat both checks on the corrected page before
+    sharing its link.
+
+  If a shared page later misbehaves, inspect the served page itself, its
+  scripts, console and submission response first. Do not blame the person's
+  browser or duplicate tabs without evidence from that diagnosis.
 
   If the page cannot be served, the agent asks the same questions in chat with
   the same defaults and records the answers the same way. For the look, the
@@ -117,7 +156,23 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   chat fallback never substitutes screenshots of the person's app.
 - **R4 — Stages and gates.** Onboarding moves through these states in order;
   each state is entered only when the previous one's proof passes, and a
-  failure stays in its state with what failed named:
+  failure stays in its state with what failed named. After recording each
+  passed proof, proceed to the next state autonomously in the same working
+  turn. Do not end a turn merely to announce the next stage, ask for a
+  go-ahead at a stage boundary, or wait for the person to say "continue".
+  Narrate under R10 while doing the work, not instead of doing it. Diagnose,
+  fix and retry failed proofs without skipping them; ask only when the person
+  is genuinely needed or a blocker cannot be resolved without their input.
+
+  Person-needed boundaries are the host-step answers and any required Mac
+  approval, the host handoff/sign-ins, page one (and a chosen VM-memory
+  stop/edit/start), stage 3's explicit real-login go-ahead, page two and look
+  acceptance, the person-run rebuild and pairing lines, opening the app and
+  confirming connection/first use, Mac-only checks, and choosing whether to
+  create the bots' GitHub account (and its account/credential steps if chosen).
+  These do not authorize extra real turns, installation or deployment by the
+  agent. Agent-only build, mock, messaging, UI and keeper sign-on/scout work
+  needs no extra permission between stages. The ordered states are:
   1. `host-step`: R1 answered.
   2. `host-ready`: the host exists and the environment check is green.
   3. `handoff`: R2 done; the agent runs in the host.
@@ -254,7 +309,25 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   what is happening now and why it matters to the person. Use it in chat and
   as the header on both Lavish pages, including during look iterations and on
   failure/resume messages. Firstmate's first reply after the switch also opens
-  this way ([starter bots](starter-bots.md) R7).
+  this way ([starter bots](starter-bots.md) R7). These updates do not end the
+  working turn at agent-only stage boundaries (R4).
+
+  Whenever handing the person a command or a name, say in plain words what
+  the command does, where they run it, what it touches, and what each name
+  refers to. Do this beside the command even if its components were introduced
+  earlier; the first-mention-only glossary rule below does not remove these
+  explanations. Never pass through a bare "next command" from tool output.
+  For the supplied VM, explain that `myharness-vm` is the Lima VM instance,
+  while `myharness` in `ssh myharness` is the SSH name connecting as the bot
+  user inside that VM, and `myharness-admin` connects as its admin account.
+  The bare `myharness` command runs the harness CLI; it is not a Lima instance
+  name. A person's chosen display name labels their app, not an SSH connection.
+  For example, alongside `ssh myharness`, say: "Run this in Terminal on your
+  Mac to open a shell as the bot user in your VM. Here myharness is the SSH
+  connection name; the Lima VM itself is named myharness-vm."
+  Explain the effects and names in the rebuild and pairing lines as well,
+  without exposing the token. For an own host, use the actual recorded names
+  and explain their roles rather than substituting the supplied VM names.
 
   For example, after `stage-3-real-login` has passed:
   `▓▓▓▓▓▓▓░░░░░░░░░░ 41% · step 7 of 17 · now: checking the crew can talk · next: proving the window`.
@@ -428,8 +501,9 @@ pages and chat: the setup agent's, then Firstmate's in the app from R9.
 - **E6 — Defaults all the way.** The all-defaults path produces both engines
   (Claude Code on the person's Claude login, Pi signed in with ChatGPT), the
   supplied VM with one disk and prevent-sleep on, the display name
-  `My Harness`, the Plain bot named `Plain`, the starter bots' model unset (R3),
-  this Mac's memory row, every choice at its section's default and the GitHub
+  `My Harness`, the Plain bot named `Plain`, the explicit listed starter
+  model for the selected route (R3), this Mac's memory row, every choice at
+  its section's default and the GitHub
   account deferred. Both engines then need their sign-in before
   `stage-3-real-login`.
 

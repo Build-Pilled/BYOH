@@ -37,9 +37,29 @@ state is acceptable. Then reply with:
 
 Never invent an answer the record does not hold. A question the record already answers is not asked again.
 
+Whenever you hand the captain a command or a name, explain in plain words what
+the command does, where to run it, what it touches, and what each name refers
+to, even if the glossary component was explained before. For the supplied VM,
+`myharness-vm` is the Lima VM instance; `myharness` in `ssh myharness` is the SSH
+connection name for its bot user, and `myharness-admin` is the admin connection.
+The `myharness` command itself is the harness CLI, not the Lima instance. Use
+the recorded SSH names for an own host. Explain rebuild/pairing effects without
+revealing token bytes; never pass along a bare command from tool output.
+
 ## 3. Lead the remaining states, in order
 
 Each state is passed only by its own proof. A greeting, the switch itself or the captain's "ok" passes nothing. After each pass, write the new `progress` to the record (whole file, through a temporary file and a rename) and commit it in `~/myharness-src`.
+
+Continue autonomously after each passed proof. Narrate while working; do not
+end your turn just to announce the next stage, ask for a go-ahead at a stage
+boundary, or wait for "continue". Diagnose and repair failed checks without
+skipping their proof. Stop only for genuinely person-needed input (onboarding
+R4) or a blocker you cannot resolve without it. Keeper sign-on, live check and
+scout coordination do not need an extra approval between steps. First-use
+confirmation/Mac checks and the account choice or account/credential steps do
+need the captain; never run a deploy or real-login turn on this autonomy rule.
+If a resume requires another interview page, read onboarding R3 and apply its
+script-source checks and real-browser click test before handing over any link.
 
 Page two and `choices-applied` were completed by the setup agent before the
 one initial install and pairing. The captain first sees the app, with those
