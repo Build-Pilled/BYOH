@@ -167,12 +167,23 @@ environment check.
   boot, and the environment check reports the recovery as INFO. After a Mac
   crash the instance may show Broken (P5); the person runs
   `limactl stop --force myharness-vm`, then `limactl start myharness-vm`.
-- **R11 — Removal.** Trying it and judging is supported. Removal turns
-  off start at login, deletes the instance, removes Lima's files under the Mac
-  home and the `~/.local` install, the SSH file and its `Include` line, the
-  app and its support folder. Removal states first, in the person's words, that
-  deleting the VM deletes the harness data unless backup was chosen or the
-  data disk is kept ([VM backup](vm-backup.md) R2).
+- **R11 — Removal.** Trying it and judging is supported. Removal uses the
+  pinned `~/.local/bin/limactl` to turn off start at login and delete only
+  `myharness-vm`. It removes the SSH file, known-hosts file and its `Include`
+  line, the app and its support folder, and only the pinned Lima install files
+  listed in its manifest under `~/.local`. Other Lima instances and their disks
+  stay. `~/.lima`, its shared `_config` and Lima's image cache are removed only
+  when no other instance remains; otherwise the output says what was kept and
+  why. A symlinked `~/.lima` and its target's shared contents stay, with output
+  naming the link target; only the named harness instance and its data disk
+  are removed through Lima. `--keep-data-disk` keeps the harness's `mhhome`
+  disk; no other data disk is removed. After keeping it, the person may delete
+  the folder `~/.lima/_disks/mhhome` themselves; removal says so when keeping
+  the disk and when the pinned Lima is missing. It does not reinstall Lima or
+  automatically delete that previously kept disk. Unrelated files are never recursively
+  deleted to remove `~/.lima`. Removal states first, in the person's words,
+  that deleting the VM deletes the harness data unless backup was chosen or
+  the data disk is kept ([VM backup](vm-backup.md) R2).
 
 ## States
 

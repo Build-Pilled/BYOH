@@ -6,7 +6,7 @@ The Mac side of the host step and the environment check. Spec: [VM](../spec/vm.m
 | File | What it is |
 | --- | --- |
 | `myharness.yaml` | The Lima template: Debian 13 arm64 on `vz`, no mounts, the three forwards, the bot user, the output rule, Node, the engines, the daemon unit, the launcher, the nightly tidy and the deploy program. |
-| `host-step.sh` | Runs on the Mac: preflight, the pinned Lima under `~/.local`, create and start, the SSH names, start at login, the sleep setting. `--remove` undoes all of it. |
+| `host-step.sh` | Runs on the Mac: preflight, the pinned Lima under `~/.local`, create and start, the SSH names, start at login, the sleep setting. `--remove` removes only the harness instance and files; other Lima instances and their shared files stay. The sleep setting is undone manually. |
 | `check.sh` | The environment check: `--mac` on the Mac, `--host` inside the host as the bot user. Reads only. |
 | `SHA256SUMS` | Hashes of the three files above. |
 
@@ -37,6 +37,25 @@ sh check.sh --mac
 ssh myharness                                    # then, inside the host, with the repository cloned:
 sh vm/check.sh --host
 ```
+
+To remove the supplied VM and app:
+
+```sh
+sh host-step.sh --remove                         # confirms before deleting harness data
+sh host-step.sh --remove --keep-data-disk        # keeps only the harness's mhhome data disk
+```
+
+Other Lima instances and disks are left alone. When another instance remains,
+`~/.lima`, its shared key/config and Lima's image cache stay. A symlinked
+`~/.lima` and its target's shared contents are kept too; the output explains
+what stayed and why. Only the pinned Lima install files in the host step's
+manifest are removed from `~/.local`. Undo prevent-sleep in System Settings
+if you enabled it.
+
+A kept data disk is the folder `~/.lima/_disks/mhhome`. The pinned Lima install
+is removed even when that disk is kept, so a later `--remove` fails closed
+rather than reinstalling Lima or deleting the disk itself. You may delete that
+folder yourself when you no longer want its data.
 
 Before the real-login stage engine logins report INFO; pass `--login-stage` after it.
 Before a logout, restart, shutdown or macOS update: `~/.local/bin/limactl stop myharness-vm`.

@@ -35,17 +35,42 @@ remove() {
     [ "$answer" = yes ] || { say "Nothing was removed."; exit 0; }
   fi
   if [ -x "$LIMACTL" ]; then
-    "$LIMACTL" autostart disable myharness-vm 2>/dev/null || true
-    "$LIMACTL" delete -f myharness-vm 2>/dev/null || true
+    LIMA_HOME="$LIMA_DIR" "$LIMACTL" autostart disable myharness-vm 2>/dev/null || true
+    LIMA_HOME="$LIMA_DIR" "$LIMACTL" delete -f myharness-vm || die "could not delete myharness-vm; Lima files were kept"
+    if [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; then
+      # No force: Lima must refuse a disk still used by another instance.
+      LIMA_HOME="$LIMA_DIR" "$LIMACTL" disk delete mhhome || die "could not delete the harness data disk; Lima files were kept"
+    fi
+  elif [ -e "$LIMA_DIR/myharness-vm" ] || { [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; }; then
+    die "the pinned limactl is missing; Lima files were kept. If you previously kept the data disk, it is the folder ~/.lima/_disks/mhhome; you may delete that folder yourself."
   fi
+  [ ! -e "$LIMA_DIR/myharness-vm" ] || die "myharness-vm still exists; Lima files were kept"
   rm -f "$SSH_FILE" "$HOME/.ssh/myharness_known_hosts"
   drop_include
-  rm -rf "$HOME/Applications/myharness.app" "$HOME/Library/Application Support/myharness" "$HOME/Library/Caches/lima"
+  rm -rf "$HOME/Applications/myharness.app" "$HOME/Library/Application Support/myharness"
   if [ "$keep" = 1 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; then
-    find "$LIMA_DIR" -mindepth 1 -maxdepth 1 ! -name _disks -exec rm -rf {} +
-    say "The data disk stays at $LIMA_DIR/_disks/mhhome."
+    say "The data disk stays in ~/.lima/_disks/mhhome; you may delete that folder yourself when you no longer want the data."
+  fi
+  # Look at entries rather than a successful-instance listing: broken instances
+  # and instance links also need their shared key and image cache.
+  other=0
+  for p in "$LIMA_DIR"/*; do
+    case "${p##*/}" in _*) continue ;; esac
+    if [ -d "$p" ] || [ -L "$p" ]; then other=1; break; fi
+  done
+  if [ -L "$LIMA_DIR" ]; then
+    say "~/.lima is a link you set up (-> $(readlink "$LIMA_DIR")); it and its contents were kept."
+    say "Lima's shared image cache was kept because ~/.lima is a link."
+  elif [ "$other" = 1 ]; then
+    say "Kept ~/.lima, its _config and Lima's shared image cache because another Lima instance remains."
   else
-    rm -rf "$LIMA_DIR"
+    rm -rf "$LIMA_DIR/_config" "$HOME/Library/Caches/lima"
+    # Never recursively remove the root: unrelated disks and unknown files stay.
+    rmdir "$LIMA_DIR/_disks" 2>/dev/null || true
+    rmdir "$LIMA_DIR" 2>/dev/null || true
+    if [ -d "$LIMA_DIR" ]; then
+      say "Kept ~/.lima because it still contains a kept data disk or other files."
+    fi
   fi
   if [ -f "$MANIFEST" ]; then
     # Files first, then directories, deepest first; only what Lima's archive installed. Shared directories stay when not empty.
