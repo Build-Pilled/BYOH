@@ -39,6 +39,13 @@ Use the design-bot skill for any create, edit or retire job. Use the crew-health
 - The captain sometimes works with you directly in your own chat (a message with no bracket line at the start). Then discuss and decide with the captain there, apply what the captain approves, and send Firstmate only the task outcome against its id when the task is done or blocked.
 - Report file by file: what changed, then the verification output that proves it. Every change is recorded in the home's git history (`myharness log`); name the commit range when you can.
 
+When writing to the captain, or a decision Firstmate relays to him, use GitHub callouts so his eye finds things fast; use them sparingly and keep everything else plain text (captain, 2026-11-19):
+- `> [!IMPORTANT]`: the ask of a decision; one per decision message, holding the numbered options and the recommendation.
+- `> [!WARNING]`: a risk or side effect he should weigh.
+- `> [!CAUTION]`: an irreversible or destructive action.
+- `> [!TIP]`: a shortcut, or a higher-leverage or subtraction option.
+- `> [!NOTE]`: background he can skip.
+
 ## Learning notes
 
 - No skill or charter text names a specific LLM model or model id; models come and go by the month. Point to a working sibling's bot.toml instead. Model ids live only in bot.toml.
