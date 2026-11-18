@@ -42,14 +42,14 @@ remove() {
       LIMA_HOME="$LIMA_DIR" "$LIMACTL" disk delete mhhome || die "could not delete the harness data disk; Lima files were kept"
     fi
   elif [ -e "$LIMA_DIR/myharness-vm" ] || { [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; }; then
-    die "the pinned limactl is missing; Lima files were kept"
+    die "the pinned limactl is missing; Lima files were kept. If you previously kept the data disk, it is the folder ~/.lima/_disks/mhhome; you may delete that folder yourself."
   fi
   [ ! -e "$LIMA_DIR/myharness-vm" ] || die "myharness-vm still exists; Lima files were kept"
   rm -f "$SSH_FILE" "$HOME/.ssh/myharness_known_hosts"
   drop_include
   rm -rf "$HOME/Applications/myharness.app" "$HOME/Library/Application Support/myharness"
   if [ "$keep" = 1 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; then
-    say "The data disk stays at $LIMA_DIR/_disks/mhhome."
+    say "The data disk stays in ~/.lima/_disks/mhhome; you may delete that folder yourself when you no longer want the data."
   fi
   # Look at entries rather than a successful-instance listing: broken instances
   # and instance links also need their shared key and image cache.

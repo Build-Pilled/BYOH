@@ -52,5 +52,10 @@ what stayed and why. Only the pinned Lima install files in the host step's
 manifest are removed from `~/.local`. Undo prevent-sleep in System Settings
 if you enabled it.
 
+A kept data disk is the folder `~/.lima/_disks/mhhome`. The pinned Lima install
+is removed even when that disk is kept, so a later `--remove` fails closed
+rather than reinstalling Lima or deleting the disk itself. You may delete that
+folder yourself when you no longer want its data.
+
 Before the real-login stage engine logins report INFO; pass `--login-stage` after it.
 Before a logout, restart, shutdown or macOS update: `~/.local/bin/limactl stop myharness-vm`.

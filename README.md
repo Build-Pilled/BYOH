@@ -34,7 +34,7 @@ It tells you what the harness needs, sets up the isolated host, asks you a few q
 ## Release
 
 v1.2.1
-SHA-256 of vm/SHA256SUMS: 8dd47460638b65174bf5928e8048d4ac2c8027633534327a1a75edd5f003a3c4
+SHA-256 of vm/SHA256SUMS: cd6fd678a4724adb065e6d97adbcc08545f0185c900326ae3a35f92944370a42
 
 ## For those who
 

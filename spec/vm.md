@@ -177,7 +177,10 @@ environment check.
   why. A symlinked `~/.lima` and its target's shared contents stay, with output
   naming the link target; only the named harness instance and its data disk
   are removed through Lima. `--keep-data-disk` keeps the harness's `mhhome`
-  disk; no other data disk is removed. Unrelated files are never recursively
+  disk; no other data disk is removed. After keeping it, the person may delete
+  the folder `~/.lima/_disks/mhhome` themselves; removal says so when keeping
+  the disk and when the pinned Lima is missing. It does not reinstall Lima or
+  automatically delete that previously kept disk. Unrelated files are never recursively
   deleted to remove `~/.lima`. Removal states first, in the person's words,
   that deleting the VM deletes the harness data unless backup was chosen or
   the data disk is kept ([VM backup](vm-backup.md) R2).
