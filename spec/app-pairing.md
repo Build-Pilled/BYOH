@@ -23,7 +23,10 @@ program.
   launch-time `MYHARNESS_API` and `MYHARNESS_TOKEN_FILE` override both
   ([verifiability](verifiability.md) R6). The paired origin is that address's
   scheme, host and port. The support folder name is fixed, so a changed display
-  name never orphans the token. The app reads no daemon discovery file, no
+  name never orphans the token. All persistent Electron `userData` and
+  `sessionData` use that same fixed support tree, pinned before readiness,
+  independently of `app.setName`; isolated verification retains its disposable
+  profile ([app build](app-build.md) R4). The app reads no daemon discovery file, no
   harness home and no other file on the Mac besides its support folder and its
   own bundle.
 - **R2 — Pairing line.** Pairing is one command the person runs once in

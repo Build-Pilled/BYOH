@@ -1,7 +1,7 @@
 #!/bin/sh
 # The pinned host step: the only thing from this repository that runs on the Mac (spec/vm.md, spec/onboarding.md R1).
 # Installs the pinned Lima under ~/.local, creates the VM, writes the SSH names and turns on start at login.
-# Removal: myharness-host-step.sh --remove [--keep-data-disk] [--yes] (spec/vm.md R11).
+# Removal: myharness-host-step.sh --remove [--save-first|--discard-data] [--keep-data-disk] [--yes] (spec/vm.md R11).
 set -eu
 
 LIMA_VERSION=2.3.0
@@ -16,41 +16,9 @@ HERE=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 say() { printf '%s\n' "$*"; }
 die() { printf 'reason: %s\n' "$*" >&2; exit 1; }
 
-drop_include() {
-  [ -f "$HOME/.ssh/config" ] || return 0
-  grep -vxF "$INCLUDE" "$HOME/.ssh/config" > "$HOME/.ssh/myharness-ssh-config.new" || true
-  chmod 600 "$HOME/.ssh/myharness-ssh-config.new"
-  mv "$HOME/.ssh/myharness-ssh-config.new" "$HOME/.ssh/config"
-}
+. "$HERE/myharness-removal.sh"
 
-remove() {
-  keep=0; yes=0
-  for a in "$@"; do
-    case "$a" in --keep-data-disk) keep=1 ;; --yes) yes=1 ;; *) printf 'usage: myharness-host-step.sh --remove [--keep-data-disk] [--yes]\n' >&2; exit 2 ;; esac
-  done
-  say "This deletes the VM and the harness data inside it, unless VM backup was chosen or the data disk is kept."
-  if [ "$yes" = 0 ]; then
-    printf 'Type yes to go on: '
-    read -r answer
-    [ "$answer" = yes ] || { say "Nothing was removed."; exit 0; }
-  fi
-  if [ -x "$LIMACTL" ]; then
-    LIMA_HOME="$LIMA_DIR" "$LIMACTL" autostart disable myharness-vm 2>/dev/null || true
-    LIMA_HOME="$LIMA_DIR" "$LIMACTL" delete -f myharness-vm || die "could not delete myharness-vm; Lima files were kept"
-    if [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/myharness-d" ]; then
-      # No force: Lima must refuse a disk still used by another instance.
-      LIMA_HOME="$LIMA_DIR" "$LIMACTL" disk delete myharness-d || die "could not delete the harness data disk; Lima files were kept"
-    fi
-  elif [ -e "$LIMA_DIR/myharness-vm" ] || { [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/myharness-d" ]; }; then
-    die "the pinned limactl is missing; Lima files were kept. If you previously kept the data disk, it is the folder ~/.lima/_disks/myharness-d; you may delete that folder yourself."
-  fi
-  [ ! -e "$LIMA_DIR/myharness-vm" ] || die "myharness-vm still exists; Lima files were kept"
-  rm -f "$SSH_FILE" "$HOME/.ssh/myharness-known-hosts"
-  drop_include
-  rm -rf "$HOME/Applications/myharness.app" "$HOME/Library/Application Support/myharness"
-  if [ "$keep" = 1 ] && [ -e "$LIMA_DIR/_disks/myharness-d" ]; then
-    say "The data disk stays in ~/.lima/_disks/myharness-d; you may delete that folder yourself when you no longer want the data."
-  fi
+cleanup_lima() {
   # Look at entries rather than a successful-instance listing: broken instances
   # and instance links also need their shared key and image cache.
   other=0
@@ -75,13 +43,13 @@ remove() {
   if [ -f "$MANIFEST" ]; then
     # Files first, then directories, deepest first; only what Lima's archive installed. Shared directories stay when not empty.
     sort -r "$MANIFEST" | while IFS= read -r p; do
+      case "$p" in ''|/*|../*|*/../*|*/..|./*|*/./*|*//*|*/) die "unsafe Lima install manifest; kept" ;; esac
+      # The archive manifest is authority only inside its own .local tree.
+      case "$p" in */*) owned_path "$HOME/.local/${p%/*}" ;; *) owned_path "$HOME/.local" ;; esac
       if [ -d "$HOME/.local/$p" ] && [ ! -L "$HOME/.local/$p" ]; then rmdir "$HOME/.local/$p" 2>/dev/null || true; else rm -f "$HOME/.local/$p"; fi
     done
     rm -f "$MANIFEST"
   fi
-  say "result: removed"
-  say "Undo the prevent-sleep setting in System Settings if you turned it on."
-  exit 0
 }
 
 ENGINES=claude,pi; DISK=one; SLEEP=yes; MEMORY=""; CPUS=""
@@ -92,7 +60,7 @@ while [ $# -gt 0 ]; do
     --disk) DISK=${2:?}; shift 2 ;;
     --prevent-sleep) SLEEP=${2:?}; shift 2 ;;
     --memory) MEMORY=${2:?}; shift 2 ;;
-    *) printf 'usage: myharness-host-step.sh [--engines claude,pi] [--disk one|data] [--prevent-sleep yes|no] [--memory GiB] | --remove [--keep-data-disk] [--yes]\n' >&2; exit 2 ;;
+    *) printf 'usage: myharness-host-step.sh [--engines claude,pi] [--disk one|data] [--prevent-sleep yes|no] [--memory GiB] | --remove [--save-first|--discard-data] [--keep-data-disk] [--yes]\n' >&2; exit 2 ;;
   esac
 done
 case "$ENGINES" in claude|pi|claude,pi|pi,claude) ;; *) die "--engines takes claude, pi or both" ;; esac
@@ -123,9 +91,22 @@ cores=$(sysctl -n hw.ncpu); CPUS=$(( cores / 2 ))
 [ "$CPUS" -le 6 ] || CPUS=6
 say "VM: $CPUS CPUs, $MEMORY GiB memory, a disk file on this Mac that grows to at most 100 GiB"
 
+for existing in "$SSH_FILE" "$HOME/.ssh/myharness-known-hosts" "$HOME/Applications/myharness.app" "$HOME/Library/Application Support/myharness"; do
+  [ ! -e "$existing" ] && [ ! -L "$existing" ] || die "a fixed install path already exists; use its original release's remover or resolve the collision first: $existing"
+done
+
 say "step: files"
 ( cd "$HERE" && shasum -a 256 -c SHA256SUMS >/dev/null ) || die "the files next to this program do not match SHA256SUMS; nothing was installed"
 
+# One Mac-side record/lock; no sleep fields or VM-side admission protocol.
+state_lock
+if [ -e "$RECORD" ]; then
+  state_read
+  [ "$phase" = complete ] || die "a host operation is incomplete; resolve/remove it before installing again"
+fi
+phase=installed; ssh_created=0; ssh_inserted=0; ssh_inode=0; ssh_hash=none
+[ "$disk_phase" = kept ] || disk_phase=none
+state_write
 say "step: lima"
 if [ "$("$LIMACTL" --version 2>/dev/null)" != "limactl version $LIMA_VERSION" ]; then
   t=$(mktemp -d)
@@ -166,10 +147,7 @@ mkdir -p "$HOME/.ssh"; chmod 700 "$HOME/.ssh"
   done
 } > "$SSH_FILE.new"
 chmod 600 "$SSH_FILE.new"; mv "$SSH_FILE.new" "$SSH_FILE"
-if ! grep -qxF "$INCLUDE" "$HOME/.ssh/config" 2>/dev/null; then
-  { printf '%s\n' "$INCLUDE"; cat "$HOME/.ssh/config" 2>/dev/null || true; } > "$HOME/.ssh/myharness-ssh-config.new"
-  chmod 600 "$HOME/.ssh/myharness-ssh-config.new"; mv "$HOME/.ssh/myharness-ssh-config.new" "$HOME/.ssh/config"
-fi
+ssh_install_include
 
 say "step: start at login"
 "$LIMACTL" autostart enable myharness-vm --condition=login --keep-alive=false

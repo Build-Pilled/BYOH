@@ -10,10 +10,9 @@ requirement in one pinned step on the Mac: Lima on Apple's virtualization,
 Debian 13 arm64, one VM for all bots. This section owns how that VM is
 created, sized, connected, started, kept awake, stopped cleanly and removed.
 It is the default way to meet the isolation requirement, not the only one. The Mac gets Lima with its start-at-login job, one app, the two SSH
-names and, when chosen, the sleep setting; nothing else.
+names, a private host-operation record/lock and, when chosen, the sleep setting. Removal saves are created only when removal is requested.
 
-The recipe is [`vm/`](../vm/README.md): the template, the host step and the
-environment check.
+The recipe is [`vm/`](../vm/README.md): the template, host step and its removal helpers, and the environment check.
 
 ## Required behaviour
 
@@ -41,7 +40,7 @@ environment check.
     absolute path.
   - The recipe: fetched from `Build-Pilled/BYOH` at the release named in the
     [top-level README](../README.md#release). Check the SHA-256 of `vm/SHA256SUMS`
-    against that README, then check the template, host step and environment check against
+    against that README, then check every recipe/helper file listed in
     `SHA256SUMS` before running them.
   - Node: the exact pinned version from the official Node build for
     the VM's architecture, checked against that release's `SHASUMS256.txt`,
@@ -168,23 +167,102 @@ environment check.
   boot, and the environment check reports the recovery as INFO. After a Mac
   crash the instance may show Broken (P5); the person runs
   `limactl stop --force myharness-vm`, then `limactl start myharness-vm`.
-- **R11 — Removal.** Trying it and judging is supported. Removal uses the
-  pinned `~/.local/bin/limactl` to turn off start at login and delete only
-  `myharness-vm`. It removes the SSH file, known-hosts file and its `Include`
-  line, the app and its support folder, and only the pinned Lima install files
-  listed in its manifest under `~/.local`. Other Lima instances and their disks
-  stay. `~/.lima`, its shared `_config` and Lima's image cache are removed only
-  when no other instance remains; otherwise the output says what was kept and
-  why. A symlinked `~/.lima` and its target's shared contents stay, with output
-  naming the link target; only the named harness instance and its data disk
-  are removed through Lima. `--keep-data-disk` keeps the harness's `myharness-d`
-  disk; no other data disk is removed. After keeping it, the person may delete
-  the folder `~/.lima/_disks/myharness-d` themselves; removal says so when keeping
-  the disk and when the pinned Lima is missing. It does not reinstall Lima or
-  automatically delete that previously kept disk. Unrelated files are never recursively
-  deleted to remove `~/.lima`. Removal states first, in the person's words,
-  that deleting the VM deletes the harness data unless backup was chosen or
-  the data disk is kept ([VM backup](vm-backup.md) R2).
+- **R11 — Removal.** Trying it and judging is supported. The host step's
+  `--remove` offers a one-time collection before deleting data. Save is the
+  default; skipping requires `--discard-data`. `--save-first` explicitly selects
+  saving, and these flags are mutually exclusive. `--yes` answers only the final
+  deletion confirmation, never the save/discard question. On a terminal, no
+  policy flag means ask to save; declining/EOF/cancel leaves the installation
+  intact and says how to rerun with an explicit discard. Unattended removal
+  requires one policy flag **and** `--yes`, or exits before any mutation.
+
+  Show what goes and stays before asking, including that quitting can lose
+  UI-only unsaved state. A backup selection or kept disk is not proof of a
+  current saved copy. Saves may contain **anything typed into a conversation,
+  in clear text**; no content scan is performed. The destination is a new private
+  `~/myharness-removal-saves/<UTC time>-<unique>/` directory, never overwritten or
+  automatically deleted. A private hidden partial sibling is labelled incomplete
+  and kept on failure; print its path. Publish only after all required files and
+  checks pass. Files are owner-only, directories 0700. No fetched VM script is
+  executed on the Mac and no extra Mac runtime is installed.
+
+  Collection includes the effective service home, definitions, notes, bridge
+  logs, session metadata/attachments/durable input recovery, tidy archive and
+  native conversations (including this harness's external Claude transcripts
+  and their owned associated artifacts). Validate session/path ownership; a
+  missing required native transcript or archived artifact fails collection.
+  Known credential locations and `secrets/` are excluded **before traversal**;
+  no SSH keys, account/login files, app profile, Git configuration/history,
+  dependencies/caches/build output, session `work/` or VM image is collected.
+  Links are not followed. Include a SQLite online backup of `tasks/factory.db`,
+  checked with `integrity_check`, rather than its raw live DB/WAL/journals;
+  a never-created DB is recorded absent. Include the owned `~/myharness-src`
+  working tree, including uncommitted source, and a separately labelled filtered
+  `/opt/myharness-deploy/src` worktree when present. The manifest records original
+  paths, native mappings, revisions when available, file checksums, exclusions,
+  absence and DB result. Source inventory is the saved working tree, not Git
+  history. This is not a bootable image or automatic restore; fresh engine
+  logins and pairing are required. It neither enables nor depends on optional
+  [VM backup](vm-backup.md).
+
+  Before collection, quit only the installed `~/Applications/myharness.app`,
+  verified by exact bundle path, `local.myharness.app`, current UID and process
+  identity. Ask it to quit without launching it; wait 30 seconds. Then send
+  SIGTERM only to revalidated owned PID/start/executable identities (including
+  exact-bundle helpers), wait 10 seconds and refuse if any remain/relaunch or
+  identity is ambiguous. No name-matching, global Electron kill or SIGKILL.
+  This fallback is removal-only, not a change to rebuild's polite-only policy.
+
+  Pause `myharness-tidy.timer` first; refuse if tidy or a deploy is observed in
+  progress. Ask the daemon about running turns, attached terminals and waiting
+  input; busy/unknown refuses without stopping the service. Stop the idle
+  service cleanly, then collect. Routine scheduling lives inside the daemon;
+  there is no separate routines timer or new pause API. As with R9, a turn may
+  start between the idle check and the stop and be cut off. Disclose this race
+  before confirmation and identify a possible cutoff when changed final session
+  metadata makes it detectable; detection is not guaranteed. Collection happens
+  with the service stopped, not under a VM-side writer lock. Starting an offline
+  terminal, tidy, source write or rebuild during removal is the person's own
+  concurrent act; tell them not to. On failure, state that the service/tidy timer
+  may remain stopped and print the explicit restart command. Never silently
+  restart work. A failed save, transfer, checksum, DB check or publication blocks
+  autostart disable and all VM/data/SSH/app deletion. Retry must collect afresh
+  while the VM exists; an old success phase is not authorization to delete new
+  data. A fresh explicit discard is the bypass for saving, not `--yes`.
+
+  Only then use pinned `~/.local/bin/limactl` to disable start at login and delete
+  `myharness-vm` and, unless kept, its `myharness-d` data disk. `--keep-data-disk`
+  is independent of the save choice. A kept disk stays kept on future invocations,
+  even if Lima is available again; print `~/.lima/_disks/myharness-d` and explain
+  the person may delete it manually. Do not reinstall Lima to remove a disk.
+  Other instances and disks stay. Shared `~/.lima/_config` and Lima's image cache
+  are removed only when no other instance remains. A symlinked `~/.lima` and
+  its target's shared contents stay, with explanation; only the named resources
+  are removed through Lima. Never recursively remove the `.lima` root to erase
+  unknown files. Remove only the pinned Lima files listed in the owned manifest.
+
+  Remove the owned SSH file/known-hosts file and only the exact Include inserted
+  by this install. A private Mac record at
+  `~/.local/share/myharness-host-state/record` holds SSH provenance and phases,
+  not tokens, conversation content or sleep fields; its lock excludes overlapping
+  host operations. Record provenance before writing the Include. Restore shared
+  `~/.ssh/config` absence only if this install created it, the owned lineage is
+  unchanged and removing that line leaves it empty. Preserve pre-existing empty
+  files and other content byte-for-byte. Preserve an unfamiliar replacement or
+  moved/edited line with an explanation; refuse a concurrent edit rather than
+  overwrite it. A missing/corrupt record cannot authorize guessed cleanup. Keep
+  phases/kept-disk state for safe retry, including after partial VM deletion;
+  an interrupted host lock needs confirmation its process ended before manual
+  lock removal. New installs only; older installs use their own release's remover.
+
+  After the identified app exits, remove only its fixed support folder
+  `~/Library/Application Support/myharness` and exact preferences domain
+  `local.myharness.app` through the platform preferences API. Refuse ambiguous
+  linked/foreign-owned cleanup paths. Never search other support folders by
+  display name or remove unrelated preferences, Downloads or backup collections.
+  Removal does not change sleep settings; the person undoes prevent-sleep in
+  System Settings if desired. Report complete only after required owned cleanup
+  succeeds; failure names what remains for retry.
 
 ## States
 

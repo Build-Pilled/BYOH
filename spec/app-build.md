@@ -86,7 +86,12 @@ half that pulls, checks and swaps the app, rollback and replacement errors.
      name are escaped for the strings-file format, stored as UTF-8 or UTF-16
      so macOS reads the exact name. The running Electron app also uses that
      display name for its app name, native About panel and notification sender.
-     Each helper's property list names its own executable.
+     Before app readiness or creating any window/session, explicitly pin
+     Electron's persistent `userData` and `sessionData` to
+     `~/Library/Application Support/myharness`, independently of that display
+     name. No name-derived sibling profile may be created. Isolated verification
+     still uses a disposable profile ([verifiability](verifiability.md) R1/R6),
+     never the production directory. Each helper's property list names its own executable.
   4. The bundle is signed ad hoc, recursively, with rcodesign at its pinned
      version and hash; the build fails when the signer reports a nested
      bundle without a main executable. There is no hardened runtime, no
@@ -114,7 +119,8 @@ half that pulls, checks and swaps the app, rollback and replacement errors.
   3. `quit`: if the app is running it is asked to quit by its bundle
      identifier, never by process name (other apps share Electron's executable
      name), in a way that cannot launch it; the half waits up to 30 seconds and
-     stops, replacing nothing, if it is still running.
+     stops, replacing nothing, if it is still running. Removal has a separate,
+     bounded owned-PID fallback ([VM](vm.md) R11); rebuild does not.
   4. `swap`: the installed `~/Applications/myharness.app`, if any, is moved
      aside to `~/Applications/.myharness-previous.app`, and the new bundle is
      moved into place. If that move fails the previous bundle is moved back and

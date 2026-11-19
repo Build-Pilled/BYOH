@@ -35,6 +35,12 @@ the bot name) and the job that produces the task-database copy of R7 (R7).
   every conversation, bot configuration, archive and task, and that a separate data
   disk is not a backup, since it still sits on the same Mac. [Session
   tidy](session-tidy.md) E2 already says the same where it touches it.
+  The supplied remover separately offers a verified one-time collection
+  ([VM](vm.md) R11), even when this backup choice is off. A selected backup,
+  a completed removal collection and a kept data disk are different things;
+  neither a selected checkbox nor keeping a disk proves a current saved copy.
+  Removal collections have no content scan and may contain anything typed into
+  a conversation in clear text; the scheduled backup's scan policy is unchanged.
 - **R3 — What a ticked choice adds, and nothing else.** With backup chosen, the Mac
   also carries this job, its configuration, the push key, a scheduled launch for
   it, a bare mirror of the host's history, a state folder, a log and the snapshot

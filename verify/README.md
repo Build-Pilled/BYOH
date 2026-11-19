@@ -23,6 +23,7 @@ from the pinned blueprint checkout, with no separate skill installation.
 
 ```sh
 node verify/test/selftest.mjs
+node --test verify/test/removal.mjs
 ```
 
 It copies the committed tree into a fresh directory with nothing installed and runs
