@@ -5,7 +5,7 @@ LOCK="$STATE_DIR/lock"
 phase=installed; disk_phase=none; ssh_created=0; ssh_inserted=0; ssh_inode=0; ssh_hash=none
 locked=0
 
-owned_path() {
+owned_path() (
   # Refuse links in any existing component, not just the final leaf.
   p=$1
   while [ "$p" != / ] && [ "$p" != . ]; do
@@ -16,8 +16,11 @@ owned_path() {
     [ "$p" != "$HOME" ] || break
     p=${p%/*}; [ -n "$p" ] || p=/
   done
+)
+file_hash() {
+  hashed=$(shasum -a 256 "$1") || return 1
+  printf '%s\n' "${hashed%% *}"
 }
-file_hash() { shasum -a 256 "$1" | awk '{print $1}'; }
 file_inode() { stat -f '%d:%i' "$1"; }
 state_write() {
   ( umask 077

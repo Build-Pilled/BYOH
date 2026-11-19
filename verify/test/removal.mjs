@@ -66,11 +66,17 @@ check('collection failure leaves VM, disk and SSH intact',f=>{
   assert.ok(vm(f),'failed collection deleted the VM');assert.notEqual(r.status,0);assert.ok(fs.existsSync(path.join(f.home,'.ssh/myharness-ssh.conf')));
 });
 check('verified save is published before teardown and never removed by retry',f=>{
+  put(path.join(f.home,'.local/share/myharness-lima.files'),'bin/lima\nbin/limactl\nbin\n');
+  fs.symlinkSync('limactl',path.join(f.home,'.local/bin/lima'));
+  put(path.join(f.home,'.lima/other-vm/keep'),'other instance');put(path.join(f.home,'.lima/_config/keep'),'shared');put(path.join(f.home,'Library/Caches/lima/keep'),'shared');
   const r=f.remove(['--save-first','--yes']);assert.equal(r.status,0,r.stdout+r.stderr);
   const parent=path.join(f.home,'myharness-removal-saves');assert.ok(fs.existsSync(parent),'conversations/source were not saved');
   const saves=fs.readdirSync(parent);assert.equal(saves.length,1);assert.ok(!saves[0].startsWith('.'));
   const saved=path.join(parent,saves[0]);assert.equal(fs.readFileSync(path.join(saved,'source/main.js'),'utf8'),'source changes\n');
   assert.equal(fs.statSync(saved).mode&0o777,0o700);assert.equal(fs.statSync(path.join(saved,'source/main.js')).mode&0o777,0o600);
+  assert.ok(!fs.existsSync(path.join(f.home,'.local/bin/limactl')),'owned install manifest files were not removed');
+  assert.ok(!fs.existsSync(path.join(f.home,'.local/bin/lima')),'owned archive symlink was not unlinked');
+  assert.equal(fs.readFileSync(path.join(f.home,'.lima/other-vm/keep'),'utf8'),'other instance');assert.equal(fs.readFileSync(path.join(f.home,'.lima/_config/keep'),'utf8'),'shared');assert.equal(fs.readFileSync(path.join(f.home,'Library/Caches/lima/keep'),'utf8'),'shared');
   const retry=f.remove(['--discard-data','--yes']);assert.equal(retry.status,0,retry.stdout+retry.stderr);assert.ok(fs.existsSync(saved));
 });
 check('app refusal blocks teardown instead of deleting a running profile',f=>{
