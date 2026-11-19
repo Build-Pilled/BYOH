@@ -24,10 +24,10 @@ try {
     if (i === 0) Object.assign(set, instrument);
     const k = order[i], f = set.fonts, r = set.radius, rule = set.ruleStrength, motion = set.motion;
     const L = looks[k] = {...set.description, fonts:set.description.fontCaption,
-      marks:{tileR:set.markStyle.tileRadius,cellR:set.markStyle.radius,gap:set.markStyle.gap,size:4,ink:set.markStyle.ink,crisp:set.markStyle.cellShape==='square'}};
+      marks:{tileR:set.markStyle.tileRadius,cellR:set.markStyle.radius,gap:set.markStyle.gap,grid:k==='instrument',ink:set.markStyle.ink,crisp:set.markStyle.cellShape==='square'}};
     for (const mode of ['dark','light']) {
       const t = Object.fromEntries(Object.entries(set.tokens).map(([n,v])=>[n,v[mode]]));
-      L[mode] = {display:t.display,chassis:t.chassis,surface:t['surface-card'],raised:t['surface-raised'],rule:t.rule,hi:t['edge-light'],text:t.text,muted:t['text-muted'],dim:t['text-faint'],accent:t.accent,onAccent:t['on-accent'],accentInk:t.link,personBg:t['person-bubble'],personText:t.display,codeBg:t['surface-inline-code'],glow:rule.glow,mkTile:t['mark-ground'],mkRim:t['mark-ground-grid'],mkInk:t.text,mk:Array.from({length:9},(_,i)=>t['mark-'+(i+1)])};
+      L[mode] = {display:t.display,chassis:t.chassis,surface:t['surface-card'],raised:t['surface-raised'],rule:t.rule,hi:t['edge-light'],text:t.text,muted:t['text-muted'],dim:t['text-faint'],accent:t.accent,onAccent:t['on-accent'],accentInk:t.link,personBg:t['person-bubble'],personText:t.display,codeBg:t['surface-inline-code'],glow:rule.glow,mkTile:t['mark-ground'],mkRim:t['mark-ground-grid'],mkGridStrong:t['mark-ground-grid-strong'],mkInk:t.text,mk:Array.from({length:9},(_,i)=>t['mark-'+(i+1)])};
       for (const s of ['working','waiting','unread','attention']) L[mode][s]=t['status-'+s];
       for (const c of callouts) L[mode][c]=['bar','bg','ink'].map(part=>t[`callout-${c}-${part}`]);
       // Every token is available by its published name to consumers of the stage.

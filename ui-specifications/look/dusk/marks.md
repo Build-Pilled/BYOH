@@ -3,12 +3,14 @@
 `tokens.json` owns the mark-style block and both modes' colours. The mark seed
 and its 6 x 6 cell assignment stay unchanged across looks. Drawing takes place
 inside the same 32, 28, 20 or 88 px box; these values are given at 32 px and
-scale with the box. A gap shrinks a painted cell, never its grid pitch or box.
+scale with the box. The 6 x 6 grid fills the whole tile without padding:
+32/6 px per cell at 32 px, 88/6 px at 88 px. A gap shrinks painted cells,
+never their grid pitch or the box.
 
 | Parameter | Value |
 | --- | --- |
 | Cell shape | rounded |
-| Drawing gap | 0.5 px on a 4 px pitch |
+| Drawing gap | 0.5 px on a 32/6 px pitch |
 | Cell radius | 1.3 px |
 | Tile radius | 10 px |
 | Ink | multi |

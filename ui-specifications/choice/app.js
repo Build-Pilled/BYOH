@@ -25,14 +25,18 @@ var GRIDS=[['cc....','cc.yy.','cc.yy.','ccrrr.','..rrp.','..rrp.'],
            ['pp.cc.','pp.cc.','..aa..','yy.aa.','yy..bb','....bb']];
 var KEY={p:0,c:1,y:2,r:3,g:4,a:5,s:6,l:7,b:8};
 var BOTS=['Firstmate','Bot Maker','Code Reviewer','Plain'];
-function mark(i,look,mode,px,working){
- var L=LOOKS[look],t=L[mode],m=L.marks,g=GRIDS[i],cell=m.size-m.gap,pad=m.gap/2,out='';
+function mark(i,look,mode,px){
+ var L=LOOKS[look],t=L[mode],m=L.marks,g=GRIDS[i],pitch=32/6,cell=pitch-m.gap,pad=m.gap/2,out='';
  out+='<rect x="0" y="0" width="32" height="32" rx="'+m.tileR+'" fill="'+t.mkTile+'"/>';
- if(t.mkRim&&t.mkRim.indexOf('rgba(0,0,0,0)')<0)out+='<rect x=".5" y=".5" width="31" height="31" rx="'+(m.tileR-.5)+'" fill="none" stroke="'+t.mkRim+'" stroke-width="1"/>';
+ if(!m.grid&&t.mkRim&&t.mkRim.indexOf('rgba(0,0,0,0)')<0)out+='<rect x=".5" y=".5" width="31" height="31" rx="'+(m.tileR-.5)+'" fill="none" stroke="'+t.mkRim+'" stroke-width="1"/>';
  g.forEach(function(row,r){row.split('').forEach(function(ch,c){if(ch==='.')return;
   var fill=m.ink==='single'?t.mkInk:t.mk[KEY[ch]];
-  out+='<rect x="'+(4+c*4+pad)+'" y="'+(4+r*4+pad)+'" width="'+cell+'" height="'+cell+'" rx="'+m.cellR+'" fill="'+fill+'"'+(m.crisp?' shape-rendering="crispEdges"':'')+'/>'})});
- return '<svg viewBox="0 0 32 32" width="'+px+'" height="'+px+'" aria-hidden="true" focusable="false">'+out+'</svg>'}
+  out+='<rect x="'+(c*pitch+pad)+'" y="'+(r*pitch+pad)+'" width="'+cell+'" height="'+cell+'" rx="'+m.cellR+'" fill="'+fill+'"'+(m.crisp?' shape-rendering="crispEdges"':'')+'/>'})});
+ if(m.grid){var lines='';for(var n=1;n<6;n++){var at=n*pitch;lines+='M'+at+' 0V32M0 '+at+'H32'}
+  out+='<path data-grid="true" d="'+lines+'" fill="none" stroke="'+t.mkRim+'" stroke-width="'+(32/88)+'"/>';
+  if(px>=88)for(var row=1;row<6;row++)for(var col=1;col<6;col++)out+='<circle cx="'+col*pitch+'" cy="'+row*pitch+'" r=".35" fill="'+t.mkGridStrong+'"/>';
+ }
+ return '<svg viewBox="0 0 32 32" width="'+px+'" height="'+px+'" style="border-radius:'+(m.tileR/32*100)+'%;overflow:hidden" aria-hidden="true" focusable="false">'+out+'</svg>'}
 
 /* ---------- stage ---------- */
 var IC={
@@ -79,7 +83,7 @@ function buildStage(){
  '<span class="lead a"><span class="leadb">'+ic('crown')+'Lead</span></span>'+
  '<button class="pillb btn a" style="left:472px;top:10px;width:28px;padding:0" aria-label="Save conversation">'+ic('down')+'</button>'+
  '<button class="pillb btn a" style="left:508px;top:10px;width:150px">All sessions <span class="mut">3</span> '+ic('chev')+'</button>'+
- '<button class="pillb btn a" style="left:667px;top:10px;width:196px">Opus 5.5 <span class="tag">API</span><span class="mut">· high</span> '+ic('chev')+'</button>'+
+ '<button class="pillb btn a" style="left:667px;top:10px;width:196px">Opus 5.5 <span class="tag">API</span><span class="mut">\u00b7 high</span> '+ic('chev')+'</button>'+
  '<button class="pillb btn a" style="left:872px;top:10px;width:28px;padding:0" aria-label="Prompt">'+ic('doc')+'</button>'+
  '<button class="pillb btn a" style="left:911px;top:10px;width:28px;padding:0" aria-label="Settings">'+ic('gear')+'</button></header>';
  h+='<main><div class="person a">Is the reading list ready to publish?</div>'+
@@ -121,22 +125,29 @@ function rowHTML(k){var L=LOOKS[k],mode=resolved(),marks='';
  '<div class="spec" data-look="'+k+'" data-mode="'+mode+'" data-mark-animation="'+window.LOOK_SETS[ORDER.indexOf(k)].markStyle.working+'">'+
  '<div class="sp"><div class="k">Text</div><div class="big">Aa 0123 Almost, all 48 tests pass</div></div>'+
  '<div class="sp"><div class="k">Code</div><div class="cd">readingList.add(book)</div><div class="lb2" style="margin-top:8px">'+L.fonts+'</div></div>'+
- '<div class="sp"><div class="k">Labels and data</div><div class="lb">Crew · Working · Opus 5.5</div><div class="lb2">11:32 AM · 6.2k tokens · 0123456789</div><div class="lb2" style="margin-top:8px">Motion: '+motionLine+'</div></div>'+
+ '<div class="sp"><div class="k">Labels and data</div><div class="lb">Crew \u00b7 Working \u00b7 Opus 5.5</div><div class="lb2">11:32 AM \u00b7 6.2k tokens \u00b7 0123456789</div><div class="lb2" style="margin-top:8px">Motion: '+motionLine+'</div></div>'+
  '<div class="sp"><div class="k">The four starter marks, working state</div><div class="marks">'+marks+'</div></div>'+
  '<div class="d90"><b>Day 90</b>'+L.day90+'</div></div>'+shots+'</div>'+
  '<div class="actions"><button type="button" data-a="pick" data-look="'+k+'" aria-pressed="'+(state.chosen===k)+'">'+(state.chosen===k?'Chosen':'Choose')+'</button>'+
  '<button type="button" data-a="ask" data-look="'+k+'">Ask for changes</button></div>'+
  '<div class="ask" id="ask-'+k+'"><textarea aria-label="What should change in '+L.name+'?" placeholder="For example: warmer, less busy, less contrast in the rules"></textarea><p>Your agent can use this request to revise the '+L.name+' row. <button type="button" data-a="queue" data-look="'+k+'" style="font:13px system-ui">Use request</button> <span class="qd"></span></p></div></section>'}
-function renderRows(){var open={};$$('.ask.open').forEach(function(a){open[a.id]=a.querySelector('textarea').value});
- $('#rows').innerHTML=ORDER.map(rowHTML).join('');Object.keys(open).forEach(function(id){var a=$('#'+id);a.classList.add('open');a.querySelector('textarea').value=open[id]});
- $('#chosen').innerHTML='Chosen: <b>'+LOOKS[state.chosen].name+'</b>'}
+function renderRows(){
+ // Mount interactive controls once. Paint updates must not discard drafts or focus.
+ $('#rows').innerHTML=ORDER.map(rowHTML).join('')}
 var lastRowMode=null;
-function renderRowsMode(){var m=resolved()+state.chosen;if(lastRowMode===m)return;lastRowMode=m;renderRows();
- $$('.row').forEach(function(r){r.setAttribute('data-motion',state.motion==='motion'&&!mqRM.matches?'on':'still')})}
+function renderRowsMode(){var mode=resolved();
+ $$('.row').forEach(function(r){var k=r.dataset.look,chosen=k===state.chosen;
+  r.dataset.mode=mode;r.dataset.chosen=chosen;
+  $('input[type=radio]',r).checked=chosen;
+  var pick=$('[data-a=pick]',r);pick.setAttribute('aria-pressed',chosen);pick.textContent=chosen?'Chosen':'Choose';
+  $('.spec',r).dataset.mode=mode;
+  if(lastRowMode!==mode)$$('.marks figure',r).forEach(function(figure,i){$('svg',figure).outerHTML=mark(i,k,mode,64)});
+ });
+ lastRowMode=mode;$('#chosen').innerHTML='Chosen: <b>'+LOOKS[state.chosen].name+'</b>'}
 
 /* ---------- wiring ---------- */
 function setLook(k){state.look=k;applyStage()}
-function choose(k){state.chosen=k;lastRowMode=null;applyStage();document.dispatchEvent(new CustomEvent('look-choice',{detail:{look:k}}))}
+function choose(k){state.chosen=k;applyStage();document.dispatchEvent(new CustomEvent('look-choice',{detail:{look:k}}))}
 $('#rows').addEventListener('change',function(e){if(e.target.matches('input[type=radio]'))choose(e.target.value)});
 $('#looks').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setLook(b.dataset.look)});
 $('#mode').addEventListener('click',function(e){var b=e.target.closest('button');if(b){state.mode=b.dataset.mode;applyStage()}});

@@ -16,7 +16,8 @@ support the module's JSON fetches. No CDN or outside request is used at runtime.
   sample mark and working-state row specimens; idle sample marks rest.
 - The full-size link opens the same scene alone at its current look and mode.
 - Something else? is describe-your-own only. There is no Mix or per-row Preview.
-- Ask for changes opens a local note. No request is sent. A serving agent may
+- Ask for changes opens a local note. No request is sent. Controls stay mounted across comparison/selection: radio
+  keyboard focus and even collapsed revision drafts remain intact. A serving agent may
   use the page's values or bind the `look-choice` and `look-request` document
   events (detail `{look}` and `{look, text}`), or use its interview tool's native
   annotation. It records the accepted answer in the existing interview record.
