@@ -19,9 +19,12 @@ observed output or this skill. Use the stage's existing cases during the build;
 run the full applicable suite before the first-use hand-over. For a later change,
 run the existing cases it affects and state the run's scope.
 
-**The suite is the only pass/fail gate.** This skill explains how to collect and
-inspect evidence, not a second ship gate or a per-feature checklist. It does not
-replace Code Reviewer or authorize a merge, deploy or real login. Edge-case
+**The suite is the only pass/fail gate for behaviour.** The
+[UI checks](../ui-specifications/checks/README.md) are a second completion
+requirement for the app's appearance and layout; see
+[What done means](../spec/README.md#what-done-means). This skill explains how to
+collect and inspect evidence, not another behavioural gate or a per-feature
+checklist. It does not replace Code Reviewer or authorize a merge, deploy or real login. Edge-case
 tables are reference only: no new scenarios, tests or fault hooks are required
 by this skill. A section or entry point without a case remains **not covered**.
 
