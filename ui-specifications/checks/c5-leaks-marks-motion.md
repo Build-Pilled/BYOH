@@ -5,11 +5,14 @@ distinct and respect reduced motion?
 
 **Procedure and pass conditions.**
 
-1. **Leak scan.** Scan the built CSS and the built page for the Instrument-only
-   literals: the accent, the link colour, the badge colour, the on-accent ink,
-   the nine mark colours and the island fills (read their values from
-   `look/instrument/tokens.json`). Pass when none appears unless the chosen
-   look's own token file contains the same literal.
+1. **Leak scan.** In every staged state and both modes, including each hover,
+   focus, selected and open-menu or dialog variation, read the computed visible
+   paint of every rendered element: colours, borders, shadows, outlines and
+   SVG fill and stroke. Look for the Instrument-only values: the accent, the
+   link colour, the badge colour, the on-accent ink, the mark colours and the
+   island fills (read their values from `look/instrument/tokens.json`). Pass
+   when none is painted unless the chosen look's own token file contains the
+   same value. Stylesheet text is not scanned; only what is painted counts.
 2. **Mark distinctness.** Render marks at 88 x 88 for 200 seeds with the chosen
    look. Count a pixel as different when the two colours differ by more than 8
    in any channel. Pass when every pair of marks differs in at least 12 percent

@@ -44,6 +44,7 @@ node verify/kit.mjs engine claude -p "hello"     # the configured engine command
 node verify/kit.mjs mock [reset]                 # what the model received (second read), or empty it
 node verify/kit.mjs app                          # Xvfb + the app, with a loopback testing connection
 node verify/kit.mjs ui click button "Send"       # verbs: see the header of driver.mjs
+node verify/kit.mjs ui-check /abs/ui-plan.mjs --evidence /abs/new-dir [--sample]   # appearance checks C1-C5; see ui-specifications/checks/README.md
 node verify/kit.mjs run scenario.mjs --harness descriptor.json [--engines pi,claude] [--only <case>] [--keep-at <case>] [--evidence <dir>]
                                                  # --engines as for up
 node verify/kit.mjs down [--evidence <dir>]      # stop this run, keep its logs, remove its directory

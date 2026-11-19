@@ -24,7 +24,7 @@
 | Every rendered text node other than faint text, at any size and weight | at least 4.5:1 |
 | Every rendered faint text node, at any size and weight | at least 3:1, except the exact Instrument-only pairs below |
 | Status colours | every pair at least 20 delta E apart in both modes |
-| Callout bars | every pair at least 20 delta E apart |
+| Callout bars | every pair at least 20 delta E apart, except the Instrument-only pair below |
 | Callouts and status | the label and the words are present (a colour is never the only signal) |
 
 ## Instrument-only faint exceptions
@@ -49,3 +49,12 @@ Light mode has value records, not screenshots. A frame named in a light row
 identifies the corresponding state, not an additional light picture. These
 exceptions do not extend to disabled-control glyphs, other colours or surfaces,
 or a new low-contrast pair discovered during a build.
+
+## Instrument-only bar exception
+
+Instrument's exact shipped tokens give the `callout-important-bar` and
+`callout-warning-bar` pair a CIE76 delta E of 19.09059333594837, in both dark
+and light modes. That one pair, with those exact Instrument token values, is
+retained as a named exception to the 20 delta E threshold. Every other pair in
+Instrument, and every pair in every other look, including a user-invented look,
+must reach 20.

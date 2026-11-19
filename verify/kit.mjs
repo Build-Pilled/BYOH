@@ -331,6 +331,13 @@ async function main(argv) {
     case 'mock': { const m = run().mock; if (pos[0] === 'reset') await m.reset(); else console.log(JSON.stringify(await m.requests(), null, 2)); return 0; }
     case 'app': { const inst = run(); const w = await inst.app(); w.close(); console.log(`APP READY pid=${inst.state.app.pid} cdp=127.0.0.1:${inst.state.app.cdp} window=${inst.url}`); return 0; }
     case 'ui': { const inst = run(); if (!inst.state.app?.cdp) fail('no app is running: kit app'); return uiCli({ port: inst.state.app.cdp, urlPrefix: inst.url }, pos); }
+    case 'ui-check': {
+      const plan = (await import(pathToUrl(pos[0] ?? fail('usage: ui-check <plan.mjs> --run <dir> --evidence <new-dir> [--sample]')))).default;
+      const { checkUI } = await import('./ui-checks.mjs'); const inst = run();
+      const w = await inst.window();
+      try { const result = await checkUI(w, plan, { evidence: o.evidence, sample: !!o.sample }); console.log(`${result.pass ? 'PASS' : 'FAIL'} UI checks; complete=${result.complete}; ${join(o.evidence, 'report.md')}`); return result.pass ? 0 : 1; }
+      finally { w.close(); }
+    }
     case 'run': {
       const scenario = (await import(pathToUrl(pos[0] ?? fail('usage: run <scenario.mjs> --harness <d.json> [--engines pi,claude] [--only id] [--keep-at id]')))).default;
       const idx = scenario.cases.findIndex((c) => c.id === o['keep-at']); if (o['keep-at'] && idx < 0) fail(`no case ${o['keep-at']} in ${scenario.section}`);

@@ -203,6 +203,8 @@ await check('two runs: --run picks one for cli, engine and ui; an unknown --only
     const bare = kit(['cli', 'bots']); assert.notEqual(bare.status, 0); assert.match(bare.stderr, /2 runs are up/);
     const pick = kit(['cli', '--run', a.root, 'bots']); assert.equal(pick.status, 0, pick.stderr); assert.match(pick.stdout, /helper/);
     assert.match(kit(['ui', '--run', a.root, 'focus']).stderr, /no app is running/);   // reached run a: the verb was not mistaken for --run
+    const uiPlan = join(scratch, 'ui-plan.mjs'); writeFileSync(uiPlan, 'export default {};\n');
+    assert.match(kit(['ui-check', uiPlan, '--run', a.root, '--evidence', join(scratch, 'ui-evidence')]).stderr, /no app is running/, 'UI-check command must reach the explicitly selected run');
     const only = kit(['run', SCENARIO, '--harness', descriptor, '--only', 'typo']); assert.notEqual(only.status, 0); assert.match(only.stderr, /no case typo/);
     // an engine child that dropped the stamp but sits in the run directory: down refuses to delete, then succeeds once it is gone
     const holder = spawn('sleep', ['60'], { cwd: b.root, env: {}, detached: true, stdio: 'ignore' });

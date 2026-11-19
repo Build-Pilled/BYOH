@@ -7,7 +7,8 @@
 1. In one build, drive every fixture state of the frames (`frames/index.md`),
    in both modes, twice: once with Instrument tokens and once with the chosen
    look. For a look being tested against itself there is nothing to do.
-2. In each state, for every element carrying a `data-role` attribute, record
+2. In each state, for every element the plan's role/name mapping names (see the
+   README's Mapping section), record
    `getBoundingClientRect()` (x, y, width, height) and the computed font-size,
    line-height, padding, margin, row and column gap, border widths, display.
 3. Record the accessibility tree snapshot and hash it.
