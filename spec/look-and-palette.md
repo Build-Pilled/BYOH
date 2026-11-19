@@ -92,9 +92,9 @@ their own meaning and only borrow the colours defined here.
   else decides which one shows: System, Dark and Light pick the variant exactly
   as [appearance mode](appearance-mode.md) R2 to R4 say. The three buttons, their
   names and their pressed states are unchanged under every palette. Release one
-  adds no palette picker; a palette is part of the app, and changing it later
+  adds no look picker; a look is part of the app, and changing it later
   is a change to the app that the person's agent makes and installs with the
-  app-build flow ([app build](app-build.md)). Installing a new palette neither
+  app-build flow ([app build](app-build.md)). Installing a new look neither
   clears the person's saved mode nor touches conversations or bot configuration.
 - **R5 — Legible.** In each variant, text and muted text meet a 4.5:1 contrast
   ratio against both the display and the chassis. Accent text SHOULD meet 4.5:1
@@ -139,7 +139,7 @@ belong to [appearance mode](appearance-mode.md) and the Settings frame to
 - **E3 — Declined.** A harness without this choice has the default look and all
   three mode buttons; declining removes no core control ([appearance
   mode](appearance-mode.md) E4).
-- **E4 — Changing later.** Installing a changed palette keeps the saved mode of
+- **E4 — Changing later.** Installing a changed look keeps the saved mode of
   the app profile (appearance mode R4) and reopens on the same conversation.
   Nothing is written to the daemon or to conversations.
 - **E5 — Missing font.** If a bundled font fails to load, text is drawn in the
@@ -154,4 +154,4 @@ belong to [appearance mode](appearance-mode.md) and the Settings frame to
 | Id | Given | When | Expect |
 | --- | --- | --- | --- |
 | **T1 — Default callout accents keep their role in both variants** | Default Instrument look, all five callouts, dark and light modes | Render each role and inspect actual colour/label/boundary | The five R3 hues map to note/tip/important/warning/caution in both default variants; light deepens label text as callouts R4, not the accent identity. Preserve distinct roles, words and boundaries; a chosen alternative palette still follows R2/R5/R6, not private brand-variable names (R3, R6, R7). |
-| **T2 — Theme is not harness configuration** | Otherwise valid disposable home, regardless of chosen/default look | Add theme = "dark" to myharness.toml and run myharness validate | Report unknown field theme at that file, exit1, no new look config/daemon route. Removing it restores valid config; the core System/Dark/Light selector and interview palette answer remain their own contracts (R1, R4; [home](home.md) R4). |
+| **T2 — Theme is not harness configuration** | Otherwise valid disposable home, regardless of chosen/default look | Add theme = "dark" to myharness.toml and run myharness validate | Report unknown field theme at that file, exit1, no new look config/daemon route. Removing it restores valid config; the core System/Dark/Light selector and interview look answer remain their own contracts (R1, R4; [home](home.md) R4). |
