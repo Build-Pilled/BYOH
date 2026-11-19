@@ -164,7 +164,7 @@ var botVariants=roles.botRow.variants.filter(function(v){return v.rect.width===2
 $$('#stage .brow').slice(1).forEach(function(e,i){e.style.top=botVariants[i].rect.y+'px'});
 $('#stage .head[style*="386px"]').style.top='445px';
 $('#stage .a.lbl[style*="386px"]').style.top='445px';
-$('#stage .more').style.top='289px';
+$('#stage .more').style.top='289px';$('#stage .head[style*="481px"]').style.top='535px';
 var firstSession=$('#stage .sess');firstSession.style.top='200.5px';firstSession.style.height='29.5px';
 ['Reading notes','Earlier plan'].forEach(function(name,i){var e=firstSession.cloneNode(true);e.setAttribute('aria-label','Session: '+name);e.style.top=(230+i*29.5)+'px';e.querySelector('.t').textContent=name;firstSession.parentNode.append(e)});
 
