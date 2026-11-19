@@ -71,7 +71,7 @@
 .meta{left:340px;top:597px;width:300px;height:16px;display:flex;align-items:center;gap:12px;color:var(--muted)}
 .meta svg.i{width:14px;height:14px}
 .arrive{animation:none}
-.stage[data-motion="on"][data-mark-animation="breath"] .arrive{animation:arrive var(--arrival-duration) var(--ease) both}
+.stage[data-motion="on"][data-arrival="on"] .arrive{animation:arrive var(--arrival-duration) var(--ease) both}
 .stage[data-motion="on"][data-mark-animation="breath"] .mkslot.working svg,.stage[data-motion="on"][data-mark-animation="breath"] .light.working{animation:breath var(--mark-duration) ease-in-out infinite}
 .stage[data-motion="on"] .btn,.stage[data-motion="on"] .hov{transition-duration:var(--dur)}
 .stage[data-motion="still"] *{transition:none!important}

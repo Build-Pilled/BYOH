@@ -95,7 +95,7 @@ function paintMarks(){var look=state.look,mode=resolved();
  $$('#stage .mkslot').forEach(function(s){s.innerHTML=mark(+s.getAttribute('data-bot'),look,mode,32)})}
 function applyStage(){var st=$('#stage'),mode=resolved();
  st.setAttribute('data-look',state.look);st.setAttribute('data-mode',mode);st.setAttribute('data-motion',state.motion==='motion'&&!mqRM.matches?'on':'still');
- st.dataset.markAnimation=window.LOOK_SETS[ORDER.indexOf(state.look)].markStyle.working;paintMarks();fit();
+ st.dataset.arrival='off';st.dataset.markAnimation=window.LOOK_SETS[ORDER.indexOf(state.look)].markStyle.working;paintMarks();fit();
  [].forEach.call($$('#looks button'),function(b){b.setAttribute('aria-pressed',b.dataset.look===state.look)});
  [].forEach.call($$('#mode button'),function(b){b.setAttribute('aria-pressed',b.dataset.mode===state.mode)});
  [].forEach.call($$('#motion button'),function(b){b.setAttribute('aria-pressed',b.dataset.motion===state.motion)});
@@ -118,7 +118,7 @@ function rowHTML(k){var L=LOOKS[k],mode=resolved(),marks='';
  '<input type="radio" name="look" aria-label="'+L.name+'"'+(state.chosen===k?' checked':'')+' value="'+k+'" style="margin-top:6px">'+
  '<div><h2>'+L.name+'</h2><div class="ch">'+L.character+'</div><div class="tags">'+L.tags+'</div>'+
  '<div class="pal"><span class="grp">Dark <span class="sw">'+swatches(k,'dark')+'</span></span><span class="grp">Light <span class="sw">'+swatches(k,'light')+'</span></span></div>'+
- '<div class="spec" data-look="'+k+'" data-mode="'+mode+'">'+
+ '<div class="spec" data-look="'+k+'" data-mode="'+mode+'" data-mark-animation="'+window.LOOK_SETS[ORDER.indexOf(k)].markStyle.working+'">'+
  '<div class="sp"><div class="k">Text</div><div class="big">Aa 0123 Almost, all 48 tests pass</div></div>'+
  '<div class="sp"><div class="k">Code</div><div class="cd">readingList.add(book)</div><div class="lb2" style="margin-top:8px">'+L.fonts+'</div></div>'+
  '<div class="sp"><div class="k">Labels and data</div><div class="lb">Crew · Working · Opus 5.5</div><div class="lb2">11:32 AM · 6.2k tokens · 0123456789</div><div class="lb2" style="margin-top:8px">Motion: '+motionLine+'</div></div>'+
@@ -141,7 +141,7 @@ $('#rows').addEventListener('change',function(e){if(e.target.matches('input[type
 $('#looks').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setLook(b.dataset.look)});
 $('#mode').addEventListener('click',function(e){var b=e.target.closest('button');if(b){state.mode=b.dataset.mode;applyStage()}});
 $('#motion').addEventListener('click',function(e){var b=e.target.closest('button');if(b&&!b.disabled){state.motion=b.dataset.motion;applyStage();
- if(state.motion==='motion'&&e.detail>0){var c=$('#stage .arrive');c.style.animation='none';void c.offsetWidth;c.style.animation=''}}});
+ if(state.motion==='motion'&&e.detail>0){var st=$('#stage'),c=$('#stage .arrive');st.dataset.arrival='off';void c.offsetWidth;st.dataset.arrival='on'}}});
 $('#rows').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var k=b.dataset.look,a=b.dataset.a;
  if(a==='pick'){choose(k)}
  if(a==='ask'){$('#ask-'+k).classList.toggle('open')}

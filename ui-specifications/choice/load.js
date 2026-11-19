@@ -15,7 +15,7 @@ try {
     fonts:{body:'Literata, Georgia, serif', ui:'Literata, Georgia, serif', person:'Literata, Georgia, serif', label:'ui-monospace, "SF Mono", monospace', data:'ui-monospace, "SF Mono", monospace', code:'Recursive, ui-monospace, monospace', bodyWeight:400, strongWeight:600, labelWeight:600, tracking:'0', labelTracking:'.06em', bodyFeatures:'normal', labelFeatures:'normal', dataFeatures:'normal', codeVariations:'"MONO" 1, "CASL" 0'},
     radius:{control:4,card:4,callout:4},
     ruleStrength:{region:1.5,control:1.5,card:1.5,calloutEdge:.45,glow:.9,personShadow:.18,composerAccent:0,primaryTexture:1},
-    motion:{preset:'none',hoverDuration:0,arrivalDuration:0,easing:'linear',pressScale:1},
+    motion:{preset:'none',durationScale:1,hoverDuration:0,arrivalDuration:0,easing:'linear',pressScale:1},
     markStyle:{cellShape:'square',gap:0,radius:0,tileRadius:5.12,ink:'multi',idle:'none',working:'none',duration:0}
   };
   const looks = {order, callouts};
@@ -33,7 +33,7 @@ try {
       // Every token is available by its published name to consumers of the stage.
       css += `[data-look="${k}"][data-mode="${mode}"]{`+Object.entries(t).map(([n,v])=>`--${n}:${v}`).join(';')+'}\n';
     }
-    const vars = {'ff-ui':f.ui,'ff-text':f.body,'ff-person':f.person,'ff-data':f.data,'ff-label':f.label,'ff-code':f.code,'code-var':f.codeVariations,'fw-ui':f.bodyWeight,'fw-name':f.strongWeight,'lbl-fw':f.labelWeight,'lbl-ls':f.labelTracking,'lbl-feat':f.labelFeatures,'data-feat':f.dataFeatures,'body-ls':f.tracking,'body-feat':f.bodyFeatures,'dur':motion.hoverDuration+'ms','arrival-duration':motion.arrivalDuration+'ms','ease':motion.easing,'press':motion.pressScale,'sel':k==='paper'?'var(--accent)':'var(--rule)','band':'none','dot-rad':k==='instrument'?'1.5px':'50%','dot-glow':rule.glow? '6px':'0px','co-frame':rule.calloutEdge*100+'%','lead-ring':rule.control+'px','radius-control':r.control+'px','radius-card':r.card+'px','radius-callout':r.callout+'px','rule-region':rule.region+'px','rule-control':rule.control+'px','rule-card':rule.card+'px','person-shadow-alpha':rule.personShadow,'mark-duration':set.markStyle.duration+'ms','composer-accent':rule.composerAccent+'px','primary-texture':rule.primaryTexture};
+    const vars = {'ff-ui':f.ui,'ff-text':f.body,'ff-person':f.person,'ff-data':f.data,'ff-label':f.label,'ff-code':f.code,'code-var':f.codeVariations,'fw-ui':f.bodyWeight,'fw-name':f.strongWeight,'lbl-fw':f.labelWeight,'lbl-ls':f.labelTracking,'lbl-feat':f.labelFeatures,'data-feat':f.dataFeatures,'body-ls':f.tracking,'body-feat':f.bodyFeatures,'dur':motion.hoverDuration*motion.durationScale+'ms','arrival-duration':motion.arrivalDuration*motion.durationScale+'ms','ease':motion.easing,'press':motion.pressScale,'sel':k==='paper'?'var(--accent)':'var(--rule)','band':'none','dot-rad':k==='instrument'?'1.5px':'50%','dot-glow':rule.glow? '6px':'0px','co-frame':rule.calloutEdge*100+'%','lead-ring':rule.control+'px','radius-control':r.control+'px','radius-card':r.card+'px','radius-callout':r.callout+'px','rule-region':rule.region+'px','rule-control':rule.control+'px','rule-card':rule.card+'px','person-shadow-alpha':rule.personShadow,'mark-duration':set.markStyle.duration*motion.durationScale+'ms','composer-accent':rule.composerAccent+'px','primary-texture':rule.primaryTexture};
     css += `[data-look="${k}"]{`+Object.entries(vars).map(([n,v])=>`--${n}:${v}`).join(';')+'}\n';
   });
   const style = document.createElement('style'); style.textContent=css; document.head.append(style);

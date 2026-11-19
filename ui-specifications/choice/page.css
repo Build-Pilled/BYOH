@@ -32,7 +32,7 @@ button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible{
 .spec .lb2{font:var(--fw-ui) 13px/18px var(--ff-data);font-feature-settings:var(--data-feat);color:var(--muted);margin-top:2px}
 .spec .marks{display:flex;gap:16px;align-items:flex-end}.spec .marks figure{margin:0;text-align:center;font:var(--lbl-fw) 10.5px/14px var(--ff-label);letter-spacing:var(--lbl-ls);text-transform:uppercase;color:var(--muted)}
 .spec .marks svg{display:block;margin:0 auto 4px}
-.row[data-motion=on] .spec[data-look=dusk] .marks svg{animation:breath var(--mark-duration) ease-in-out infinite}
+.row[data-motion=on] .spec[data-mark-animation=breath] .marks svg{animation:breath var(--mark-duration) ease-in-out infinite}
 .spec .d90{grid-column:1/-1;font:var(--fw-ui) 15px/1.5 var(--ff-text);letter-spacing:var(--body-ls);color:var(--text)}
 .spec .d90 b{font:var(--lbl-fw) 11px var(--ff-label);letter-spacing:var(--lbl-ls);text-transform:uppercase;color:var(--accent-ink);margin-right:8px}
 .shots{display:grid;gap:12px;margin-top:6px}.shots figure{margin:0}.shots img{width:100%;height:auto;display:block;border:1px solid var(--pl);border-radius:4px}
