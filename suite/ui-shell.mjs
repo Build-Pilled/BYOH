@@ -1,15 +1,24 @@
 // ui-shell: window behaviour that the layout pack fixes, proved on the real app at the pack's window size (1280 x 795). Effect
 // first: the seeded session's transcript from the daemon, then the window, found by role and exact accessible name from the
-// Controls table. Geometry that has no role (the composer box, the transcript, the steps block and result panel) is read through
-// the pack's data-role attributes `composer`, `transcript`, `toolSteps` and `toolResult`. Numbers are CSS px with a 2 px tolerance
+// Controls table. Geometry that has no role or name (the composer box, the transcript, the steps block and result panel) comes from
+// the same mapping JSON as the appearance checks (ui-specifications/checks/README.md, Mapping): the descriptor's `uiMap` names the
+// file, and the entries with layout `composer`, `transcript`, `toolSteps` and `toolResult` locate those elements. Numbers are CSS px with a 2 px tolerance
 // (the layout pack's fixed class). Nothing here judges paint, so a case passes on any look.
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { cliOk, detail, evidencePath, firstEngine, mockBot, newSession, saveJson, until, windowStep } from './lib.mjs';
 
 const TOL = 2;
 const near = (a, b, tol = TOL) => Math.abs(a - b) <= tol;
 const lines = (n, word = 'line') => Array.from({ length: n }, (_, i) => `${word} ${i + 1}`).join('\n');
 const TOOL = { pi: ['bash', (c) => ({ command: c })], claude: ['Bash', (c) => ({ command: c, description: 'ui-shell tool collapse' })] };
+// The mapping entry for one pack layout role, from the checks' mapping file named by the descriptor's `uiMap`.
+function mapped(kit, layout) {
+  const file = kit.desc.uiMap; assert.ok(file, `the descriptor has no "uiMap": the appearance checks' mapping JSON that locates the ${layout} element`);
+  const hits = Object.values(JSON.parse(readFileSync(file, 'utf8'))).flat().filter((n) => n?.layout === layout);
+  assert.ok(hits.length, `${file} maps no element for the layout role ${layout}`);
+  return hits[0];
+}
 const rect = (m) => ({ x: m.rect.x, y: m.rect.y, w: m.rect.width, h: m.rect.height });
 
 // A bot with one session holding the given turns, then the window on that conversation.
@@ -37,17 +46,15 @@ const growth = { id: 'ui-shell-composer-grows-to-cap-then-scrolls', title: 'ui-s
   try {
     const bot = 'uigrow';
     const seeded = await seed(kit, bot, 'ui-shell growth', [`MOCK_REPLY\n${lines(40, 'earlier reply line')}`], ev);
-    const last = seeded.messages.at(-1).entry; ev.lastEntry = last;
-    await windowStep(kit, ev, 'ui-shell-composer', async (w) => {
+        await windowStep(kit, ev, 'ui-shell-composer', async (w) => {
       await openConversation(w, bot, seeded.sid);
-      const FIELD = { role: 'textbox', name: 'Message' }, COMPOSER = { selector: '[data-role="composer"]' }, TRANSCRIPT = { selector: '[data-role="transcript"]' };
+      const FIELD = { role: 'textbox', name: 'Message' }, COMPOSER = mapped(kit, 'composer'), TRANSCRIPT = mapped(kit, 'transcript');
       const sample = async (name) => {
         const fm = await w.measure(FIELD); const f = rect(fm); const c = rect(await w.measure(COMPOSER));
-        const send = await w.read('button', 'Send'); const msg = (await w.read('region', `Message ${last}`)).box;
-        const t = await w.eval(`(() => { const t = document.querySelector('[data-role="transcript"]'); return { top: t.scrollTop, height: t.scrollHeight, client: t.clientHeight, inner: innerHeight }; })()`);
-        // where the last message's bottom edge lies once the transcript is scrolled to its end
-        const lastBottomAtEnd = msg.y + msg.h - (t.height - t.client - t.top);
-        const s = { name, field: f, fieldScrolls: fm.overflow, composer: c, send: { x: send.box.x, y: send.box.y, w: send.box.w, h: send.box.h, disabled: !!send.states.disabled }, lastBottomAtEnd, innerHeight: t.inner };
+        const send = await w.read('button', 'Send'); const tr = await w.measure(TRANSCRIPT);
+        // the transcript's bottom reserve: where the content of the scrolled-to-end transcript stops, so no message can end under the composer
+        const reserveTop = tr.rect.y + tr.rect.height - parseFloat(tr.geometry.paddingBottom); const inner = await w.eval('innerHeight');
+        const s = { name, field: f, fieldScrolls: fm.overflow, composer: c, send: { x: send.box.x, y: send.box.y, w: send.box.w, h: send.box.h, disabled: !!send.states.disabled }, transcript: rect(tr), reserveTop, innerHeight: inner };
         ev.steps[name] = s; await w.shot(evidencePath(kit, `ui-shell-composer-${name}.png`)); return s;
       };
       const rest = await sample('rest');
@@ -58,7 +65,7 @@ const growth = { id: 'ui-shell-composer-grows-to-cap-then-scrolls', title: 'ui-s
       assert.ok(near(rest.send.w, 32) && near(rest.send.h, 32), `Send is ${rest.send.w} x ${rest.send.h}, expected 32 x 32`);
       assert.ok(near(rest.send.y + rest.send.h, rest.field.y + rest.field.h), 'Send is not bottom-aligned with the field');
       assert.equal(rest.fieldScrolls, false, 'the empty field already scrolls');
-      assert.ok(rest.lastBottomAtEnd <= rest.composer.y + 1, `the last message ends at ${rest.lastBottomAtEnd}, under the composer that starts at ${rest.composer.y}`);
+      assert.ok(rest.reserveTop <= rest.composer.y + 1, `the transcript's content ends at ${rest.reserveTop}, under the composer that starts at ${rest.composer.y}`);
 
       await w.fill('textbox', 'Message', 'one line');
       const one = await sample('one-line');
@@ -72,14 +79,14 @@ const growth = { id: 'ui-shell-composer-grows-to-cap-then-scrolls', title: 'ui-s
       assert.equal(mid.fieldScrolls, false, 'the field scrolls before it reaches its cap');
       assert.ok(near(mid.composer.y + mid.composer.h, mid.innerHeight), 'the composer left the bottom of the window as it grew');
       assert.ok(near(mid.send.y + mid.send.h, rest.send.y + rest.send.h, 1), `Send moved from y ${rest.send.y + rest.send.h} to ${mid.send.y + mid.send.h} while the composer grew`);
-      assert.ok(mid.lastBottomAtEnd <= mid.composer.y + 1, `the last message ends at ${mid.lastBottomAtEnd}, under the grown composer that starts at ${mid.composer.y}`);
+      assert.ok(mid.reserveTop <= mid.composer.y + 1, `the transcript's content ends at ${mid.reserveTop}, under the grown composer that starts at ${mid.composer.y}`);
 
       await w.fill('textbox', 'Message', lines(28));
       const cap = await sample('twenty-eight-lines');
       assert.ok(near(cap.field.h, 240), `28 pasted lines make the field ${cap.field.h} high, expected the 240 cap`);
       assert.ok(near(cap.composer.h, 264), `28 pasted lines make the composer ${cap.composer.h} high, expected 264`);
       assert.equal(cap.fieldScrolls, true, 'the field does not scroll inside itself at the cap');
-      assert.ok(cap.lastBottomAtEnd <= cap.composer.y + 1, `the last message ends at ${cap.lastBottomAtEnd}, under the capped composer that starts at ${cap.composer.y}`);
+      assert.ok(cap.reserveTop <= cap.composer.y + 1, `the transcript's content ends at ${cap.reserveTop}, under the capped composer that starts at ${cap.composer.y}`);
       assert.ok(near(cap.send.y + cap.send.h, rest.send.y + rest.send.h, 1), 'Send moved at the cap');
 
       await w.fill('textbox', 'Message', lines(60));
@@ -125,7 +132,7 @@ const collapse = { id: 'ui-shell-tool-steps-collapsed-until-clicked', title: 'ui
       const step = await w.waitFor('button', RESULT, { timeout: 5000 });
       assert.equal(!!step.states.expanded, false, 'a tool result is open before its button is clicked');
       assert.equal(await shown('42xRAW'), false, 'raw tool output is visible before its tool result button is clicked');
-      const block = await w.measure({ selector: '[data-role="toolSteps"]' }); const after = (await w.read('region', `Message ${reply.entry}`)).box;
+      const block = await w.measure(mapped(kit, 'toolSteps')); const after = (await w.read('region', `Message ${reply.entry}`)).box;
       ev.steps.groupOpen = { stepsBlock: rect(block), replyY: after.y, moved: after.y - before.y };
       assert.ok(block.rect.height > 0, 'the step list has no height after the Worked button is clicked');
       assert.ok(near(after.y - before.y, block.rect.height), `the reply moved down ${after.y - before.y}, expected the step list's height ${block.rect.height}`);
@@ -134,7 +141,7 @@ const collapse = { id: 'ui-shell-tool-steps-collapsed-until-clicked', title: 'ui
       await w.click('button', RESULT);
       await w.waitFor('button', RESULT, { state: 'expanded=true', timeout: 5000 });
       assert.equal(await shown('42xRAW'), true, 'the tool result button did not show the raw tool output');
-      const panel = await w.measure({ selector: '[data-role="toolResult"]' }); ev.steps.resultOpen = { panel: rect(panel) };
+      const panel = await w.measure(mapped(kit, 'toolResult')); ev.steps.resultOpen = { panel: rect(panel) };
       assert.ok(panel.rect.height > 0, 'the result panel has no height after its button is clicked');
       await w.shot(evidencePath(kit, 'ui-shell-tools-result-open.png'));
     });

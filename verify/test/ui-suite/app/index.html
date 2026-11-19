@@ -33,15 +33,15 @@
     const { sessions } = await get(`/bots/${bot}/sessions`); if (!sessions.length) return;
     const sid = sessions.at(-1).id, s = await get(`/sessions/${bot}/${sid}`);
     conv?.remove(); conv = el('div', { role: 'region', 'aria-label': `Conversation ${bot}/${sid}` }); conv.style.cssText = 'position:absolute;inset:0';
-    const tr = el('div', { 'data-role': 'transcript' }); tr.id = 'transcript'; conv.append(tr);
+    const tr = el('div'); tr.id = 'transcript'; conv.append(tr);
     let n = 0;
     for (const m of s.messages) {
       if (m.steps) {
         const gid = ++n; const chip = el('button', { 'aria-label': `Worked ${gid}`, 'aria-expanded': 'false', class: 'worked' }, `Worked for 0s, ${m.steps.length} step`);
-        const block = el('div', { class: 'steps', 'data-role': 'toolSteps' }); block.hidden = true;
+        const block = el('div', { class: 'steps', id: 'steps' }); block.hidden = true;
         m.steps.forEach((st, i) => {
           const sum = el('button', { 'aria-label': `Tool result ${i + 1}`, 'aria-expanded': 'false', class: 'sum' }, `${st.tool} ${st.arguments}`);
-          const pre = el('pre', { 'data-role': 'toolResult' }, st.result); pre.hidden = true;
+          const pre = el('pre', { id: 'result' }, st.result); pre.hidden = true;
           sum.onclick = () => { pre.hidden = !pre.hidden; sum.setAttribute('aria-expanded', String(!pre.hidden)); };
           block.append(sum, pre);
           if (mutant === 'tools-expanded') { pre.hidden = false; sum.setAttribute('aria-expanded', 'true'); }
@@ -52,7 +52,7 @@
       }
       tr.append(el('div', { role: 'region', 'aria-label': `Message ${m.entry}`, class: 'msg' }, m.text));
     }
-    const c = el('div', { 'data-role': 'composer' }); c.id = 'composer';
+    const c = el('div'); c.id = 'composer';
     const ta = el('textarea', { 'aria-label': 'Message', rows: '1', placeholder: `Message ${bot}` });
     const send = el('button', { id: 'send', 'aria-label': 'Send' }, '↑'); send.disabled = true;
     c.append(ta, send); conv.append(c); main.append(conv);

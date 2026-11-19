@@ -1,0 +1,10 @@
+{
+  "conversation": [
+    {"layout": "composer", "selector": "#composer"},
+    {"layout": "transcript", "selector": "#transcript"}
+  ],
+  "toolsOpen": [
+    {"layout": "toolSteps", "selector": "#steps"},
+    {"layout": "toolResult", "selector": "#result"}
+  ]
+}

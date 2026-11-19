@@ -18,7 +18,7 @@ from the pinned blueprint checkout, with no separate skill installation.
 | `mock-model.mjs` | One server, two wire formats (OpenAI for Pi, Anthropic for Claude Code), one set of directives. Its header lists them. |
 | `fixtures/` | Two scripted replies for `MOCK_REPLY`: callouts and a table. |
 | `test/selftest.mjs` | The kit's own test, against `test/stub`, a stub of the harness contract. |
-| `test/ui-suite/` | A stub harness and page for proving the window cases of `suite/ui-shell.mjs`; an `app` argument `--mutant=<name>` after `app/main.cjs` breaks one rule on purpose (`fixed-composer`, `no-cap`, `no-reserve`, `tools-expanded`). |
+| `test/ui-suite/` | A stub harness, page and `ui-map.json` for proving the window cases of `suite/ui-shell.mjs`; an `app` argument `--mutant=<name>` after `app/main.cjs` breaks one rule on purpose (`fixed-composer`, `no-cap`, `no-reserve`, `tools-expanded`). |
 
 ## Check the kit itself
 
@@ -78,7 +78,7 @@ For mock directives and wire endpoints, see the header of `mock-model.mjs`;
 A command after `up` finds its run through `--run <dir>`, `BYOH_KIT_DIR`, or the only
 run this user has up. For `cli`, `engine` and `ui`, `--run <dir>` goes first; everything
 after it belongs to the tool. The descriptor is JSON:
-`{"cli": [argv…], "app": [electron, app-path…], "seed": [[cli args]…], "source": "<git dir>"}`.
+`{"cli": [argv…], "app": [electron, app-path…], "seed": [[cli args]…], "source": "<git dir>", "uiMap": "<absolute path>"}`. `uiMap` is optional: the mapping JSON of the [appearance checks](../ui-specifications/checks/README.md), which the window cases of `suite/ui-shell.mjs` read to find the composer, transcript, step list and result panel when they have no role and name.
 The kit appends its own flags after `app[0]`. For each chosen engine it writes a wrapper
 into the run, sets `pi` and `claude` in `myharness.toml` to those wrappers, and the wrappers
 point the real engine at the mock. Every process of the run (daemon, CLI, app and
