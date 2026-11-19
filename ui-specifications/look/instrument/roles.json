@@ -558,6 +558,32 @@
     "4px"
    ]
   },
+  "connectionCard": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{find-highlight}"
+   ],
+   "background": [
+    "{surface-dialog}"
+   ],
+   "border": {
+    "top": [
+     "{find-highlight}"
+    ],
+    "left": [
+     "{find-highlight}"
+    ],
+    "bottom": [
+     "{find-highlight}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
   "dialog": {
    "family": "Literata",
    "weight": [

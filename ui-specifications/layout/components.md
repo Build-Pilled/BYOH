@@ -84,8 +84,9 @@ Which family fills each class is the look's choice.
     age at the right (`1m`, never shrinks), space between, gap 8; snippet
     (`searchHitSnippet`, 12 on 18, 4 below the meta) wrapping at any point and
     capped at 3 lines, with a leading or trailing `…` where the text is cut.
-    The snippet is the raw text as typed (markdown and callout markers show
-    unrendered); a title-only match has no snippet line. Row height by snippet
+    The snippet is plain text: formatting characters (callout markers,
+    quote marks, emphasis marks) are removed, so a snippet never shows raw
+    markup; a title-only match has no snippet line. Row height by snippet
     lines: none 52.5, one 74.5, two 92.5, three or more 110.5 (the cap).
   - States: the active thread's row has a solid fill (`surface-button`);
     hover shows a lighter fill (`surface-row-hover`). Neither moves a box.

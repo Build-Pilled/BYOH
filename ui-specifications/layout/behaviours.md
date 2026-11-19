@@ -34,6 +34,39 @@ sensibly and keep it inside the layout rules.
   moves down by the block's height. Nothing persists; open state is screen-only.
 - Not specified: very long results, running and failed steps.
 
+## Connection loss (frame F52)
+
+How the harness should behave when its background service cannot be reached;
+the frame is a reference for the card's position and size only, and its
+wording is the pack's.
+
+- **Trigger:** a health check of the service fails. Checking about every 5 s
+  is guidance, not a requirement; the card should appear within one check.
+- **Change:** a corner card (`connectionCard`) appears with the text "The
+  harness is not reachable." It is fixed to the window, its right edge 12 from
+  the window's right edge and its bottom edge 20 from the bottom (12 inset
+  plus an 8 margin), 35 high, padding 6 x 10, 1 border, gap 8, 14 on 21, on
+  one line. Its width follows its text; F52 shows 264.9 for its own wording.
+  It is the front-most thing in the window: it sits above the composer, panels
+  and popovers (it is not clipped or hidden by the composer), and it never
+  pushes or resizes any region, dims the window or adds a scrim.
+- **Kept:** nothing is disabled. The composer stays usable, and the sidebar
+  and page contents stay as last shown and may be stale. There is no spinner
+  and no reconnect button.
+- **No raw errors:** no technical error text (such as a network failure
+  message) shows under the header, above the composer or anywhere else; the
+  card is the only signal.
+- **Restore:** when the service answers again, the card goes away within one
+  check and nothing else is left over from the outage: no stale status line
+  or error remains.
+- **Sent while disconnected:** the message appears as the person's message,
+  marked as failed in plain words ("Message not sent.") with a `Retry`
+  button under it. It stays failed, also after the service returns, until
+  Retry is pressed. Sizes of this mark are not specified: use the notice and
+  button roles.
+- Paint: the card's text and border take the look's warning step and its
+  fill the dialog surface; see `look/instrument/roles.json` (`connectionCard`).
+
 ## Other behaviours
 
 | Trigger | Change | Numbers or note |
@@ -49,7 +82,7 @@ sensibly and keep it inside the layout rules.
 | Attach files | Chips above the field, a 70 high row (908 x 70); Send enabled; a thumbnail opens the viewer | error and oversize states not specified |
 | Type `/skill:` | An anchored list above the composer; choosing inserts the command into the draft | |
 | Annotate selected text | Editor popover, then badge, highlight and composer chip | annotations live for the session only |
-| Send, queue, steer, edit, cancel | Send becomes Stop; Queue adds a 920 x 39 card; the composer region is 102 high; Edit holds the card with a banner | failure and retry states not specified |
+| Send, queue, steer, edit, cancel | Send becomes Stop; Queue adds a 920 x 39 card; the composer region is 102 high; Edit holds the card with a banner | a failed send while disconnected: see Connection loss; other failure states not specified |
 | Open the compaction divider | Toggles the summary block | |
 | Peer reply, read state | Working lamp while running, waiting-on-teammate lamp, unread lamp; a new-dot and divider in recent activity | |
 | Open an activity row | Shows the raw message text; Back returns | |
@@ -61,5 +94,4 @@ sensibly and keep it inside the layout rules.
 | Scrolling | Transcript, editor, table, calendar and panel scroll independently | calendar 452 high with seven columns |
 | Reduced motion | Every animation and transition stops | |
 
-Not specified in this folder: scrolling while a reply streams, connection loss
-and restore, dragging team members and columns, narrow viewports.
+Not specified in this folder: scrolling while a reply streams, dragging team members and columns, narrow viewports.

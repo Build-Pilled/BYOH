@@ -30,6 +30,7 @@ Size, line height, weight class and text case per role. Families are never set h
 | `codeText` | 13px | 20.8px | regular | as typed | normal |
 | `compaction` | 14px | 21px | regular | as typed | normal |
 | `composer` | 14px | 21px | regular | as typed | normal |
+| `connectionCard` | 14px | 21px | regular | as typed | normal |
 | `confirm` | 14px | 21px | regular | as typed | normal |
 | `dialog` | 14px | 21px | regular | as typed | normal |
 | `diff` | 12px | 18px | regular | as typed | normal |

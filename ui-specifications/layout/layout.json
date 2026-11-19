@@ -5589,6 +5589,64 @@
     }
    ]
   },
+  "connectionCard": {
+   "dataRole": "connectionCard",
+   "class": "intrinsic-width",
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 10px 6px 10px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   },
+   "variants": [
+    {
+     "rect": {
+      "x": 1003.12,
+      "y": 740,
+      "width": 264.88,
+      "height": 35
+     },
+     "padding": [
+      6,
+      10,
+      6,
+      10
+     ],
+     "gap": {
+      "row": 8,
+      "column": 8
+     },
+     "borderWidths": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "fontSize": "14px",
+     "lineHeight": "21px",
+     "display": "flex",
+     "position": "fixed",
+     "frames": [
+      "F52"
+     ]
+    }
+   ]
+  },
   "dialog": {
    "dataRole": "dialog",
    "class": "fixed",

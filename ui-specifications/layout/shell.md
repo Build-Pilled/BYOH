@@ -40,7 +40,8 @@ header, and no extra band is added to make room for the buttons.
 ## Z-order and scroll
 
 From back to front: display, regions, panel, popovers and menus, dialogs with
-their scrim, the image viewer (its own full-window dimmer). A scrim covers the
+their scrim, the image viewer (its own full-window dimmer), and in front of
+all of them the connection card (`behaviours.md`, Connection loss). A scrim covers the
 whole 1280 x 795 window including the sidebar and header.
 
 Scroll is independent per surface: sidebar, transcript, panel, editors, tables,
