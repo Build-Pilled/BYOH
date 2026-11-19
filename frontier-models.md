@@ -9,7 +9,6 @@ model; that is their choice, not an agent recommendation.
 - Claude Opus 5.5
 - Claude Sonnet 5.5
 - ChatGPT 6.2 Sol
-- ChatGPT 6.2 Astra
 
 ## Onboarding defaults
 
