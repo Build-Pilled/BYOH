@@ -17,7 +17,7 @@ Harnesses have become a first-class daily workspace: far too important and frequ
 
 A harness need not be complicated. A minimal harness is a more capable one. Plain folders and files are all it takes to understand and run it.
 
-Anyone who wants to can tailor a harness to their needs, work and ideas.
+Everyone (who wants to) can tailor a harness to their needs, work and ideas.
 
 ## Quick start
 
