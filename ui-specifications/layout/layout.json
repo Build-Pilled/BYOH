@@ -1,0 +1,2084 @@
+{
+ "schema": 1,
+ "note": "Fixed layout values. CSS px at a 1280x795 window. \"sizes\" lists the observed rectangles, most frequent first. class: fixed, intrinsic-width or flow.",
+ "tolerance": {
+  "fixed": "0.5 px (check C2), about 2 px against a build (completion rule)",
+  "intrinsic-width": "height equal, width within 8 px or 4 percent, whichever is larger",
+  "flow": "no overflow or overlap; line height equal"
+ },
+ "roles": {
+  "active": {
+   "dataRole": "active",
+   "class": "fixed",
+   "sizes": [
+    "260x104"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 6px 6px 6px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "annotationBadge": {
+   "dataRole": "annotationBadge",
+   "class": "intrinsic-width",
+   "sizes": [
+    "20x20"
+   ],
+   "fontSize": [
+    "11px"
+   ],
+   "lineHeight": [
+    "20px"
+   ],
+   "weightClass": "strong"
+  },
+  "annotationChip": {
+   "dataRole": "annotationChip",
+   "class": "intrinsic-width",
+   "sizes": [
+    "150.1x31.5"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 10px 6px 10px"
+   ]
+  },
+  "annotationEditor": {
+   "dataRole": "annotationEditor",
+   "class": "fixed",
+   "sizes": [
+    "340x77"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 10px 8px 14px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "annotationPopup": {
+   "dataRole": "annotationPopup",
+   "class": "fixed",
+   "sizes": [
+    "420x330"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "4px 4px 4px 4px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "assistant": {
+   "dataRole": "assistant",
+   "class": "flow",
+   "sizes": [
+    "672x330.8",
+    "500x428.3",
+    "154.5x44.4"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 16px 10px 16px"
+   ]
+  },
+  "attachment": {
+   "dataRole": "attachment",
+   "class": "fixed",
+   "sizes": [
+    "908x70"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 8px 0px 8px"
+   ]
+  },
+  "authoredLink": {
+   "dataRole": "authoredLink",
+   "class": "intrinsic-width",
+   "sizes": [
+    "105.1x22"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "textDecoration": [
+    "underline"
+   ]
+  },
+  "banner": {
+   "dataRole": "banner",
+   "class": "flow",
+   "sizes": [
+    "317x77"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 10px 6px 10px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "bareUrl": {
+   "dataRole": "bareUrl",
+   "class": "intrinsic-width",
+   "sizes": [
+    "249.6x16"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "21.125px"
+   ],
+   "weightClass": "regular",
+   "textDecoration": [
+    "underline"
+   ]
+  },
+  "bold": {
+   "dataRole": "bold",
+   "class": "intrinsic-width",
+   "sizes": [
+    "88.7x22"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "strong"
+  },
+  "botRow": {
+   "dataRole": "botRow",
+   "class": "fixed",
+   "sizes": [
+    "294x56",
+    "266x29.5",
+    "294x75"
+   ],
+   "fontSize": [
+    "14px",
+    "13px",
+    "12px"
+   ],
+   "lineHeight": [
+    "21px",
+    "19.5px",
+    "18px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "8px 8px 8px 4px",
+    "5px 10px 5px 8px",
+    "4px 10px 4px 10px"
+   ]
+  },
+  "bridgeNote": {
+   "dataRole": "bridgeNote",
+   "class": "fixed",
+   "sizes": [
+    "920x30"
+   ],
+   "fontSize": [
+    "12px"
+   ],
+   "lineHeight": [
+    "18px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 12px 6px 12px"
+   ]
+  },
+  "calendar": {
+   "dataRole": "calendar",
+   "class": "fixed",
+   "sizes": [
+    "920x452"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular"
+  },
+  "callout": {
+   "dataRole": "callout",
+   "class": "flow",
+   "sizes": [
+    "640x70.2",
+    "468x94.6",
+    "878x70.2"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 14px 10px 14px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "4px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "calloutCaution": {
+   "dataRole": "calloutCaution",
+   "class": "flow",
+   "sizes": [
+    "878x70.2"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 14px 10px 14px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "4px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "calloutImportant": {
+   "dataRole": "calloutImportant",
+   "class": "flow",
+   "sizes": [
+    "640x70.2",
+    "468x94.6",
+    "878x70.2"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 14px 10px 14px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "4px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "calloutLabel": {
+   "dataRole": "calloutLabel",
+   "class": "intrinsic-width",
+   "sizes": [
+    "607x17.9",
+    "435x17.9",
+    "845x17.9"
+   ],
+   "fontSize": [
+    "11px"
+   ],
+   "lineHeight": [
+    "17.875px"
+   ],
+   "weightClass": "strong",
+   "textTransform": [
+    "uppercase"
+   ],
+   "letterSpacing": [
+    "0.66px"
+   ]
+  },
+  "calloutNote": {
+   "dataRole": "calloutNote",
+   "class": "flow",
+   "sizes": [
+    "640x70.2",
+    "468x94.6",
+    "878x70.2"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 14px 10px 14px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "4px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "calloutTip": {
+   "dataRole": "calloutTip",
+   "class": "flow",
+   "sizes": [
+    "878x70.2"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 14px 10px 14px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "4px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "calloutWarning": {
+   "dataRole": "calloutWarning",
+   "class": "flow",
+   "sizes": [
+    "878x70.2"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 14px 10px 14px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "4px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "card": {
+   "dataRole": "card",
+   "class": "flow",
+   "sizes": [
+    "381x672",
+    "391x233",
+    "391x162.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "14px 16px 14px 16px"
+   ]
+  },
+  "codeBlock": {
+   "dataRole": "codeBlock",
+   "class": "flow",
+   "sizes": [
+    "640x78.4"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "20.8px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "4px 14px 12px 14px"
+   ]
+  },
+  "codeText": {
+   "dataRole": "codeText",
+   "class": "intrinsic-width",
+   "sizes": [
+    "218.4x57.6"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "20.8px"
+   ],
+   "weightClass": "regular"
+  },
+  "compaction": {
+   "dataRole": "compaction",
+   "class": "flow",
+   "sizes": [
+    "950x647",
+    "950x43"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "composer": {
+   "dataRole": "composer",
+   "class": "fixed",
+   "sizes": [
+    "960x57",
+    "540x57",
+    "960x96.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular"
+  },
+  "confirm": {
+   "dataRole": "confirm",
+   "class": "flow",
+   "sizes": [
+    "492x195"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "12px 12px 12px 12px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "dialog": {
+   "dataRole": "dialog",
+   "class": "fixed",
+   "sizes": [
+    "460x180",
+    "460x362",
+    "460x340"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "20px 22px 20px 22px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "diff": {
+   "dataRole": "diff",
+   "class": "flow",
+   "sizes": [
+    "680x717"
+   ],
+   "fontSize": [
+    "12px"
+   ],
+   "lineHeight": [
+    "18px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "12px 16px 12px 16px"
+   ]
+  },
+  "diffAdd": {
+   "dataRole": "diffAdd",
+   "class": "flow",
+   "sizes": [
+    "638x18"
+   ],
+   "fontSize": [
+    "12px"
+   ],
+   "lineHeight": [
+    "18px"
+   ],
+   "weightClass": "regular"
+  },
+  "display": {
+   "dataRole": "display",
+   "class": "fixed",
+   "sizes": [
+    "1280x795"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular"
+  },
+  "draft": {
+   "dataRole": "draft",
+   "class": "fixed",
+   "sizes": [
+    "773.1x33",
+    "353.1x33",
+    "773.1x240"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "22.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "5px 0px 5px 0px"
+   ]
+  },
+  "editor": {
+   "dataRole": "editor",
+   "class": "fixed",
+   "sizes": [
+    "680x717",
+    "381x340",
+    "349x163"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular"
+  },
+  "editorText": {
+   "dataRole": "editorText",
+   "class": "flow",
+   "sizes": [
+    "329x19.4",
+    "361x19.4",
+    "657.0x19.4"
+   ],
+   "fontSize": [
+    "12.5px"
+   ],
+   "lineHeight": [
+    "19.375px"
+   ],
+   "weightClass": "regular"
+  },
+  "empty": {
+   "dataRole": "empty",
+   "class": "fixed",
+   "sizes": [
+    "960x101",
+    "922x101"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "40px 40px 40px 40px"
+   ]
+  },
+  "fieldLabel": {
+   "dataRole": "fieldLabel",
+   "class": "fixed",
+   "sizes": [
+    "110x26",
+    "349x19.5",
+    "349x36"
+   ],
+   "fontSize": [
+    "14px",
+    "13px",
+    "12px"
+   ],
+   "lineHeight": [
+    "21px",
+    "19.5px",
+    "18px"
+   ],
+   "weightClass": "mixed",
+   "padding": [
+    "5px 0px 0px 0px",
+    "0px 0px 0px 0px"
+   ],
+   "textTransform": [
+    "none",
+    "uppercase"
+   ],
+   "letterSpacing": [
+    "normal",
+    "1.04px"
+   ]
+  },
+  "fileBar": {
+   "dataRole": "fileBar",
+   "class": "fixed",
+   "sizes": [
+    "680x38",
+    "349x64.5",
+    "419x68"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "8px 10px 8px 10px"
+   ]
+  },
+  "fileRow": {
+   "dataRole": "fileRow",
+   "class": "fixed",
+   "sizes": [
+    "349x30",
+    "349x31.5"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 8px 6px 8px"
+   ]
+  },
+  "findBar": {
+   "dataRole": "findBar",
+   "class": "fixed",
+   "sizes": [
+    "960x50"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "8px 20px 8px 20px"
+   ],
+   "borderWidths": {
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "findHit": {
+   "dataRole": "findHit",
+   "class": "intrinsic-width",
+   "sizes": [
+    "70.8x22"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular"
+  },
+  "finder": {
+   "dataRole": "finder",
+   "class": "fixed",
+   "sizes": [
+    "360x363.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 6px 6px 6px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "folderActions": {
+   "dataRole": "folderActions",
+   "class": "intrinsic-width",
+   "sizes": [
+    "41.8x20"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular"
+  },
+  "folderRow": {
+   "dataRole": "folderRow",
+   "class": "fixed",
+   "sizes": [
+    "266x29.5",
+    "266x30"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "5px 8px 5px 8px"
+   ]
+  },
+  "footer": {
+   "dataRole": "footer",
+   "class": "fixed",
+   "sizes": [
+    "924x18"
+   ],
+   "fontSize": [
+    "12px"
+   ],
+   "lineHeight": [
+    "18px"
+   ],
+   "weightClass": "regular"
+  },
+  "genericButton": {
+   "dataRole": "genericButton",
+   "class": "intrinsic-width",
+   "sizes": [
+    "28x28",
+    "16x16",
+    "15.8x19.5"
+   ],
+   "fontSize": [
+    "14px",
+    "12px",
+    "13px"
+   ],
+   "lineHeight": [
+    "0px",
+    "18px",
+    "19.5px"
+   ],
+   "weightClass": "mixed",
+   "padding": [
+    "2px 5px 2px 5px",
+    "5px 2px 5px 2px",
+    "0px 4px 0px 4px"
+   ],
+   "textTransform": [
+    "none",
+    "uppercase"
+   ],
+   "letterSpacing": [
+    "normal",
+    "0.96px"
+   ]
+  },
+  "genericInput": {
+   "dataRole": "genericInput",
+   "class": "fixed",
+   "sizes": [
+    "253.1x31.5",
+    "773.1x33",
+    "353.1x33"
+   ],
+   "fontSize": [
+    "13px",
+    "15px",
+    "14px"
+   ],
+   "lineHeight": [
+    "19.5px",
+    "22.5px",
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 0px 6px 0px",
+    "5px 10px 5px 10px",
+    "4px 8px 4px 8px"
+   ],
+   "borderWidths": {
+    "top": [
+     "0px",
+     "1px"
+    ],
+    "left": [
+     "0px",
+     "1px"
+    ],
+    "bottom": [
+     "0px",
+     "1px"
+    ]
+   }
+  },
+  "header": {
+   "dataRole": "header",
+   "class": "fixed",
+   "sizes": [
+    "960x48",
+    "960x40",
+    "960x44.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "8px 20px 8px 20px"
+   ]
+  },
+  "heading": {
+   "dataRole": "heading",
+   "class": "flow",
+   "sizes": [
+    "640x26.8",
+    "468x26.8",
+    "878x26.8"
+   ],
+   "fontSize": [
+    "16.5px"
+   ],
+   "lineHeight": [
+    "26.8125px"
+   ],
+   "weightClass": "strong"
+  },
+  "inlineCode": {
+   "dataRole": "inlineCode",
+   "class": "intrinsic-width",
+   "sizes": [
+    "173.8x18"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "21.125px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "1px 5px 1px 5px"
+   ]
+  },
+  "italic": {
+   "dataRole": "italic",
+   "class": "intrinsic-width",
+   "sizes": [
+    "75.0x22"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular"
+  },
+  "lightbox": {
+   "dataRole": "lightbox",
+   "class": "fixed",
+   "sizes": [
+    "1280x795"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "48px 48px 48px 48px"
+   ]
+  },
+  "mark": {
+   "dataRole": "mark",
+   "class": "fixed",
+   "sizes": [
+    "32x32",
+    "28x28",
+    "20x20"
+   ],
+   "fontSize": [
+    "14px",
+    "12px",
+    "13px"
+   ],
+   "lineHeight": [],
+   "weightClass": "regular"
+  },
+  "menu": {
+   "dataRole": "menu",
+   "class": "fixed",
+   "sizes": [
+    "190x292",
+    "214.6x152",
+    "190x82"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "5px 5px 5px 5px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "menuItem": {
+   "dataRole": "menuItem",
+   "class": "fixed",
+   "sizes": [
+    "178x35",
+    "202.6x35"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "7px 10px 7px 10px"
+   ]
+  },
+  "modalInput": {
+   "dataRole": "modalInput",
+   "class": "fixed",
+   "sizes": [
+    "414x35"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 10px 6px 10px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "modelLabel": {
+   "dataRole": "modelLabel",
+   "class": "fixed",
+   "sizes": [
+    "197.5x29.5"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "4px 12px 4px 12px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "modelOption": {
+   "dataRole": "modelOption",
+   "class": "fixed",
+   "sizes": [
+    "345x31.5"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 8px 6px 8px"
+   ]
+  },
+  "modelPicker": {
+   "dataRole": "modelPicker",
+   "class": "fixed",
+   "sizes": [
+    "359x268",
+    "359x141"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 6px 6px 6px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "notice": {
+   "dataRole": "notice",
+   "class": "flow",
+   "sizes": [
+    "920x18"
+   ],
+   "fontSize": [
+    "12px"
+   ],
+   "lineHeight": [
+    "18px"
+   ],
+   "weightClass": "regular"
+  },
+  "panel": {
+   "dataRole": "panel",
+   "class": "fixed",
+   "sizes": [
+    "420x747",
+    "420x755",
+    "960x747"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "borderWidths": {
+    "left": [
+     "1px"
+    ]
+   }
+  },
+  "panelField": {
+   "dataRole": "panelField",
+   "class": "fixed",
+   "sizes": [
+    "347.8x31.5",
+    "199x35",
+    "13x13"
+   ],
+   "fontSize": [
+    "14px",
+    "13px",
+    "12px"
+   ],
+   "lineHeight": [
+    "21px",
+    "19.5px",
+    "18px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 0px 6px 0px",
+    "0px 10px 0px 10px"
+   ],
+   "borderWidths": {
+    "top": [
+     "0px",
+     "1px"
+    ],
+    "left": [
+     "0px",
+     "1px"
+    ],
+    "bottom": [
+     "0px",
+     "1px"
+    ]
+   }
+  },
+  "panelLabel": {
+   "dataRole": "panelLabel",
+   "class": "fixed",
+   "sizes": [
+    "349x19.5",
+    "359x19.5",
+    "349x18"
+   ],
+   "fontSize": [
+    "13px",
+    "12px"
+   ],
+   "lineHeight": [
+    "19.5px",
+    "18px"
+   ],
+   "weightClass": "strong",
+   "textTransform": [
+    "uppercase"
+   ],
+   "letterSpacing": [
+    "1.04px",
+    "0.96px"
+   ]
+  },
+  "person": {
+   "dataRole": "person",
+   "class": "flow",
+   "sizes": [
+    "297.8x44.4",
+    "251.9x44.4",
+    "303.1x44.4"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "10px 16px 10px 16px"
+   ]
+  },
+  "pill": {
+   "dataRole": "pill",
+   "class": "intrinsic-width",
+   "sizes": [
+    "60.2x18.5"
+   ],
+   "fontSize": [
+    "11px"
+   ],
+   "lineHeight": [
+    "16.5px"
+   ],
+   "weightClass": "regular",
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "problems": {
+   "dataRole": "problems",
+   "class": "flow",
+   "sizes": [
+    "387x50"
+   ],
+   "fontSize": [
+    "12px"
+   ],
+   "lineHeight": [
+    "18px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "6px 10px 6px 10px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "prose": {
+   "dataRole": "prose",
+   "class": "flow",
+   "sizes": [
+    "468x48.8",
+    "640x24.4",
+    "607x24.4"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular"
+  },
+  "queueCard": {
+   "dataRole": "queueCard",
+   "class": "fixed",
+   "sizes": [
+    "920x39"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "8px 12px 8px 12px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "recent": {
+   "dataRole": "recent",
+   "class": "fixed",
+   "sizes": [
+    "560x179.2",
+    "560x206.6"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "recentRow": {
+   "dataRole": "recentRow",
+   "class": "fixed",
+   "sizes": [
+    "542x63.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "9px 14px 10px 16px"
+   ]
+  },
+  "routine": {
+   "dataRole": "routine",
+   "class": "flow",
+   "sizes": [
+    "381x117.5",
+    "381x647.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "14px 16px 14px 16px"
+   ]
+  },
+  "scrim": {
+   "dataRole": "scrim",
+   "class": "fixed",
+   "sizes": [
+    "1280x795"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "0px 0px 0px 0px",
+    "24px 24px 24px 24px"
+   ]
+  },
+  "sectionHead": {
+   "dataRole": "sectionHead",
+   "class": "fixed",
+   "sizes": [
+    "409x43",
+    "949x43",
+    "419x43"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "11px 18px 11px 18px"
+   ],
+   "textTransform": [
+    "uppercase"
+   ],
+   "letterSpacing": [
+    "1.12px"
+   ]
+  },
+  "send": {
+   "dataRole": "send",
+   "class": "fixed",
+   "sizes": [
+    "32x32"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "1px 6px 1px 6px"
+   ]
+  },
+  "settings": {
+   "dataRole": "settings",
+   "class": "fixed",
+   "sizes": [
+    "900x620"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "settingsBody": {
+   "dataRole": "settingsBody",
+   "class": "fixed",
+   "sizes": [
+    "678x618"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "14px 20px 20px 20px"
+   ]
+  },
+  "settingsCard": {
+   "dataRole": "settingsCard",
+   "class": "flow",
+   "sizes": [
+    "638x254.5",
+    "638x194.5",
+    "638x197.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "14px 16px 14px 16px"
+   ]
+  },
+  "settingsNav": {
+   "dataRole": "settingsNav",
+   "class": "fixed",
+   "sizes": [
+    "220x618"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "14px 10px 14px 10px"
+   ]
+  },
+  "settingsSection": {
+   "dataRole": "settingsSection",
+   "class": "flow",
+   "sizes": [
+    "638x28"
+   ],
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "22.5px"
+   ],
+   "weightClass": "regular"
+  },
+  "sidebar": {
+   "dataRole": "sidebar",
+   "class": "fixed",
+   "sizes": [
+    "320x795"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular"
+  },
+  "skillMenu": {
+   "dataRole": "skillMenu",
+   "class": "fixed",
+   "sizes": [
+    "920x44.1"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "5px 5px 5px 5px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "statusLight": {
+   "dataRole": "statusLight",
+   "class": "fixed",
+   "sizes": [
+    "8x8",
+    "7x7"
+   ],
+   "fontSize": [
+    "14px",
+    "13px"
+   ],
+   "lineHeight": [
+    "21px",
+    "19.5px"
+   ],
+   "weightClass": "regular"
+  },
+  "switch": {
+   "dataRole": "switch",
+   "class": "fixed",
+   "sizes": [
+    "349x48",
+    "349x29",
+    "349x66"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "4px 0px 4px 0px"
+   ]
+  },
+  "table": {
+   "dataRole": "table",
+   "class": "flow",
+   "sizes": [
+    "878x95.2"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "22.75px"
+   ],
+   "weightClass": "regular"
+  },
+  "tableCell": {
+   "dataRole": "tableCell",
+   "class": "flow",
+   "sizes": [
+    "439x31.8"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "22.75px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "4px 9px 4px 9px"
+   ],
+   "borderWidths": {
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "taskCell": {
+   "dataRole": "taskCell",
+   "class": "fixed",
+   "sizes": [
+    "85x36",
+    "224x36",
+    "173x36"
+   ],
+   "fontSize": [
+    "13px",
+    "11px"
+   ],
+   "lineHeight": [
+    "19.5px",
+    "normal"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "7px 8px 7px 8px"
+   ],
+   "borderWidths": {
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "taskDetail": {
+   "dataRole": "taskDetail",
+   "class": "fixed",
+   "sizes": [
+    "540x578.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "taskTable": {
+   "dataRole": "taskTable",
+   "class": "fixed",
+   "sizes": [
+    "924x578.5"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "teamBoard": {
+   "dataRole": "teamBoard",
+   "class": "fixed",
+   "sizes": [
+    "540x661",
+    "960x697"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "4px 20px 20px 20px"
+   ]
+  },
+  "teamColumn": {
+   "dataRole": "teamColumn",
+   "class": "fixed",
+   "sizes": [
+    "260x253",
+    "260x128"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "8px 8px 8px 8px"
+   ]
+  },
+  "teamMember": {
+   "dataRole": "teamMember",
+   "class": "fixed",
+   "sizes": [
+    "244x73",
+    "244x58",
+    "244x55"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "8px 10px 8px 10px"
+   ]
+  },
+  "themeChoice": {
+   "dataRole": "themeChoice",
+   "class": "fixed",
+   "sizes": [
+    "195.3x161"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "12px 12px 12px 12px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  },
+  "threadLabel": {
+   "dataRole": "threadLabel",
+   "class": "fixed",
+   "sizes": [
+    "196.5x19.5",
+    "110.1x19.5",
+    "207.2x19.5"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular"
+  },
+  "threadRow": {
+   "dataRole": "threadRow",
+   "class": "fixed",
+   "sizes": [
+    "266x29.5",
+    "244x29.5",
+    "346x29.5"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "5px 8px 5px 8px"
+   ]
+  },
+  "timestamp": {
+   "dataRole": "timestamp",
+   "class": "intrinsic-width",
+   "sizes": [
+    "53.0x16.5"
+   ],
+   "fontSize": [
+    "11px"
+   ],
+   "lineHeight": [
+    "16.5px"
+   ],
+   "weightClass": "regular",
+   "textTransform": [
+    "uppercase"
+   ],
+   "letterSpacing": [
+    "0.88px"
+   ]
+  },
+  "toolResult": {
+   "dataRole": "toolResult",
+   "class": "flow",
+   "sizes": [
+    "646x78"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular"
+  },
+  "toolSteps": {
+   "dataRole": "toolSteps",
+   "class": "flow",
+   "sizes": [
+    "672x90"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular"
+  },
+  "transcript": {
+   "dataRole": "transcript",
+   "class": "fixed",
+   "sizes": [
+    "960x747",
+    "540x747",
+    "960x721"
+   ],
+   "fontSize": [
+    "14px"
+   ],
+   "lineHeight": [
+    "21px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "20px 0px 65px 0px"
+   ]
+  },
+  "worked": {
+   "dataRole": "worked",
+   "class": "intrinsic-width",
+   "sizes": [
+    "231.2x31.5"
+   ],
+   "fontSize": [
+    "13px"
+   ],
+   "lineHeight": [
+    "19.5px"
+   ],
+   "weightClass": "regular",
+   "padding": [
+    "5px 12px 5px 12px"
+   ],
+   "borderWidths": {
+    "top": [
+     "1px"
+    ],
+    "left": [
+     "1px"
+    ],
+    "bottom": [
+     "1px"
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,1890 @@
+{
+ "schema": 1,
+ "note": "Instrument paint per role. Every colour is a token name in braces; token values are in tokens.json. Radius is paint. Several entries in a list are the observed variants, most frequent first.",
+ "roles": {
+  "active": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-popover} 0px 12px 32px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "annotationBadge": {
+   "family": "Literata",
+   "weight": [
+    "600"
+   ],
+   "color": [
+    "{annotation-ink}"
+   ],
+   "background": [
+    "{annotation-1}",
+    "{annotation-2}",
+    "{callout-warning-bar}"
+   ],
+   "shadow": [
+    "{shadow-badge} 0px 1px 3px 0px"
+   ],
+   "radius": [
+    "50%"
+   ]
+  },
+  "annotationChip": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-input}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "annotationEditor": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-popover} 0px 12px 32px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "annotationPopup": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-popover} 0px 12px 32px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "assistant": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "shadow": [
+    "{rule} 0px 0px 0px 1.5px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "attachment": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "authoredLink": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{link}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "banner": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{badge}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "border": {
+    "top": [
+     "{badge}"
+    ],
+    "left": [
+     "{badge}"
+    ],
+    "bottom": [
+     "{badge}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "bareUrl": {
+   "family": "Recursive Mono Linear",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{link}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "bold": {
+   "family": "Literata",
+   "weight": [
+    "700"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "botRow": {
+   "family": "Literata",
+   "weight": [
+    "400",
+    "500"
+   ],
+   "color": [
+    "{text}",
+    "{text-faint}",
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-raised}",
+    "{surface-row-hover}"
+   ],
+   "shadow": [
+    "none",
+    "{rule} 0px 0px 0px 1.5px inset, {rule-underside} 0px -2px 0px 0px inset"
+   ],
+   "radius": [
+    "4px",
+    "0px"
+   ]
+  },
+  "bridgeNote": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{surface-input}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "calendar": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "callout": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{callout-important-bg}",
+    "{callout-note-bg}",
+    "{callout-tip-bg}"
+   ],
+   "border": {
+    "top": [
+     "{callout-important-edge}",
+     "{callout-note-edge}",
+     "{callout-tip-edge}"
+    ],
+    "left": [
+     "{callout-important-bar}",
+     "{callout-note-bar}",
+     "{callout-tip-bar}"
+    ],
+    "bottom": [
+     "{callout-important-edge}",
+     "{callout-note-edge}",
+     "{callout-tip-edge}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "calloutCaution": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{callout-caution-bg}"
+   ],
+   "border": {
+    "top": [
+     "{callout-caution-edge}"
+    ],
+    "left": [
+     "{callout-caution-bar}"
+    ],
+    "bottom": [
+     "{callout-caution-edge}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "calloutImportant": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{callout-important-bg}"
+   ],
+   "border": {
+    "top": [
+     "{callout-important-edge}"
+    ],
+    "left": [
+     "{callout-important-bar}"
+    ],
+    "bottom": [
+     "{callout-important-edge}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "calloutLabel": {
+   "family": "ui-monospace",
+   "weight": [
+    "750"
+   ],
+   "color": [
+    "{callout-important-ink}",
+    "{callout-note-ink}",
+    "{callout-tip-ink}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "calloutNote": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{callout-note-bg}"
+   ],
+   "border": {
+    "top": [
+     "{callout-note-edge}"
+    ],
+    "left": [
+     "{callout-note-bar}"
+    ],
+    "bottom": [
+     "{callout-note-edge}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "calloutTip": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{callout-tip-bg}"
+   ],
+   "border": {
+    "top": [
+     "{callout-tip-edge}"
+    ],
+    "left": [
+     "{callout-tip-bar}"
+    ],
+    "bottom": [
+     "{callout-tip-edge}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "calloutWarning": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{callout-warning-bg}"
+   ],
+   "border": {
+    "top": [
+     "{callout-warning-edge}"
+    ],
+    "left": [
+     "{callout-warning-bar}"
+    ],
+    "bottom": [
+     "{callout-warning-edge}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "card": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}",
+    "{text}"
+   ],
+   "background": [
+    "{island-ground}",
+    "{surface-input}"
+   ],
+   "shadow": [
+    "none",
+    "{rule-popover} 0px 0px 0px 1px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "codeBlock": {
+   "family": "Recursive Mono Linear",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "codeText": {
+   "family": "Recursive Mono Linear",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "radius": [
+    "5px"
+   ]
+  },
+  "compaction": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "border": {
+    "top": [
+     "{rule-soft}"
+    ],
+    "left": [
+     "{rule-soft}"
+    ],
+    "bottom": [
+     "{rule-soft}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "composer": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "confirm": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "dialog": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-dialog}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "diff": {
+   "family": "Recursive Mono Linear",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "diffAdd": {
+   "family": "Recursive Mono Linear",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{positive}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "display": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{display}"
+   ]
+  },
+  "draft": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "editor": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}",
+    "{text}"
+   ],
+   "background": [
+    "{island-ground}",
+    "{surface-input}"
+   ]
+  },
+  "editorText": {
+   "family": "Recursive Mono Linear",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}",
+    "{text}"
+   ],
+   "background": [
+    "{transparent}",
+    "{editor-line}"
+   ]
+  },
+  "empty": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-faint}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "fieldLabel": {
+   "family": "Literata",
+   "weight": [
+    "400",
+    "600"
+   ],
+   "color": [
+    "{island-text-muted}",
+    "{island-text}",
+    "{text-label}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "fileBar": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}",
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "fileRow": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}"
+   ],
+   "background": [
+    "{surface-file-row}",
+    "{transparent}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "findBar": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-dialog}"
+   ],
+   "border": {
+    "bottom": [
+     "{rule-soft}"
+    ]
+   }
+  },
+  "findHit": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{display}"
+   ],
+   "background": [
+    "{find-highlight}"
+   ],
+   "outline": [
+    "{find-highlight}"
+   ],
+   "radius": [
+    "2px"
+   ]
+  },
+  "finder": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-popover} 0px 12px 32px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "folderActions": {
+   "family": "ui-monospace",
+   "weight": [
+    "500"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "folderRow": {
+   "family": "ui-monospace",
+   "weight": [
+    "500"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-row-hover}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "footer": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-faint}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "genericButton": {
+   "family": "Literata",
+   "weight": [
+    "400",
+    "600",
+    "500"
+   ],
+   "color": [
+    "{text-muted}",
+    "{text-faint}",
+    "{positive}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-button}",
+    "{surface-raised}"
+   ],
+   "shadow": [
+    "none",
+    "{rule} 0px 0px 0px 1.5px inset, {rule-underside} 0px -3px 0px 0px inset",
+    "{accent-glow} 0px 0px 16px 0px, {accent-glow-core} 0px 0px 2px 0px, {accent-top-light} 0px 1px 0px 0px inset, {accent-bottom-shade} 0px -3px 0px 0px inset"
+   ],
+   "radius": [
+    "4px",
+    "0px"
+   ]
+  },
+  "genericInput": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}",
+    "{text-muted}",
+    "{island-text}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-input}",
+    "{island-ground}"
+   ],
+   "border": {
+    "top": [
+     "{text-muted}",
+     "{text}",
+     "{rule-input}"
+    ],
+    "left": [
+     "{text-muted}",
+     "{text}",
+     "{rule-input}"
+    ],
+    "bottom": [
+     "{text-muted}",
+     "{text}",
+     "{rule-input}"
+    ]
+   },
+   "radius": [
+    "4px",
+    "0px"
+   ]
+  },
+  "header": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{chassis}"
+   ],
+   "shadow": [
+    "{rule} 0px -1.5px 0px 0px inset, {edge-light} 0px 1px 0px 0px inset"
+   ]
+  },
+  "heading": {
+   "family": "Literata",
+   "weight": [
+    "600"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "inlineCode": {
+   "family": "Recursive Mono Linear",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-inline-code}"
+   ],
+   "radius": [
+    "5px"
+   ]
+  },
+  "italic": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "lightbox": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{scrim-lightbox}"
+   ]
+  },
+  "mark": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}",
+    "{text-muted}",
+    "{positive}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "menu": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{menu-glass}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{edge-light-menu} 0px 1px 0px 0px inset, {shadow-menu} 4px 4px 0px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "menuItem": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "modalInput": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-input}"
+   ],
+   "border": {
+    "top": [
+     "{accent}"
+    ],
+    "left": [
+     "{accent}"
+    ],
+    "bottom": [
+     "{accent}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "modelLabel": {
+   "family": "ui-monospace",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-raised}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{rule} 0px 0px 0px 1.5px inset, {rule-underside} 0px -3px 0px 0px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "modelOption": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}"
+   ],
+   "background": [
+    "{transparent}",
+    "{option-active}",
+    "{accent-wash}"
+   ],
+   "shadow": [
+    "none",
+    "{accent-ring} 0px 0px 0px 1px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "modelPicker": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}"
+   ],
+   "background": [
+    "{island-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule-popover}"
+    ],
+    "left": [
+     "{rule-popover}"
+    ],
+    "bottom": [
+     "{rule-popover}"
+    ]
+   },
+   "shadow": [
+    "{shadow-popover} 0px 12px 32px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "notice": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "panel": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}"
+   ],
+   "background": [
+    "{island-ground}"
+   ],
+   "border": {
+    "left": [
+     "{rule-island}"
+    ]
+   },
+   "shadow": [
+    "{chassis} 0px 0px 0px 6px inset, {island-ground} 0px 0px 0px 7.5px inset"
+   ]
+  },
+  "panelField": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}",
+    "{island-text-muted}"
+   ],
+   "background": [
+    "{transparent}",
+    "{island-ground}"
+   ],
+   "border": {
+    "top": [
+     "{island-text-muted}",
+     "{rule-island}",
+     "{island-text}"
+    ],
+    "left": [
+     "{island-text-muted}",
+     "{rule-island}",
+     "{island-text}"
+    ],
+    "bottom": [
+     "{island-text-muted}",
+     "{rule-island}",
+     "{island-text}"
+    ]
+   },
+   "radius": [
+    "4px",
+    "0px"
+   ]
+  },
+  "panelLabel": {
+   "family": "ui-monospace",
+   "weight": [
+    "600"
+   ],
+   "color": [
+    "{island-text}",
+    "{island-text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "person": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{display}"
+   ],
+   "background": [
+    "{person-bubble}"
+   ],
+   "shadow": [
+    "{rule} 0px 0px 0px 1.5px inset, {person-shadow} 0px -3px 0px 0px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "pill": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{badge}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "border": {
+    "top": [
+     "{badge}"
+    ],
+    "left": [
+     "{badge}"
+    ],
+    "bottom": [
+     "{badge}"
+    ]
+   },
+   "shadow": [
+    "{pill-underside} 0px -1px 0px 0px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "problems": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{problem}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "border": {
+    "top": [
+     "{problem}"
+    ],
+    "left": [
+     "{problem}"
+    ],
+    "bottom": [
+     "{problem}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "prose": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}",
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "queueCard": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "border": {
+    "top": [
+     "{rule-soft}"
+    ],
+    "left": [
+     "{rule-soft}"
+    ],
+    "bottom": [
+     "{rule-soft}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "recent": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-recent}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-modal} 0px 24px 64px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "recentRow": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-recent-row}"
+   ],
+   "outline": [
+    "{accent}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "routine": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}"
+   ],
+   "background": [
+    "{island-ground}"
+   ],
+   "shadow": [
+    "none",
+    "{rule-popover} 0px 0px 0px 1px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "scrim": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{scrim}",
+    "{scrim-soft}"
+   ]
+  },
+  "sectionHead": {
+   "family": "ui-monospace",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}",
+    "{island-ground}"
+   ],
+   "background": [
+    "{transparent}",
+    "{accent}"
+   ]
+  },
+  "send": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-faint}",
+    "{on-accent}"
+   ],
+   "background": [
+    "{send-idle}",
+    "{transparent}"
+   ],
+   "shadow": [
+    "{rule-underside} 0px -2px 0px 0px inset",
+    "{accent-glow} 0px 0px 16px 0px, {accent-glow-core} 0px 0px 2px 0px, {accent-top-light} 0px 1px 0px 0px inset, {accent-bottom-shade} 0px -3px 0px 0px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "settings": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-dialog}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-modal} 0px 24px 64px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "settingsBody": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "settingsCard": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-input}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "settingsNav": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{display}"
+   ]
+  },
+  "settingsSection": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "sidebar": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{chassis}"
+   ],
+   "shadow": [
+    "{rule} -1.5px 0px 0px 0px inset, {edge-light-soft} 1px 1px 0px 0px inset"
+   ]
+  },
+  "skillMenu": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-popover} 0px 12px 32px 0px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "statusLight": {
+   "family": "Literata",
+   "weight": [
+    "400",
+    "500"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{status-unread}",
+    "{status-working}",
+    "{status-waiting}"
+   ],
+   "shadow": [
+    "{status-unread} 0px 0px 8px 0px",
+    "{status-working} 0px 0px 8px 0px",
+    "{status-waiting} 0px 0px 8px 0px"
+   ],
+   "radius": [
+    "1.5px"
+   ]
+  },
+  "switch": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{island-text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "opacity": [
+    "1",
+    "0.45"
+   ]
+  },
+  "table": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "tableCell": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ],
+   "border": {
+    "bottom": [
+     "{rule-soft}"
+    ]
+   }
+  },
+  "taskCell": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}",
+    "{text-faint}",
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-task-selected}"
+   ],
+   "border": {
+    "bottom": [
+     "{rule-soft}"
+    ]
+   },
+   "shadow": [
+    "none",
+    "{accent} 2px 0px 0px 0px inset"
+   ]
+  },
+  "taskDetail": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{shadow-drawer} -18px 0px 40px 0px"
+   ]
+  },
+  "taskTable": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-card}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "teamBoard": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "teamColumn": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-dialog}"
+   ],
+   "shadow": [
+    "{rule-soft} 0px 0px 0px 1px",
+    "{accent} 0px 0px 0px 1px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "teamMember": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-input}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "themeChoice": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-dialog}"
+   ],
+   "border": {
+    "top": [
+     "{rule}",
+     "{accent}"
+    ],
+    "left": [
+     "{rule}",
+     "{accent}"
+    ],
+    "bottom": [
+     "{rule}",
+     "{accent}"
+    ]
+   },
+   "shadow": [
+    "none",
+    "{accent} 0px 0px 0px 1px"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "threadLabel": {
+   "family": "ui-monospace",
+   "weight": [
+    "500",
+    "400"
+   ],
+   "color": [
+    "{text}",
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "threadRow": {
+   "family": "ui-monospace",
+   "weight": [
+    "500",
+    "400"
+   ],
+   "color": [
+    "{text}",
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-raised}",
+    "{surface-row-hover}"
+   ],
+   "shadow": [
+    "none",
+    "{rule} 0px 0px 0px 1.5px inset, {rule-underside} 0px -2px 0px 0px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "timestamp": {
+   "family": "ui-monospace",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "toolResult": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "toolSteps": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "transcript": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "worked": {
+   "family": "ui-monospace",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{surface-raised}"
+   ],
+   "border": {
+    "top": [
+     "{rule}"
+    ],
+    "left": [
+     "{rule}"
+    ],
+    "bottom": [
+     "{rule}"
+    ]
+   },
+   "shadow": [
+    "{rule} 0px 0px 0px 1.5px inset, {rule-underside} 0px -3px 0px 0px inset"
+   ],
+   "radius": [
+    "4px"
+   ]
+  }
+ }
+}
