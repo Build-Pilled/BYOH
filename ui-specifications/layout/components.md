@@ -89,9 +89,9 @@ Which family fills each class is the look's choice.
 
 - At rest (`composer`) 960 x 57: paperclip (24 glyph, x about 330); one-line
   field (`draft`) 773 x 33, body face 15 on 22.5, placeholder "Message <bot>";
-  a `Queue` text button right; Send (`send`) 32 x 32 at x = 1222, y = 745, 4 px
-  radius, up arrow. Idle (empty draft) it is flat. With text it is the primary
-  control. While a turn runs it becomes a Stop square.
+  a `Queue` text button right; Send (`send`) 32 x 32 at x = 1222, y = 745,
+  up arrow. It is disabled for an empty draft and primary with text; its paint
+  comes from the chosen look. While a turn runs it becomes a Stop square.
 - Grown: see behaviours B01. Capped field 240 high, composer 264.
 - Attachments (`attachment`): a chip row inside the composer above the field,
   908 x 70 at 346, 668: an image thumbnail with a close badge top right, and a
@@ -127,9 +127,9 @@ Which family fills each class is the look's choice.
   bridge menus.
 - Dialog (`dialog`) 460 wide (180, 340 or 362 high), centred, padding 20 x 22,
   with a scrim over the whole window. Title 22, strong. Labelled fields: label
-  14, muted; input (`modalInput`) 414 x 35. The focused field takes the accent
-  as its rule. Hint lines 13 muted. Footer right-aligned: Cancel (bordered),
-  then the primary button (accent fill, glow). Variants differ only in fields:
+  14, muted; input (`modalInput`) 414 x 35. The focused field uses the look's
+  focus treatment. Hint lines 13 muted. Footer right-aligned: Cancel (bordered),
+  then the primary button, painted by the look. Variants differ only in fields:
   New folder and Rename folder (one Name field), Connect two bots (two ids,
   a Why field, a hint), a refusal with Close, New MCP server (Name), and a
   read-only scrolling prompt view.
@@ -154,7 +154,7 @@ Which family fills each class is the look's choice.
   Overview, Identity, System prompt, bot.toml, Skills, Routines, Tools & MCP,
   Model, Limits, Notes, History. Each header (`sectionHead`) is 409 x 43 with a
   glyph token at left, a 14 upper-case label (1.12 px tracking) and a chevron.
-  The open header takes the accent fill with its ink and shows the file hint.
+  The open header uses the look's open-state treatment and shows the file hint.
 - Fields: label (`panelLabel` 13, strong, upper-case) over a field
   (`panelField` 347.8 x 31.5); descriptive hints 13 muted.
 - Identity: the bot's mark at 88 x 88 centred over a `Reroll mark` button, then
@@ -170,8 +170,8 @@ Which family fills each class is the look's choice.
 - Routines section: nested framed editor with a Form and Text toggle,
   label/value rows. Tools & MCP: switch cards (`switch`, 349 x 29, 48 or 66
   high): a Defaults row with hint, then one row per tool; the track is
-  bordered, the knob white, accent when on. Web tools are disabled for an
-  engine that lacks them.
+  bordered, with a knob and distinct on/off treatments from the look. Web
+  tools are disabled for an engine that lacks them.
 
 ## 7. Annotations
 

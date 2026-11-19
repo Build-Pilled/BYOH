@@ -1,6 +1,9 @@
 # Ranges
 
 Allowed range of each token group. The contrast and distinctness floors are checked by C4 and C5.
+Every new look meets the floors without exceptions; the exact Instrument-only
+faint pairs listed in [C4](../checks/c4-contrast.md) are not inherited by a look
+that starts from this template.
 
 | Group | Range |
 | --- | --- |
@@ -22,4 +25,4 @@ Allowed range of each token group. The contrast and distinctness floors are chec
 | Weight | any weight inside the role's class |
 | Radius | 0 to 16 px, paint only |
 | Rule strength | width and alpha of inset rules and shadows; never a border width |
-| Motion | transform and opacity only; any duration, with a looping animation allowed only for a working or streaming state; one duration scale that reduced motion sets to 0 |
+| Motion | transform and opacity only; any duration; one duration scale that reduced motion sets to 0 |
