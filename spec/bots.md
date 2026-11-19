@@ -49,9 +49,12 @@ owns creation, bot configuration and marks, not starter prompt content or the
   an empty set prints `count: 0 bots`. Live discovery and diagnostic changes do
   not require an app or daemon restart.
 - **R5 — Marks and prompts.** `mark_seed` defaults to the bot id and deterministically
-  selects its mark, not its address. `myharness mark <bot> [--light] [--size n]`
-  emits SVG (default dark, size 128, positive finite size); an unknown bot uses
-  the supplied id as seed. `myharness prompt <bot>` prints the assembled prompt
+  selects which mark it gets, not its address. The chosen look may decide how
+  the mark is drawn and animated, provided each bot stays recognisable and
+  distinct ([look and palette](look-and-palette.md) R9).
+  `myharness mark <bot> [--light] [--size n]` emits static SVG
+  (default dark, size 128, positive finite size); an unknown bot uses the supplied
+  id as seed. `myharness prompt <bot>` prints the assembled prompt
   offline; `GET /bots/<id>/prompt` offers the owner API view. Assembly belongs
   to the [engine contract](engine-contract.md); no notes are loaded implicitly.
 

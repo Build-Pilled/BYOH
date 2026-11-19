@@ -7,8 +7,11 @@ Classification: Core. Prerequisites: [sessions](sessions.md), [turns](turns.md),
 
 Distinguish actual work, requests for the person and teammate waits from unread
 replies. Status is an aid to navigation, not proof that a model succeeded or a
-peer received an input. Bot marks are deterministic identity pictures owned by
-[bots](bots.md); this section owns the status lights beside them.
+peer received an input. Bot marks are identity pictures: the seed deterministically
+fixes which mark a bot gets ([bots](bots.md) R5), while the chosen look may
+decide how it is drawn and animated, keeping each bot recognisable and distinct
+([look and palette](look-and-palette.md) R9). This section owns the status lights
+beside them.
 
 ## Required behaviour
 

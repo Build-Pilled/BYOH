@@ -4,10 +4,10 @@ Classification: Choice (look and palette). Prerequisites: [appearance mode](appe
 
 ## Purpose
 
-Let the person decide how their harness looks: the colours of its two variants
-(dark and light). This is the one place the
-interview asks about aesthetics, using screenshots and mockups before the person sees their
-finished app. [Appearance mode](appearance-mode.md) owns the System,
+Let the person decide how their harness looks: the colours, typefaces,
+motion and bot-mark drawing of its two variants (dark and light). This is the
+one place the interview asks about aesthetics, using screenshots and mockups
+before the person sees their finished app. [Appearance mode](appearance-mode.md) owns the System,
 Dark and Light selector, which every harness has whether or not this choice is
 made; this section owns what those modes look like. [Status](status.md),
 [callouts](callouts.md) and [conversation export](conversation-export.md) own
@@ -21,8 +21,11 @@ their own meaning and only borrow the colours defined here.
   including [dark](../screenshots/hero.png) and
   [light](../screenshots/main-chat-light.png) conversations. "Go with the
   default" is always offered and is the all-defaults path. The interview
-  opens on page two of Lavish with a few starting palette options, the default
-  option named Instrument first, shown with the gallery screenshots.
+  opens on page two of Lavish with four look options: Instrument, the default,
+  first, shown with the gallery screenshots, plus three new looks, each made
+  by a different designer and deliberately different from Instrument. Each
+  designer decides whether to animate. The brief for all three is that nothing
+  should annoy someone using the harness every day for 90 days.
   On the choice page, show look screenshots one per row at the page's full
   content width with their aspect ratio kept, not side by side or nested in
   half-width cards. Give each a clearly named full-size link or control to
@@ -30,20 +33,22 @@ their own meaning and only borrow the colours defined here.
   including dark and light. Before sharing any page or revision, follow
   [onboarding](onboarding.md) R3's script and real-browser click checks,
   including image loading and full-size opening.
-  Other palette proposals use mockups of the same fixed app shell. Never assume
+  Other look proposals use mockups of the same fixed app shell. Never assume
   the person knows that name: whenever the agent offers it, name it as an option
   and show the gallery screenshots alongside it. The person reacts and adds
   ideas; the agent shows more mockups along what they like, repeating until
-  they accept a palette. The accepted palette is the answer, then the setup
+  they accept a look. The accepted look is the answer, then the setup
   agent builds it. The gallery and mockups never show the person's app: that app
   is not shown until onboarding `first-use`.
 
   BYOH ships the fixed [shell mockup page](assets/look-mockup.html), with the
-  R3 colour roles as CSS variables for dark and light variants. Look proposals
-  change only those colours, not layout, text or controls, so the mockups match
-  the shell the agent builds. The fixed page changes with the app layout; use
-  its same shell for each proposal rather than inventing different layouts
-  for different palettes. It is a colour preview, not a working harness.
+  R3 colour roles and typeface choices as CSS variables for dark and light
+  variants. Look proposals may change colours, typefaces, motion and how bot
+  marks are drawn, not layout, text or controls, so the mockups match the shell
+  the agent builds. When a look includes motion, a short recording or animated
+  preview may accompany its still mockups. The fixed page changes with the app
+  layout; use its same shell for each proposal rather than inventing different layouts
+  for different looks. It is a look preview, not a working harness.
   Keep the other page-two choices as plain questions on the same Lavish page.
   If Lavish cannot be served, questions fall back to chat, but the person must
   explicitly accept the default-look option named Instrument alongside its
@@ -54,11 +59,12 @@ their own meaning and only borrow the colours defined here.
   field to `myharness.toml` and no daemon route: `theme` stays an unknown field
   to `myharness validate`; like the mode, a look is not a field in the harness
   configuration ([appearance mode](appearance-mode.md) E3).
-- **R2 — What a look may change.** A look is a **palette**: one colour for each
-  role in the R3 table, in two variants (dark and light). It changes colour only. It may not rename, remove, reorder or
+- **R2 — What a look may change.** A look is a **palette** (one colour for each
+  role in the R3 table, in two variants, dark and light) plus optional typefaces,
+  motion and bot-mark drawing. It may not rename, remove, reorder or
   restate any control, state or text, hide a status or callout label, or change
   what a control does. The accessibility tree of the app is the same under every
-  palette.
+  look.
 - **R3 — The default look.** The option named Instrument is the default,
   pictured in the [screenshot gallery](../screenshots/README.md):
   an opaque display, a darker or lighter chassis, orange backlit primary
@@ -78,10 +84,10 @@ their own meaning and only borrow the colours defined here.
   | Status: needs attention | `#ff2d2d` | `#dc2626` |
   | Callout: note, tip, important, warning, caution | `#4a9bc2`, `#6cc3a0`, `#f2a96b`, `#f1bd59`, `#e46f8a` | the same five hues; only the label text is deepened (callouts R4) |
 
-  The default typefaces are Literata for text and Recursive Mono Linear for code,
-  both bundled with their SIL Open Font Licence texts, with a system
+  For Instrument only, the typefaces are Literata for text and Recursive Mono
+  Linear for code, both bundled with their SIL Open Font Licence texts, with a system
   monospace stack for labels. This section claims no font file exists until the
-  asset task lands it. Status lights do not pulse.
+  asset task lands it. Instrument status lights do not pulse.
 - **R4 — Modes stay core.** A palette supplies the two variants and nothing
   else decides which one shows: System, Dark and Light pick the variant exactly
   as [appearance mode](appearance-mode.md) R2 to R4 say. The three buttons, their
@@ -106,9 +112,14 @@ their own meaning and only borrow the colours defined here.
   it makes no request to any origin but the paired daemon's: no remote
   stylesheet, font, image, icon or script. The app does not read a look asset
   from a path chosen at run time. An absent bundled font falls back to the
-  system stack and shows no error.
-- **R9 — Identity unchanged.** A palette does not alter a bot's mark: its shapes
-  and colour order depend only on the mark seed ([bots](bots.md) R5).
+  system stack and shows no error. Any look's fonts are bundled under an open
+  licence, with their licence texts.
+- **R9 — Identity unchanged.** The mark seed still determines which mark a bot
+  gets ([bots](bots.md) R5). A look may change how marks are drawn and animated,
+  including drawing them as animated characters, provided each bot stays
+  recognisable and distinct.
+- **R10 — Reduced motion.** Any motion respects the operating system's
+  reduced-motion setting.
 
 ## Controls
 
@@ -133,9 +144,9 @@ belong to [appearance mode](appearance-mode.md) and the Settings frame to
   Nothing is written to the daemon or to conversations.
 - **E5 — Missing font.** If a bundled font fails to load, text is drawn in the
   system stack, layout stays usable, and no request goes out to find another.
-- **E6 — Mockups and the Mac display.** Lavish mockups select colours, not proof
-  that the person's app renders them correctly. App screenshots on the Linux
-  test host remain the agent's own proof until onboarding `first-use`; neither
+- **E6 — Mockups and the Mac display.** Lavish mockups select a look
+  (colour, type, motion and marks), not proof that the person's app renders it
+  correctly. App screenshots on the Linux test host remain the agent's own proof until onboarding `first-use`; neither
   they nor mockups prove how the Mac's display profile or real appearance
   setting shows the built app. Present that check at `first-use`; it stays
   `mac-pending` until answered.
