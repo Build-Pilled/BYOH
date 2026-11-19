@@ -13,7 +13,7 @@
 
 Building and maintaining a custom harness is now convenient, fast and cheap.
 
-Harnesses have become a first-class daily workspace: far too important and too frequently used for a one-size-fits-all approach.
+Harnesses have become a first-class daily workspace: far too important and frequently used for a one-size-fits-all approach.
 
 A harness need not be complicated. A minimal harness is a more capable one. Plain folders and files are all it takes to understand and run it.
 
