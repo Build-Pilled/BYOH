@@ -30,6 +30,7 @@ Size, line height, weight class and text case per role. Families are never set h
 | `codeText` | 13px | 20.8px | regular | as typed | normal |
 | `compaction` | 14px | 21px | regular | as typed | normal |
 | `composer` | 14px | 21px | regular | as typed | normal |
+| `connectionCard` | 14px | 21px | regular | as typed | normal |
 | `confirm` | 14px | 21px | regular | as typed | normal |
 | `dialog` | 14px | 21px | regular | as typed | normal |
 | `diff` | 12px | 18px | regular | as typed | normal |
@@ -75,6 +76,15 @@ Size, line height, weight class and text case per role. Families are never set h
 | `recentRow` | 14px | 21px | regular | as typed | normal |
 | `routine` | 14px | 21px | regular | as typed | normal |
 | `scrim` | 14px | 21px | regular | as typed | normal |
+| `searchBotHit` | 14px | 21px | regular | as typed | normal |
+| `searchBox` | 14px | 21px | regular | as typed | normal |
+| `searchHit` | 14px | 21px | regular | as typed | normal |
+| `searchHitMeta` | 11px | 16.5px | regular | as typed | normal |
+| `searchHitSnippet` | 12px | 18px | regular | as typed | normal |
+| `searchHitTitle` | 14px | 21px | regular | as typed | normal |
+| `searchResults` | 14px | 21px | regular | as typed | normal |
+| `searchSectionTitle` | 12px | 18px | strong | uppercase | 0.96px |
+| `searchStatus` | 12px | 18px | regular | as typed | normal |
 | `sectionHead` | 14px | 21px | regular | uppercase | 1.12px |
 | `send` | 14px | 21px | regular | as typed | normal |
 | `settings` | 14px | 21px | regular | as typed | normal |

@@ -125,7 +125,7 @@ light and with Instrument and chosen tokens. Keep the same content and DOM
 between token swaps; do not edit an accessibility snapshot to make it equal.
 
 The agent checks the plan's state coverage against the sheets; automatic coverage
-checks require all 27 frame filenames and the mapped frame rectangles, but
+checks require all 29 frame filenames and the mapped frame rectangles, but
 cannot infer that a callback really opened the intended menu. Inspect the
 screenshots and state names as well as the numbers. Never claim coverage of
 an unstaged state.

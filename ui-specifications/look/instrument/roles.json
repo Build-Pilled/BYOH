@@ -558,6 +558,32 @@
     "4px"
    ]
   },
+  "connectionCard": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{find-highlight}"
+   ],
+   "background": [
+    "{surface-dialog}"
+   ],
+   "border": {
+    "top": [
+     "{find-highlight}"
+    ],
+    "left": [
+     "{find-highlight}"
+    ],
+    "bottom": [
+     "{find-highlight}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
   "dialog": {
    "family": "Literata",
    "weight": [
@@ -1388,6 +1414,139 @@
    "background": [
     "{scrim}",
     "{scrim-soft}"
+   ]
+  },
+  "searchBotHit": {
+   "family": "Literata",
+   "weight": [
+    "500"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-row-hover}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "searchBox": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{surface-input}"
+   ],
+   "border": {
+    "top": [
+     "{accent}"
+    ],
+    "left": [
+     "{accent}"
+    ],
+    "bottom": [
+     "{accent}"
+    ]
+   },
+   "radius": [
+    "4px"
+   ]
+  },
+  "searchHit": {
+   "family": "Literata",
+   "weight": [
+    "500",
+    "400"
+   ],
+   "color": [
+    "{text}",
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}",
+    "{surface-row-hover}",
+    "{surface-button}"
+   ],
+   "radius": [
+    "4px"
+   ]
+  },
+  "searchHitMeta": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "searchHitSnippet": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "searchHitTitle": {
+   "family": "Literata",
+   "weight": [
+    "500"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "searchResults": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "searchSectionTitle": {
+   "family": "ui-monospace",
+   "weight": [
+    "600"
+   ],
+   "color": [
+    "{text-muted}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "searchStatus": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{text-faint}"
+   ],
+   "background": [
+    "{transparent}"
    ]
   },
   "sectionHead": {
