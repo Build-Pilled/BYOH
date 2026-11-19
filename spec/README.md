@@ -74,7 +74,7 @@ release-one interview.
 | [session-organization.md](session-organization.md) | Core | Folders, row actions and archive without adding conversation context. |
 | [annotations.md](annotations.md) | Core | Quoted numbered comments attached to a message. |
 | [team-map.md](team-map.md) | Core | Team map, roster editing and ordering. |
-| [conversation-branching.md](conversation-branching.md) | Core | Fork and duplicate without modifying the source conversation. |
+| [conversation-branching.md](conversation-branching.md) | Core | Fork without modifying the source conversation. |
 | [completion-sound.md](completion-sound.md) | Core | Completion eligibility and the original synthesized sound. |
 | [reply-details.md](reply-details.md) | Core | Model changes, context used and added, and local timestamps. |
 | [callouts.md](callouts.md) | Core | Outward rendering of callout boxes in replies. |

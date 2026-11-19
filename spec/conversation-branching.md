@@ -1,37 +1,34 @@
-# Fork and duplicate a conversation
+# Fork a conversation
 
 Classification: Core. Prerequisites: [sessions](sessions.md), a selected engine adapter ([contract](engine-contract.md)), the [shell](ui-shell.md).
 
 ## Purpose
 
 Let the person try another direction without losing the first one. **Fork**
-starts a new session from a chosen reply; **Duplicate** copies the whole
-conversation as it stands. Both leave the source conversation exactly as it
-was. [Sessions](sessions.md) owns identity and deletion, [session
-organization](session-organization.md) owns the row menu that holds Duplicate,
-and [compaction](compaction.md) owns what a summary leaves behind.
+starts a new session from a chosen reply and leaves the source conversation
+exactly as it was. [Sessions](sessions.md) owns identity and deletion, and
+[compaction](compaction.md) owns what a summary leaves behind.
 
 ## Required behaviour
 
 - **R1 — Operations and entry points.** One owner call creates a branch:
   `POST /sessions/<bot>/<ref>/fork` (`<ref>` resolves as in [sessions](sessions.md) R4)
-  with an optional JSON body `entry` (a message's entry id from the session
-  detail) and `position`. No `entry` is **Duplicate**: the whole active
-  conversation. `entry` with `position` `at` (the default) is **Fork**: history
-  up to and including that entry. `entry` with `position` `before` is
+  with required JSON body field `entry` (a message's entry id from the session
+  detail) and optional `position`. `entry` with `position` `at` (the default)
+  is **Fork**: history up to and including that entry. `entry` with `position` `before` is
   **edit-and-fork**: history before that entry, with the entry's person text
   returned as `text` for the caller to edit; nothing is sent. The response is
-  `{session, text?}`. `myharness fork <bot> <session> [--at entry | --before entry]`
+  `{session, text?}`. `myharness fork <bot> <session> (--at entry | --before entry)`
   prints the new full UUID on its first line and, only for `--before`, a blank
-  line, `Text to edit and send:` and the text; the two flags are mutually
-  exclusive ([cli](cli.md)). Creating a branch makes no model call.
+  line, `Text to edit and send:` and the text; exactly one of the two flags is
+  required ([cli](cli.md)). Creating a branch makes no model call.
 - **R2 — The new session.** It has a new UUID, origin `fork`, the title
   `<source title> (fork)` (equal titles are permitted, no numbering), the
   source's folder label, no archive mark, no unread mark, and
   `forked_from` `{session, entry}`: the session whose history it was cut from
-  (for a branch of a not-yet-started branch, the original) and the chosen entry
-  or null for Duplicate. It records the source's native engine. The UUID is new
-  and unused: creating a branch never overwrites an existing session's files. It inherits no
+  (for a branch of a not-yet-started branch, the original) and the chosen entry.
+  It records the source's native engine. The UUID is new and unused: creating a
+  branch never overwrites an existing session's files. It inherits no
   reply address, routine, queued or pending input, attachment, workspace,
   launch record or idle mark; its first turn uses the bot's configuration at
   that time. A creation event reaches other open windows so the list updates.
@@ -56,12 +53,12 @@ and [compaction](compaction.md) owns what a summary leaves behind.
 - **R5 — Refusal creates nothing.** These return 400 with a plain reason,
   create no session and change nothing: the source has no transcript yet; the
   `entry` is not on the source's active conversation; `entry` or `position` is
-  malformed (blank entry, `position` without `entry`, a position other than
+  malformed (`entry` missing or blank, a position other than
   `at` or `before`); edit-and-fork before the first message ("nothing before
   the first message to fork from", for every engine) or on an entry that is not
   a person message (there is no person text to return); or, on Claude Code, an
   entry before the newest compaction boundary (the message reports `forkable`
-  false and has no Fork control; Duplicate stays available). Unknown bot or
+  false and has no Fork control). Unknown bot or
   session is 404; a bot with no valid configuration is 409. A failed or
   interrupted attempt removes every file it created, so recovery of orphaned
   native transcripts ([sessions](sessions.md) E2) can never adopt it as an
@@ -70,8 +67,7 @@ and [compaction](compaction.md) owns what a summary leaves behind.
   Code returns assistant text) are refused too.
 - **R6 — Pointer entry points.** A **Fork** button sits on every final
   assistant reply that is forkable; activating it creates the branch at that
-  reply and opens the new session by its exact UUID. **Duplicate** in the row's
-  Session actions menu creates a whole-conversation branch and opens it. The
+  reply and opens the new session by its exact UUID. The
   control is disabled while its request is pending, so one activation makes
   one session. Failure leaves the person where they were with a visible error.
   Edit-and-fork has no control in release one; the API and CLI provide it.
@@ -92,26 +88,23 @@ and [compaction](compaction.md) owns what a summary leaves behind.
 ## Controls
 
 The Fork button is scoped to the reply's `Message <entry-id>` region
-([shell](ui-shell.md)); Duplicate is an item of the Session actions menu owned
-by [session organization](session-organization.md).
+([shell](ui-shell.md)).
 
 | Role | Accessible name | Scope, action and observable state |
 | --- | --- | --- |
 | button | Fork | Within a final assistant reply's message region; absent when not forkable, disabled while pending; creates and opens the branch. |
-| menuitem | Duplicate | Session actions menu of one session row; creates and opens a whole-conversation branch. |
 | status | Forked from | Top of an opened branch; the sentence in R7. |
 | link | Original session | Inside Forked from; opens the source by UUID; absent when the source is gone. |
-| alert | Fork failed / Duplicate failed | Shows the refusal reason; dismissed by the next successful action. |
+| alert | Fork failed | Shows the refusal reason; dismissed by the next successful action. |
 
 ## Edge cases
 
-- **E1 — Nothing to branch.** A session with no transcript refuses Fork and
-  Duplicate with the R5 reason; its Duplicate item stays visible and the error
-  is shown, not a silent no-op or an empty copy.
+- **E1 — Nothing to branch.** A session with no transcript refuses a fork
+  request with the R5 reason, not a silent no-op or an empty branch.
 - **E2 — Compaction.** Fork on Pi keeps the compaction records up to the cut. On
   Claude Code, replies before the newest compaction have no Fork control and the
-  API refuses them; a Duplicate of a compacted session is allowed and carries the
-  native summary. Neither case restores history the engine file no longer holds.
+  API refuses them. Forking does not restore history the engine file no longer
+  holds.
 - **E3 — Unstarted Claude Code branch.** Until its first turn the branch reads
   the source's native history through the source session. If the source is deleted
   first, or its transcript is moved to the tidy archive ([session tidy](session-tidy.md))
@@ -132,4 +125,4 @@ by [session organization](session-organization.md).
 
 | Id | Given | When | Expect |
 | --- | --- | --- | --- |
-| **T1 — Branch without touching the source** | A source has history, including a working or queued source | Fork at a reply, edit-and-fork before a valid person entry, or Duplicate | New independent UUID/content cut, no model call and no inherited queued input; source artifacts stay byte-identical and its running turn is untouched. Invalid/blank entries, first-message edit-and-fork or non-person edit-and-fork refuse without creating anything (R1–R5). |
+| **T1 — Branch without touching the source** | A source has history, including a working or queued source | Fork at a reply, edit-and-fork before a valid person entry | New independent UUID/content cut, no model call and no inherited queued input; source artifacts stay byte-identical and its running turn is untouched. Invalid/blank entries, first-message edit-and-fork or non-person edit-and-fork refuse without creating anything (R1–R5). |

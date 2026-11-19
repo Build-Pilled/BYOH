@@ -37,7 +37,7 @@ owns the engine terminal UI, not the parser.
   | `new <bot>` | `--folder`, `--title` | [sessions](sessions.md) |
   | `sessions <bot>` | `--folder`, `--all` | sessions |
   | `say <bot-or-team> <text...>` | `--session`, `--no-wait` | [turns](turns.md), teams |
-  | `fork <bot> <session>` | `--at`, `--before` (mutually exclusive, nonempty entry id) | [conversation-branching](conversation-branching.md) |
+  | `fork <bot> <session>` | `--at`, `--before` (exactly one required, nonempty entry id) | [conversation-branching](conversation-branching.md) |
   | `pi <bot> [session]` | none | [terminal-chat](terminal-chat.md) (selected engine's UI) |
   | `mcp` | none | [mcp](mcp.md) (stdio server) |
   | `tidy` | `--days`, `--list`, `--put-back` | [session-tidy](session-tidy.md) |

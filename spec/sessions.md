@@ -7,7 +7,7 @@ Classification: Core. Prerequisites: a configured bot and initialized home.
 Keep conversations addressable across app and daemon restarts. This section
 owns session identity, metadata and deletion; [session-organization](session-organization.md)
 section owns folders and soft archive controls, and [conversation branching](conversation-branching.md)
-owns fork/duplicate semantics. [Session tidy](session-tidy.md) is a distinct disk archive.
+owns fork semantics. [Session tidy](session-tidy.md) is a distinct disk archive.
 
 ## Required behaviour
 

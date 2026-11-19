@@ -33,8 +33,7 @@ archive is a visibility flag, not deletion or [session tidy](session-tidy.md).
   Results open exact UUIDs. Count beside All sessions excludes archived threads.
   Outside/Close dismisses without changing data.
 - **R4 — Row actions.** Session actions offers Copy thread ID (`<bot>/<uuid>`),
-  Rename, Duplicate ([conversation branching](conversation-branching.md) owns
-  its effect), Move to <folder>, Remove from folder when filed, status-owned mark
+  Rename, Move to <folder>, Remove from folder when filed, status-owned mark
   actions, Archive/Unarchive and Delete. Rename accepts a trimmed nonempty
   title via `PATCH /sessions/<bot>/<sid>` without changing UUID. Archive toggles
   archived via PATCH; it hides from ordinary tree/aggregate but remains readable
@@ -74,7 +73,7 @@ Shared shell owns New session and bots; this section owns New folder and rows.
 | button | Open <bot>/<sid> | Finder result, within Session scope. |
 | button | Close | All sessions dialog only. |
 | menu | Session actions / Folder actions | Respective row; outside dismissal. |
-| menuitem | Copy thread ID / Rename / Duplicate / Archive / Unarchive / Delete | Session actions; applicable archive action only. Duplicate opens the new branch. |
+| menuitem | Copy thread ID / Rename / Archive / Unarchive / Delete | Session actions; applicable archive action only. |
 | menuitem | Move to <name> / Remove from folder | Session actions, applicable targets only. |
 | menuitem | Rename / Delete | Folder actions. |
 | dialog | New folder / Rename folder | Individually named prompts; textbox Name, OK, Cancel. |
