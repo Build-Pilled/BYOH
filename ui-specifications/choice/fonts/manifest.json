@@ -1,0 +1,184 @@
+[
+  {
+    "file": "literata-latin-ext.woff2",
+    "family": "Literata",
+    "coverage": "latin-ext",
+    "url": "https://fonts.gstatic.com/s/literata/v40/or3hQ6P12-iJxAIgLYT-JrUFng.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,200..900&display=swap",
+    "sha256": "1160835f4cdae6a86572ed501c13b62b341480cc7c13fc88ba0c21efdf1fcd73",
+    "bytes": 89668,
+    "fontVersionFixed": 203358,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "literata-latin.woff2",
+    "family": "Literata",
+    "coverage": "latin",
+    "url": "https://fonts.gstatic.com/s/literata/v40/or3hQ6P12-iJxAIgLYTwJrU.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,200..900&display=swap",
+    "sha256": "29de894c768689feef6ab4ef274a9a16d19bfc5b0c3cbfcdac80ef220816210c",
+    "bytes": 110080,
+    "fontVersionFixed": 203358,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "recursive-latin-ext.woff2",
+    "family": "Recursive",
+    "coverage": "latin-ext",
+    "url": "https://fonts.gstatic.com/s/recursive/v44/8vIK7wMr0mhh-RQChyHuHWZaC_w.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO,slnt,wght@0..1,0..1,0..1,-15..0,300..1000&display=swap",
+    "sha256": "2f888e0fde56aeba4e22693acf2f7608783f261bc31247909573dc2d12f5554f",
+    "bytes": 310024,
+    "fontVersionFixed": 71107,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "recursive-latin.woff2",
+    "family": "Recursive",
+    "coverage": "latin",
+    "url": "https://fonts.gstatic.com/s/recursive/v44/8vIK7wMr0mhh-RQChyHuE2Za.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO,slnt,wght@0..1,0..1,0..1,-15..0,300..1000&display=swap",
+    "sha256": "14ef41458aeba3d812284c4e32ee956910b88845062c61e91cc8578c2b78bccb",
+    "bytes": 304988,
+    "fontVersionFixed": 71107,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "inter-latin-ext.woff2",
+    "family": "Inter",
+    "coverage": "latin-ext",
+    "url": "https://fonts.gstatic.com/s/inter/v20/UcCo3FwrK3iLTcvsYwYL8g.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap",
+    "sha256": "5e6d4fe9d9f4bff8b2a2469d25ab19576bb85331e22c6ed51398e16f95d56a9c",
+    "bytes": 133336,
+    "fontVersionFixed": 262210,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "inter-latin.woff2",
+    "family": "Inter",
+    "coverage": "latin",
+    "url": "https://fonts.gstatic.com/s/inter/v20/UcCo3FwrK3iLTcviYwY.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap",
+    "sha256": "2c295d99e26dcf357d4d01bcf270fd6924b600c9a13dd8c363ef114f4c6976fa",
+    "bytes": 72920,
+    "fontVersionFixed": 262210,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "jetbrainsmono-latin-ext.woff2",
+    "family": "JetBrains Mono",
+    "coverage": "latin-ext",
+    "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbV2o-flEEny0FZhsfKu5WU4xD1OwG_TA.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap",
+    "sha256": "79bfdab9ba467e26eea4122e6f2567e188dd8a09a8c730d501fc487c4ab99c6e",
+    "bytes": 15196,
+    "fontVersionFixed": 144900,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "jetbrainsmono-latin.woff2",
+    "family": "JetBrains Mono",
+    "coverage": "latin",
+    "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbV2o-flEEny0FZhsfKu5WU4xD7OwE.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap",
+    "sha256": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e",
+    "bytes": 40404,
+    "fontVersionFixed": 144900,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "nunito-latin-ext.woff2",
+    "family": "Nunito",
+    "coverage": "latin-ext",
+    "url": "https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIO-aBXso.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap",
+    "sha256": "2c8d792869818ecb253a46bc3c63c7013df7aac2f69291c3c85e5cdc94160960",
+    "bytes": 35588,
+    "fontVersionFixed": 236061,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "nunito-latin.woff2",
+    "family": "Nunito",
+    "coverage": "latin",
+    "url": "https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaB.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap",
+    "sha256": "ba344451eab25b217a165363b1982048a5e5830a0daf36577973955a04cac793",
+    "bytes": 39128,
+    "fontVersionFixed": 236061,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "splinesansmono-latin-ext.woff2",
+    "family": "Spline Sans Mono",
+    "coverage": "latin-ext",
+    "url": "https://fonts.gstatic.com/s/splinesansmono/v13/R70BjzAei_CDNLfgZxrW6wrZOF2WX5yZmF2a.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@300..700&display=swap",
+    "sha256": "0ca9a3989044d1f9b4da1f303cea3c3091f5cb02fe54da04fd51fceaf676ecf9",
+    "bytes": 20816,
+    "fontVersionFixed": 65798,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "splinesansmono-latin.woff2",
+    "family": "Spline Sans Mono",
+    "coverage": "latin",
+    "url": "https://fonts.gstatic.com/s/splinesansmono/v13/R70BjzAei_CDNLfgZxrW6wrZOF2WX5KZmA.woff2",
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@300..700&display=swap",
+    "sha256": "46b7dcafe3e51dbe87be1bafaac3fed7646db1fe0a146647a6ffce3699f2752d",
+    "bytes": 36476,
+    "fontVersionFixed": 65798,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "IBMPlexSans[wdth,wght].ttf",
+    "family": "IBM Plex Sans",
+    "coverage": "full upstream file",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/IBMPlexSans%5Bwdth%2Cwght%5D.ttf",
+    "sha256": "3b031aa4216174205bd8471f88a49b91f093169e9e87bd5262242bc5967fe2e3",
+    "bytes": 537244,
+    "fontVersionFixed": 209781,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "IBMPlexSerif-Regular.ttf",
+    "family": "IBM Plex Serif",
+    "coverage": "full upstream file",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexserif/IBMPlexSerif-Regular.ttf",
+    "sha256": "e882efa9c41949a528ac2369079ec5ef050c1c996bbd0bacce3c3326d44cf80d",
+    "bytes": 163068,
+    "fontVersionFixed": 131465,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "IBMPlexSerif-SemiBold.ttf",
+    "family": "IBM Plex Serif",
+    "coverage": "full upstream file",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexserif/IBMPlexSerif-SemiBold.ttf",
+    "sha256": "27ce4d105591b48f666b228e1e399838a704594efea22b730000951bea700a60",
+    "bytes": 164528,
+    "fontVersionFixed": 131465,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "IBMPlexSerif-Italic.ttf",
+    "family": "IBM Plex Serif",
+    "coverage": "full upstream file",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexserif/IBMPlexSerif-Italic.ttf",
+    "sha256": "4b75b38be4673527231f49c48818d090c913d5042dd5c747b525bf6185d29ecb",
+    "bytes": 173004,
+    "fontVersionFixed": 131465,
+    "licence": "SIL OFL 1.1"
+  },
+  {
+    "file": "IBMPlexMono-Regular.ttf",
+    "family": "IBM Plex Mono",
+    "coverage": "full upstream file",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/IBMPlexMono-Regular.ttf",
+    "sha256": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46",
+    "bytes": 135580,
+    "fontVersionFixed": 131268,
+    "licence": "SIL OFL 1.1"
+  }
+]

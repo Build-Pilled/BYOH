@@ -7,7 +7,7 @@ that starts from this template.
 
 | Group | Range |
 | --- | --- |
-| ladder | ground plus a lightness offset per step, taken from the default's offsets (`look/instrument/tokens.md`); steps keep the default's order of lightness, and no two steps that the default distinguishes are equal |
+| ladder | use the default's offsets as a starting point, not a required order or formula; choose a coherent per-look hierarchy in both modes. Ground, selection, hover and islands remain visibly distinguishable where their state needs it. A page-like look may share card and page ground; hierarchy may use existing space and type instead of an added frame |
 | rule | visible against its surface but weaker than text-faint; alpha 0.05 to 0.6 for edges |
 | text | text, text-muted and text-faint each meet the contrast floors on every ladder step they sit on |
 | island | either equal to the ground tokens or a fixed dark panel; person-bubble contrasts with display |
@@ -15,7 +15,7 @@ that starts from this template.
 | status | four colours pairwise distinct in both modes, not distinguished by hue alone (words stay in the name) |
 | callout | five kinds pairwise distinct; bar visible on its background; ink meets contrast on its background |
 | annotation | slots distinct from each other; ink meets contrast on every slot |
-| mark | nine colours pairwise distinct; each visible on mark-ground |
+| mark | nine identity slots with distinct colours, each visible on mark-ground when used; a single-ink renderer may paint occupied cells with one ink while preserving the seeded silhouette |
 | shadow | colour and alpha only |
 
 | Other | Range |

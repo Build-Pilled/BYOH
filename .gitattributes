@@ -1,0 +1,2 @@
+# Preserve upstream font licence bytes, including their original whitespace.
+ui-specifications/choice/fonts/*-OFL.txt -whitespace

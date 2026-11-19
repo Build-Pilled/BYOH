@@ -62,7 +62,9 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   the interview, the build and the first chat happen in the host. Before building,
   that agent reads the pinned blueprint's [verification skill](../verify/SKILL.md)
   and uses its isolated kit/evidence workflow at the build stages. The suite
-  remains the only pass/fail gate; this adds no stage or real-login permission.
+  remains the only pass/fail gate for behaviour. The [UI specifications](../ui-specifications/README.md)
+  are the separate visual completion requirement, as [the spec index](README.md#what-done-means)
+  explains; this adds no stage or real-login permission.
 - **R3 — Interview pages.** The interview runs on Lavish pages served from the
   host, through `npx -y lavish-axi@<pinned version>` with its usage data turned
   off, on port 4388, so the page opens in the Mac
@@ -117,20 +119,22 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   ambiguous, ask for clarification without offering unlisted candidates as
   model options; if unavailable, explain that and ask for another choice.
 
-  Page two's look question offers four looks: the default-look option named
-  Instrument with the [gallery screenshots](../screenshots/README.md), including
+  Page two's look question offers **Instrument, Lab, Dusk, Paper**, in that
+  order, using the [choice-page template](../ui-specifications/choice/index.html).
+  Every look has a full live UI sample in the fixed shell and a row showing
+  both palettes, type and the four starter marks. Instrument starts selected,
+  with the [gallery screenshots](../screenshots/README.md), including
   [dark](../screenshots/hero.png) and [light](../screenshots/main-chat-light.png)
-  conversations, plus three deliberately different looks, each made by a
-  different designer. Look proposals cover colour, type, motion and bot-mark
-  drawing, with each designer deciding whether to animate and aiming for
-  nothing annoying in 90 days of daily use. Other proposals use the fixed shell
-  mockups (with a short recording or animated preview allowed for motion) and
-  iteration in [look and palette](look-and-palette.md) R1, never pictures of the
-  person's app.
-  The other four choices remain plain questions on that same page. Both pages
-  have the R10 progress line as their header. Present look screenshots at full
-  content width with full-size opening as [look and palette](look-and-palette.md)
-  R1 requires.
+  conversations. Match system/Dark/Light and Still/Motion toggles let the person
+  compare; reduced motion disables Motion. Viewing is not choosing. The person
+  may choose a row or ask for changes. “Something else?” is describe-your-own
+  only, with no Mix or per-row Preview. Proposals cover colour, type, corner
+  radius, rule/shadow strength, motion and mark drawing without moving a box;
+  aim for nothing annoying in 90 days of daily use. Iterate as
+  [look and palette](look-and-palette.md) R1 says, never with pictures of the
+  person's own app. The other four choices remain plain questions on that
+  same page. Both pages have the R10 progress line as their header. Present
+  look screenshots at full content width with full-size opening as R1 requires.
 
   Before giving the person a link to any interview page, including a revised
   look proposal, the agent checks the actual page it will serve:
@@ -383,7 +387,7 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   | Suite | `handoff` | The conformance suite is the set of checks that decides whether your built harness meets the blueprint. |
   | Verification kit | `handoff` | The verification kit gathers screenshots and other evidence from a separate test instance so your agent can inspect its work. |
   | Virtual display | `stage-5-ui` | The virtual display lets your agent run and inspect the app on the host without showing you an unfinished window. |
-  | Palette | `interview-2` | A palette is the set of colours used throughout the app; a look adds optional typefaces, motion and bot-mark drawing without changing how the app works. |
+  | Palette | `interview-2` | A palette is the set of colours used throughout the app; a look adds optional typefaces, corner radius, rule/shadow strength, motion and bot-mark drawing without moving a box or changing how the app works. |
   | Instrument option | `interview-2` | Instrument is the name of the default-look option pictured in the gallery, which you can keep or use as a starting point. |
   | Mockup | `interview-2` | A mockup is a fixed example of the app shell used to compare colour, type, motion and marks, with a short recording or animated preview allowed for motion, not a picture of your own unfinished app. |
   | Pairing | `paired` | Pairing gives the desktop app the owner token it needs to access your daemon without exposing it to other pages. |

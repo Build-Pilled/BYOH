@@ -1,0 +1,56 @@
+[
+  {
+    "file": "recursive-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/recursive/OFL.txt",
+    "sha256": "f9f539cf7549bd417159dbdb9c400943a5b60a7366c2c6fbde9f095173d82479",
+    "bytes": 4389
+  },
+  {
+    "file": "literata-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/literata/OFL.txt",
+    "sha256": "8742963604cd89dc81437811a850018fc03b2bfad686d7422c8235967c87614e",
+    "bytes": 4389
+  },
+  {
+    "file": "ibmplexserif-OFL.txt",
+    "url": "https://raw.githubusercontent.com/IBM/plex/master/LICENSE.txt",
+    "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+    "bytes": 4456
+  },
+  {
+    "file": "jetbrainsmono-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/jetbrainsmono/OFL.txt",
+    "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d",
+    "bytes": 4399
+  },
+  {
+    "file": "splinesansmono-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/splinesansmono/OFL.txt",
+    "sha256": "4abb88162e4c0c5f9fc6c2f15d7085f7b7e27fd89f541a13488e1bcb829bde3f",
+    "bytes": 4403
+  },
+  {
+    "file": "ibmplexsans-OFL.txt",
+    "url": "https://raw.githubusercontent.com/IBM/plex/master/LICENSE.txt",
+    "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+    "bytes": 4456
+  },
+  {
+    "file": "ibmplexmono-OFL.txt",
+    "url": "https://raw.githubusercontent.com/IBM/plex/master/LICENSE.txt",
+    "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+    "bytes": 4456
+  },
+  {
+    "file": "inter-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt",
+    "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+    "bytes": 4377
+  },
+  {
+    "file": "nunito-OFL.txt",
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/OFL.txt",
+    "sha256": "580df76c95a1ec5ab878ceb25bb3d85c6a076804e9c970c8c6972aea775fdf65",
+    "bytes": 4385
+  }
+]

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How should it look?</title>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="page.css"><link rel="stylesheet" href="stage.css">
+</head><body><div class="page">
+<div class="progress">Page two · look — window — notifications — export — backup</div>
+<h1>How should it look?</h1>
+<p class="sub">Instrument is already chosen. Try the others on the same screen, then pick one or ask for changes. You can go with the default at any time.</p>
+<div class="bar" aria-label="Preview controls">
+ <span class="seg" id="looks" role="group" aria-label="Look"><button data-look="instrument" aria-pressed="true"><kbd>1</kbd>Instrument</button><button data-look="lab" aria-pressed="false"><kbd>2</kbd>Lab</button><button data-look="dusk" aria-pressed="false"><kbd>3</kbd>Dusk</button><button data-look="paper" aria-pressed="false"><kbd>4</kbd>Paper</button></span>
+ <span class="seg" id="mode" role="group" aria-label="Mode"><button data-mode="system" aria-pressed="true">Match system</button><button data-mode="dark" aria-pressed="false">Dark</button><button data-mode="light" aria-pressed="false">Light</button></span>
+ <span class="seg" id="motion" role="group" aria-label="Motion"><button data-motion="still" aria-pressed="true">Still</button><button data-motion="motion" aria-pressed="false">Motion</button></span>
+ <span id="rmnote" hidden style="font-size:13px;color:var(--pm)">Your system asks for reduced motion, so Motion is off.</span>
+ <span class="chosen" id="chosen"></span>
+</div>
+<div class="stagewrap"><div class="stage" id="stage" data-look="instrument" data-mode="dark" data-motion="still"></div></div>
+<div class="cap"><a id="fullsize" target="_blank" rel="noopener">Open live sample full size</a> · Live mockup of the fixed app shell in <b id="cur">Instrument</b>. Same layout in every look; only paint (including corners and rules), type, motion and bot marks change. Keys 1 to 4 switch look. Dark, Light and System exist in every look; the conversation export is always light.</div>
+<div id="rows"></div>
+<div class="else"><b>Something else?</b>
+ <p>Describe the look you want in your own words: a mood, a place, an app you like, a colour.</p>
+ <textarea aria-label="Describe your own look"></textarea></div>
+<p class="note">Choice-page template. Your agent records the accepted answer; this page does not install a look or send requests by itself.</p>
+</div>
+<script type="module" src="load.js"></script>
+</body></html>

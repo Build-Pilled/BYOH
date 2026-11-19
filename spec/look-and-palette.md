@@ -5,7 +5,7 @@ Classification: Choice (look and palette). Prerequisites: [appearance mode](appe
 ## Purpose
 
 Let the person decide how their harness looks: the colours, typefaces,
-motion and bot-mark drawing of its two variants (dark and light). This is the
+motion, corner radius, rule/shadow strength and bot-mark drawing of its two variants (dark and light). This is the
 one place the interview asks about aesthetics, using screenshots and mockups
 before the person sees their finished app. [Appearance mode](appearance-mode.md) owns the System,
 Dark and Light selector, which every harness has whether or not this choice is
@@ -21,30 +21,36 @@ their own meaning and only borrow the colours defined here.
   including [dark](../screenshots/hero.png) and
   [light](../screenshots/main-chat-light.png) conversations. "Go with the
   default" is always offered and is the all-defaults path. The interview
-  opens on page two of Lavish with four look options: Instrument, the default,
-  first, shown with the gallery screenshots, plus three new looks, each made
-  by a different designer and deliberately different from Instrument. Each
-  designer decides whether to animate. The brief for all three is that nothing
+  opens on page two of Lavish with four look options in fixed order:
+  **Instrument, Lab, Dusk, Paper**. Use the [choice-page template](../ui-specifications/choice/index.html):
+  every look has a full live UI sample in the same shell (switch it in place)
+  and a row with both palettes, type specimens and the four starter marks.
+  Instrument starts selected and also shows its gallery screenshots, including
+  dark and light, at full content width with their aspect ratios kept and named
+  full-size links. The live sample also has a named full-size link.
+  Match system / Dark / Light and Still / Motion let the person compare both
+  variants and any motion; reduced motion disables Motion. Viewing a look does
+  not choose it. Choose or the row's radio accepts it; Ask for changes invites
+  revision. “Something else?” offers describe-your-own only: no Mix and no
+  per-row Preview button. The three published look descriptions and decided
+  token sets are in [Lab](../ui-specifications/look/lab/README.md),
+  [Dusk](../ui-specifications/look/dusk/README.md) and
+  [Paper](../ui-specifications/look/paper/README.md). Their brief is that nothing
   should annoy someone using the harness every day for 90 days.
-  On the choice page, show look screenshots one per row at the page's full
-  content width with their aspect ratio kept, not side by side or nested in
-  half-width cards. Give each a clearly named full-size link or control to
-  open the original image. Apply this to every look's screenshot previews,
-  including dark and light. Before sharing any page or revision, follow
-  [onboarding](onboarding.md) R3's script and real-browser click checks,
-  including image loading and full-size opening.
-  Other look proposals use mockups of the same fixed app shell. Never assume
-  the person knows that name: whenever the agent offers it, name it as an option
-  and show the gallery screenshots alongside it. The person reacts and adds
+  Before sharing any page or revision, follow [onboarding](onboarding.md) R3's
+  script and real-browser click checks, including image loading and full-size
+  opening. Never assume the person knows Instrument: always name the option
+  and show its gallery pictures alongside it. The person reacts and adds
   ideas; the agent shows more mockups along what they like, repeating until
   they accept a look. The accepted look is the answer, then the setup
   agent builds it. The gallery and mockups never show the person's app: that app
   is not shown until onboarding `first-use`.
 
   BYOH ships the fixed [shell mockup page](assets/look-mockup.html), with the
-  R3 colour roles and typeface choices as CSS variables for dark and light
-  variants. Look proposals may change colours, typefaces, motion and how bot
-  marks are drawn, not layout, text or controls, so the mockups match the shell
+  complete look tokens (including R3 roles) from the [UI pack](../ui-specifications/README.md),
+  with the same layout values and token files used by the live stage and built
+  app. Look proposals may change colours, typefaces, motion, corner radius,
+  rule/shadow strength and how bot marks are drawn, not layout, text or controls, so the mockups match the shell
   the agent builds. When a look includes motion, a short recording or animated
   preview may accompany its still mockups. The fixed page changes with the app
   layout; use its same shell for each proposal rather than inventing different layouts
@@ -61,7 +67,13 @@ their own meaning and only borrow the colours defined here.
   configuration ([appearance mode](appearance-mode.md) E3).
 - **R2 — What a look may change.** A look is a **palette** (one colour for each
   role in the R3 table, in two variants, dark and light) plus optional typefaces,
-  motion and bot-mark drawing. It may not rename, remove, reorder or
+  motion, corner radius, rule/shadow strength and bot-mark drawing. Radius and
+  rule/shadow strength are paint only: they must move no box. All element
+  rectangles, padding, spacing, font sizes, line heights and border widths stay
+  fixed as the [layout contract](../ui-specifications/layout/shell.md) specifies.
+  Rules may vary as inset shadows, never by changing border widths. A look is a
+  complete named token set in the pack schema, not only the R3 role table.
+  It may not rename, remove, reorder or
   restate any control, state or text, hide a status or callout label, or change
   what a control does. The accessibility tree of the app is the same under every
   look.
@@ -86,8 +98,8 @@ their own meaning and only borrow the colours defined here.
 
   For Instrument only, the typefaces are Literata for text and Recursive Mono
   Linear for code, both bundled with their SIL Open Font Licence texts, with a system
-  monospace stack for labels. This section claims no font file exists until the
-  asset task lands it. Instrument status lights do not pulse.
+  monospace stack for labels. The [bundled files and licence texts](../ui-specifications/choice/fonts/README.md)
+  are shared with the mockup and choice page. Instrument status lights do not pulse.
 - **R4 — Modes stay core.** A palette supplies the two variants and nothing
   else decides which one shows: System, Dark and Light pick the variant exactly
   as [appearance mode](appearance-mode.md) R2 to R4 say. The three buttons, their
@@ -96,9 +108,12 @@ their own meaning and only borrow the colours defined here.
   is a change to the app that the person's agent makes and installs with the
   app-build flow ([app build](app-build.md)). Installing a new look neither
   clears the person's saved mode nor touches conversations or bot configuration.
-- **R5 — Legible.** In each variant, text and muted text meet a 4.5:1 contrast
-  ratio against both the display and the chassis. Accent text SHOULD meet 4.5:1
-  against the display. The default meets the first requirement in both variants.
+- **R5 — Legible.** In both variants, faint text reaches 3:1 and every other
+  text, including muted, link, badge and callout inks, reaches 4.5:1 on its
+  effective background at every size and weight. New looks, including user-
+  invented looks, have no exceptions. Instrument remains exact: only the named
+  Instrument-only faint pairs in [C4](../ui-specifications/checks/c4-contrast.md)
+  are exceptions; they do not carry over to another look or another pair.
 - **R6 — Still readable as states.** In each variant the four status colours
   are pairwise different; the
   five callout accents are pairwise different. Neither replaces the words that
@@ -145,7 +160,7 @@ belong to [appearance mode](appearance-mode.md) and the Settings frame to
 - **E5 — Missing font.** If a bundled font fails to load, text is drawn in the
   system stack, layout stays usable, and no request goes out to find another.
 - **E6 — Mockups and the Mac display.** Lavish mockups select a look
-  (colour, type, motion and marks), not proof that the person's app renders it
+  (colour, type, radius, rule/shadow strength, motion and marks), not proof that the person's app renders it
   correctly. App screenshots on the Linux test host remain the agent's own proof until onboarding `first-use`; neither
   they nor mockups prove how the Mac's display profile or real appearance
   setting shows the built app. Present that check at `first-use`; it stays
