@@ -16,7 +16,10 @@ files on disk, engine connections through the kit's mock model, and the app's
 accessibility tree. Where an action has a daemon effect, the case reads that
 effect first and the screen second. Window controls are found by
 role and accessible name from the section's Controls table, never by CSS, test
-ids or a private bridge.
+ids or a private bridge. The one exception is geometry that has no role: the window cases of
+`suite/ui-shell.mjs` read the composer, transcript, step list and result panel
+through the layout pack's `data-role` attributes (`composer`, `transcript`,
+`toolSteps`, `toolResult`), so a build carries those four attributes.
 
 ## Run
 

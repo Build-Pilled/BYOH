@@ -18,6 +18,7 @@ from the pinned blueprint checkout, with no separate skill installation.
 | `mock-model.mjs` | One server, two wire formats (OpenAI for Pi, Anthropic for Claude Code), one set of directives. Its header lists them. |
 | `fixtures/` | Two scripted replies for `MOCK_REPLY`: callouts and a table. |
 | `test/selftest.mjs` | The kit's own test, against `test/stub`, a stub of the harness contract. |
+| `test/ui-suite/` | A stub harness and page for proving the window cases of `suite/ui-shell.mjs`; an `app` argument `--mutant=<name>` after `app/main.cjs` breaks one rule on purpose (`fixed-composer`, `no-cap`, `no-reserve`, `tools-expanded`). |
 
 ## Check the kit itself
 
