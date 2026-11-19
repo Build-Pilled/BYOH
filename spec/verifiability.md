@@ -14,7 +14,10 @@ not an implementation of the kit's commands. The [verification skill](../verify/
 in the pinned blueprint checkout tells the setup agent and permanent harness
 keeper how to use the existing [kit](../verify/README.md) during the build and
 later changes. Read it directly there; no separately installed skill is required.
-It adds neither a second pass/fail gate nor new suite cases.
+The skill adds neither another behavioural pass/fail gate nor new suite cases.
+The suite gates behaviour; the [UI checks](../ui-specifications/checks/README.md)
+are a second completion requirement for the app's appearance and layout, as
+specified in [What done means](README.md#what-done-means).
 
 ## Required behaviour
 

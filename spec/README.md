@@ -12,9 +12,18 @@ it with the same [kit](../verify/README.md) and suite to retain evidence of thei
 A build is done when the [suite](../suite/README.md) is green on it and the
 person has reached `first-use` ([onboarding](onboarding.md) R4). Mac-only items
 follow [verifiability](verifiability.md) R12. The suite is the only pass/fail
-gate. Numbered rules say what to build. Edge-case tables are reference: read a
+gate for behaviour; how the pages look and are laid out is held to the UI
+checks below, which decide nothing about behaviour. Numbered rules say what to build. Edge-case tables are reference: read a
 table when building or debugging that behaviour. They are not a checklist, and
 they ask for no new tests or fault hooks.
+
+The app's pages are also held to the [UI specifications](../ui-specifications/README.md),
+as a second completion requirement beside the suite. The setup agent screenshots each of its own pages at pack size (1280 x 795 at
+scale 2) and compares each with its frame and values: layout within about 2 px,
+colours and fonts exact for the chosen look. It fixes every mismatch. Setup is
+not done until every page passes, and the result is shown to the person. For any
+look this includes the look-swap invariance check
+([checks](../ui-specifications/checks/README.md)).
 
 ## Reading a section
 
