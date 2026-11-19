@@ -193,7 +193,9 @@ The recipe is [`vm/`](../vm/README.md): the template, host step and its removal 
   missing required native transcript or archived artifact fails collection.
   Known credential locations and `secrets/` are excluded **before traversal**;
   no SSH keys, account/login files, app profile, Git configuration/history,
-  dependencies/caches/build output, session `work/` or VM image is collected.
+  session `work/` or VM image is collected. Dependency/cache/build-output
+  exclusions apply only to source working trees, not arbitrary home folder
+  names: a skill named `build` or notes under `tmp`/`dist` are still saved.
   Links are not followed. Include a SQLite online backup of `tasks/factory.db`,
   checked with `integrity_check`, rather than its raw live DB/WAL/journals;
   a never-created DB is recorded absent. Include the owned `~/myharness-src`
@@ -251,8 +253,11 @@ The recipe is [`vm/`](../vm/README.md): the template, host step and its removal 
   files and other content byte-for-byte. Preserve an unfamiliar replacement or
   moved/edited line with an explanation; refuse a concurrent edit rather than
   overwrite it. A missing/corrupt record cannot authorize guessed cleanup. Keep
-  phases/kept-disk state for safe retry, including after partial VM deletion;
-  an interrupted host lock needs confirmation its process ended before manual
+  phases/kept-disk state for safe retry, including after partial VM deletion.
+  An interrupted pre-VM install records `installing`: when no instance exists,
+  installation can retry and removal can clean up without a VM collection.
+  After instance creation is recorded, unexplained VM absence is still a refusal,
+  not permission to guess that data was saved. An interrupted host lock needs confirmation its process ended before manual
   lock removal. New installs only; older installs use their own release's remover.
 
   After the identified app exits, remove only its fixed support folder

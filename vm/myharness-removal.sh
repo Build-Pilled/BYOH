@@ -44,7 +44,7 @@ state_read() {
   ssh_hash=$(sed -n '7s/^ssh_hash=//p' "$RECORD")
   # The eighth line is a fixed end marker, not executable or extensible state.
   [ "$(sed -n '8p' "$RECORD")" = end=1 ] || die "incomplete host record"
-  case "$phase" in installed|preparing|collected|deleting-vm|vm-removed|data-removed|complete) ;; *) die "unknown removal phase" ;; esac
+  case "$phase" in installing|installed|preparing|collected|deleting-vm|vm-removed|data-removed|complete) ;; *) die "unknown removal phase" ;; esac
   case "$disk_phase" in none|kept|removed) ;; *) die "unknown disk phase" ;; esac
   case "$ssh_created:$ssh_inserted" in 0:0|0:1|1:1) ;; *) die "invalid SSH provenance" ;; esac
   case "$ssh_inode" in *[!0-9:]*|'') die "invalid SSH file identity" ;; esac
@@ -230,7 +230,11 @@ remove() {
     LIMA_HOME="$LIMA_DIR" "$LIMACTL" delete -f myharness-vm || die "could not delete myharness-vm; retry keeps earlier saves"
     phase=vm-removed; state_write
   else
-    case "$phase" in deleting-vm|vm-removed|data-removed|complete) ;; *) die "VM is missing before a recorded teardown; refusing to guess whether its data was saved" ;; esac
+    case "$phase" in
+      installing) say "No VM was created; there is no VM data to collect. Finishing the interrupted host install cleanup." ;;
+      deleting-vm|vm-removed|data-removed|complete) ;;
+      *) die "VM is missing before a recorded teardown; refusing to guess whether its data was saved" ;;
+    esac
   fi
   [ ! -e "$LIMA_DIR/myharness-vm" ] || die "myharness-vm still exists; Lima files kept"
   if [ "$keep" = 1 ]; then

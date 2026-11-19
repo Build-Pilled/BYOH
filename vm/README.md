@@ -135,7 +135,9 @@ It holds:
 
 `secrets/` and known credential locations are excluded **before traversal**.
 There is no Git history/config, VM image, app profile, account/login state,
-dependencies/caches/build output or session `work/`; links are not followed.
+session `work/`; links are not followed. Dependency/cache/build-output names
+are excluded only from the source and deployed-source worktrees. Home skills,
+memory and notes named `build`, `tmp`, `dist` or similar are still saved.
 **The save may contain anything typed into a conversation, in clear text.**
 No content scan or redaction is done. Protect the save as private conversation
 history. It is not a bootable VM, scheduled backup, automatic restore or migration;
@@ -172,8 +174,11 @@ an old whole-file snapshot. The Mac record
 with an operation lock beside it. It contains no conversation text, credentials
 or sleep fields. On interruption, verify the recorded host process has ended
 before manually removing its stale lock directory and retrying. Keep the record:
-it permits safe residual cleanup and remembers a previously kept disk. These
-steps are for new installs; older installations use their own release's remover.
+it permits safe residual cleanup and remembers a previously kept disk. A failed
+install before instance creation records `installing`: with no VM, rerun the
+install to retry, or run removal to finish cleanup without collecting nonexistent
+VM data. Once instance creation is recorded, unexplained VM absence still refuses
+cleanup rather than guessing whether data was saved. These steps are for new installs; older installations use their own release's remover.
 
 Other Lima instances/disks are left alone. When another instance remains,
 `~/.lima`, its shared key/config and Lima's image cache stay. A symlinked

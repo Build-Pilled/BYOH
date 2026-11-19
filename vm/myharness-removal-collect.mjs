@@ -17,9 +17,11 @@ export function safePath(p) {
 }
 // Exclude by path BEFORE lstat, directory traversal, opening files or hashing.
 // No content scan: conversation text is saved as-is, including typed secrets.
-export function excluded(rel) {
+export function excluded(rel, source = false) {
   const parts = rel.split('/');
-  const dirs = new Set(['secrets', '.git', '.ssh', '.aws', '.azure', '.gnupg', '.kube', '.docker', '.claude', '.pi', 'node_modules', '.cache', '.npm', 'dist', 'build', 'coverage', 'tmp', 'temp']);
+  const dirs = new Set(['secrets', '.git', '.ssh', '.aws', '.azure', '.gnupg', '.kube', '.docker', '.claude', '.pi']);
+  const rebuildable = new Set(['node_modules', '.cache', '.npm', 'dist', 'build', 'coverage', 'tmp', 'temp']);
+  if (source && parts.some(p => rebuildable.has(p))) return true;
   return /(?:^|\/)\.config\/(?:gh|gcloud|op)(?:\/|$)/.test(rel) || /(?:^|\/)\.local\/share\/keyrings(?:\/|$)/.test(rel) || parts.some(p => dirs.has(p) || /^(?:\.env(?:\..*)?|\.npmrc|\.netrc|\.pypirc|owner-token|session-token|\.gitconfig|\.git-credentials|\.claude\.json|auth\.json|credentials(?:\..*)?|id_(?:rsa|dsa|ecdsa|ed25519)(?:\.pub)?|.*\.(?:pem|key|p12|pfx))$/i.test(p)) ||
     /(?:^|\/)sessions\/[^/]+\/work(?:\/|$)/.test(rel) ||
     /(?:^|\/)log\/daemon\.json$/.test(rel) || /(?:^|\/)factory\.db(?:-wal|-shm|-journal)?$/.test(rel);
@@ -89,7 +91,7 @@ export function inventory(root, uid, prefix, manifest) {
     for (const name of fs.readdirSync(`/proc/self/fd/${dir}`).sort()) {
       safePath(name);
       const sub = path.join(rel, name), from = path.join(root, sub);
-      if (excluded(sub)) { manifest.excluded.push(from); continue; }
+      if (excluded(sub, prefix === 'source' || prefix === 'deployed-source')) { manifest.excluded.push(from); continue; }
       const pointer = `/proc/self/fd/${dir}/${name}`, st = fs.lstatSync(pointer);
       if (st.isSymbolicLink()) { manifest.excluded.push(`${from} (link, not followed)`); continue; }
       if (st.uid !== uid) fail(`source is not owned by the expected account: ${from}`);
@@ -300,7 +302,7 @@ export async function collect(options, output = process.stdout) {
       if (seen.has(entry.to)) fail('duplicate collection destination'); seen.add(entry.to);
       await emit(entry.to, readOwned(entry.from, entry.uid), entry.from);
     }
-    await emit('READ-ME.txt', Buffer.from(`${manifest.privacy}\nCredential locations, secrets/, Git history, dependencies, caches, session work/ and VM images are excluded. Links are not followed. Source snapshots include uncommitted files but not Git history. See manifest.json for mappings, exclusions and checksums.\n`), null);
+    await emit('READ-ME.txt', Buffer.from(`${manifest.privacy}\nCredential locations, secrets/, Git history, source dependencies/caches/build output, session work/ and VM images are excluded. Home definitions/notes are not excluded just because a folder is named build, tmp or dist. Links are not followed. Source snapshots include uncommitted files but not Git history. See manifest.json for mappings, exclusions and checksums.\n`), null);
     const summary = Buffer.from(JSON.stringify(manifest, null, 2) + '\n');
     await emit('manifest.json', summary, null);
     await write(`END ${count}\n`);

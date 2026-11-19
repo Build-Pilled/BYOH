@@ -27,6 +27,12 @@ function fixture() {
   script('xxd', `const fs=require('fs');const a=process.argv.slice(2),b=fs.readFileSync(0);process.stdout.write(a.includes('-r')?Buffer.from(b.toString().trim(),'hex'):b.toString('hex').match(/.{1,60}/g)?.join('\\n')+'\\n');`);
   script('uuidgen', `console.log(require('crypto').randomUUID());`);
   script('plutil', `console.log('local.myharness.app');`);
+  script('uname', `console.log(process.argv[2]==='-s'?'Darwin':'arm64');`);
+  script('sw_vers', `console.log('13.6');`);
+  script('df', `console.log('Filesystem Blocks Used Available Capacity');console.log('test 100 20 80 20%');`);
+  script('sysctl', `console.log(process.argv.at(-1)==='hw.memsize'?'34359738368':'8');`);
+  script('lsof', `process.exit(1);`);
+  script('curl', `require('fs').appendFileSync(process.env.CALLS,'download-attempt\\n');process.stderr.write('test download unavailable\\n');process.exit(22);`);
   script('osascript', `const fs=require('fs');fs.appendFileSync(process.env.CALLS,process.argv.at(-1)+'\\n');if(process.argv.at(-1)==='quit'&&process.env.APP_FAIL==='1')process.exit(1);if(process.argv.at(-1)==='preferences')fs.rmSync(process.env.HOME+'/Library/Preferences/local.myharness.app.plist',{force:true});`);
   put(path.join(home,'.local/bin/limactl'), `#!${process.execPath}\nconst fs=require('fs'),p=require('path'),a=process.argv.slice(2),h=process.env.HOME;fs.appendFileSync(process.env.CALLS,a.join(' ')+'\\n');
 if(a[0]==='--version')console.log('limactl version 2.3.0');
@@ -47,13 +53,16 @@ else if(a[0]==='disk'&&a[1]==='delete')fs.rmSync(p.join(h,'.lima/_disks/myharnes
     put(path.join(state,'record'),`version=1\nphase=${phase}\ndisk_phase=${disk}\nssh_created=${created}\nssh_inserted=${inserted}\nssh_inode=${st?st.dev+':'+st.ino:'0'}\nssh_hash=${st?crypto.createHash('sha256').update(fs.readFileSync(cfg)).digest('hex'):'none'}\nend=1\n`,0o600);
   }
   receipt();
+  function host(args,extra={}) {
+    return spawnSync('sh',[path.join(repo,'vm/myharness-host-step.sh'),...args],{env:{PATH:bin+':'+process.env.PATH,HOME:home,LANG:'C',TMPDIR:root,CALLS:calls,STREAM:stream,...extra},encoding:'utf8',timeout:20000});
+  }
   function remove(args=[],extra={}) {
     // The older remover has no policy flags. Exercise its existing unattended
     // destructive path, not an unknown-flag error, when proving the regressions.
     const flags=modern?args:args.filter(a=>!['--save-first','--discard-data'].includes(a));
-    return spawnSync('sh',[path.join(repo,'vm/myharness-host-step.sh'),'--remove',...flags],{env:{PATH:bin+':'+process.env.PATH,HOME:home,LANG:'C',TMPDIR:root,CALLS:calls,STREAM:stream,...extra},encoding:'utf8',timeout:20000});
+    return host(['--remove',...flags],extra);
   }
-  return {root,home,state,calls,stream,receipt,remove,cleanup:()=>fs.rmSync(root,{recursive:true,force:true})};
+  return {root,home,state,calls,stream,receipt,remove,install:(args=[])=>host(args),cleanup:()=>fs.rmSync(root,{recursive:true,force:true})};
 }
 function check(name,fn) { test(name,async()=>{const f=fixture();try{await fn(f);}finally{f.cleanup();}}); }
 const vm=f=>fs.existsSync(path.join(f.home,'.lima/myharness-vm'));
@@ -153,4 +162,42 @@ check('idle check rejects running, terminal-held and queued work before service 
   }
   const details=await checkIdle(async route=>route==='/bots'?{bots:[{id:'helper',live:[]}]}:route.endsWith('/sessions')?{sessions:[{id}]}:{attached:false,outbound:[],incoming:[]});
   assert.equal(details.length,1);
+});
+
+function failBeforeVM(f) {
+  fs.rmSync(path.join(f.home,'.lima'),{recursive:true,force:true});
+  fs.rmSync(path.join(f.home,'.local/bin/limactl'));
+  fs.rmSync(path.join(f.state,'record'));
+  const r=f.install(['--prevent-sleep','no']);
+  assert.notEqual(r.status,0,'offline install must fail');
+  assert.match(fs.readFileSync(f.calls,'utf8'),/download-attempt/,'failure must occur at the download, not an earlier fixture prerequisite');
+  assert.ok(fs.existsSync(path.join(f.state,'record')),'the failed install must leave its phase record');
+}
+check('pre-VM download failure permits a later install retry',f=>{
+  failBeforeVM(f);
+  const r=f.install(['--prevent-sleep','no']);
+  assert.notEqual(r.status,0,'the retry is still offline');
+  assert.equal(fs.readFileSync(f.calls,'utf8').split('download-attempt').length-1,2,'record from failed install prevented retrying the download');
+  assert.doesNotMatch(r.stderr,/operation is incomplete/);
+});
+check('pre-VM download failure permits removal without manually deleting its record',f=>{
+  failBeforeVM(f);
+  const r=f.remove(['--save-first','--yes']);
+  assert.equal(r.status,0,'no VM/data ever existed, so failed-install cleanup should finish: '+r.stdout+r.stderr);
+  assert.match(fs.readFileSync(path.join(f.state,'record'),'utf8'),/phase=complete/);
+});
+check('home build/tmp/dist definitions are saved while source rebuildable outputs are excluded',async f=>{
+  const {collect}=await import(pathToFileURL(path.join(repo,'vm/myharness-removal-collect.mjs')));
+  const home=path.join(f.root,'payload'),source=path.join(f.root,'source'),deployed=path.join(f.root,'deployed');
+  const names=['bots/helper/skills/build/SKILL.md','bots/helper/memory/tmp/notes.md','bots/helper/notes/dist/notes.md','bots/helper/notes/coverage/note.md','bots/helper/notes/.cache/note.md','bots/helper/notes/node_modules/note.md'];
+  for(const name of names)put(path.join(home,name),'user-authored '+name);
+  put(path.join(home,'secrets/auth.json'),'excluded');put(path.join(home,'bots/helper/auth.json'),'excluded');
+  put(path.join(source,'main.js'),'source');put(path.join(deployed,'main.js'),'deployed source');
+  for(const root of [source,deployed])for(const name of ['build/output.js','dist/output.js','tmp/output.js','node_modules/package/index.js'])put(path.join(root,name),'rebuildable output');
+  const chunks=[];await collect({home,source,deployed,config:path.join(f.root,'native'),uid:process.getuid(),deployedUid:process.getuid()},{write:b=>{chunks.push(String(b));return true;}});
+  const saved=chunks.join('').split('\n').filter(line=>line.startsWith('F ')).map(line=>Buffer.from(line.split(' ')[1],'hex').toString());
+  for(const name of names)assert.ok(saved.includes('home/'+name),'user-authored home file omitted from verified save: '+name);
+  assert.ok(!saved.some(name=>name.startsWith('home/secrets/')||name.endsWith('/auth.json')),'credential exclusions must remain');
+  assert.ok(saved.includes('source/main.js')&&saved.includes('deployed-source/main.js'));
+  assert.ok(!saved.some(name=>/^(?:source|deployed-source)\/(?:build|dist|tmp|node_modules)\//.test(name)),'source rebuildable outputs must still be excluded');
 });

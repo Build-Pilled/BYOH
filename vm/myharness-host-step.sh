@@ -91,10 +91,6 @@ cores=$(sysctl -n hw.ncpu); CPUS=$(( cores / 2 ))
 [ "$CPUS" -le 6 ] || CPUS=6
 say "VM: $CPUS CPUs, $MEMORY GiB memory, a disk file on this Mac that grows to at most 100 GiB"
 
-for existing in "$SSH_FILE" "$HOME/.ssh/myharness-known-hosts" "$HOME/Applications/myharness.app" "$HOME/Library/Application Support/myharness"; do
-  [ ! -e "$existing" ] && [ ! -L "$existing" ] || die "a fixed install path already exists; use its original release's remover or resolve the collision first: $existing"
-done
-
 say "step: files"
 ( cd "$HERE" && shasum -a 256 -c SHA256SUMS >/dev/null ) || die "the files next to this program do not match SHA256SUMS; nothing was installed"
 
@@ -102,9 +98,11 @@ say "step: files"
 state_lock
 if [ -e "$RECORD" ]; then
   state_read
-  [ "$phase" = complete ] || die "a host operation is incomplete; resolve/remove it before installing again"
+  case "$phase" in installing|complete) ;; *) die "a host operation is incomplete; resolve/remove it before installing again" ;; esac
 fi
-phase=installed; ssh_created=0; ssh_inserted=0; ssh_inode=0; ssh_hash=none
+# No instance yet: download/validation/create failures remain retryable. Once
+# create returns, a missing VM must not be mistaken for an empty installation.
+phase=installing; ssh_created=0; ssh_inserted=0; ssh_inode=0; ssh_hash=none
 [ "$disk_phase" = kept ] || disk_phase=none
 state_write
 say "step: lima"
@@ -131,6 +129,7 @@ if [ "$DISK" = data ]; then
 fi
 "$LIMACTL" create --name=myharness-vm --tty=false --cpus="$CPUS" --memory="$MEMORY" \
   --set ".ssh.localPort=$port | .param.ENGINES=\"$ENGINES\"${disk_set:+ | $disk_set}" "$HERE/myharness-vm.yaml"
+phase=installed; state_write
 say "step: start (the first start takes several minutes)"
 "$LIMACTL" start myharness-vm --timeout=30m
 
