@@ -63,6 +63,7 @@ What sets BYOH apart?
 
 - It contains reasons for decisions so you can choose differently. The spec explains its choices, often including what was rejected and why.
 - It proves your harness works as intended. The suite runs real Claude Code and Pi processes against a scripted model, with no credentials needed. Your agent can show that the harness it built actually works.
+- It sets you up to be the developer and maintainer of your own harness.
 
 | Folder | What it holds |
 | --- | --- |
