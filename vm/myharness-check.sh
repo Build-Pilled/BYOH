@@ -142,7 +142,7 @@ host() {
   esac
 
   g=$(id -Gn)
-  if [ "$g" != "$(id -un)" ]; then line FAIL H-user "extra groups: $g" R2
+  if [ "$g" != "$(id -gn)" ]; then line FAIL H-user "extra groups: $g" R2
   elif sudo -n true 2>/dev/null; then line FAIL H-user "the bot user has sudo" R2
   elif ! loginctl show-user "$(id -un)" 2>/dev/null | grep -q '^Linger=yes'; then line FAIL H-user "services do not persist without a login" R2
   else line PASS H-user "own group only, no sudo, services persist"; fi

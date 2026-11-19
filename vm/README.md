@@ -25,7 +25,7 @@ A version change is a reviewed change on its own. Prove an engine pin through th
 
 ## Run it
 
-> **Upgrade warning:** The new resource names are for new installs only; there is no in-place migration. Before installing a release with these names, remove an older installation using **that older release’s own remover**, not the new release’s remover. Save any data you want to keep before removal. The desktop app’s bundle, support folder and identifier are unchanged. The release pinned in the top-level README predates this naming layout.
+> **Before upgrading:** see the [upgrade warning in the top-level README](../README.md#release).
 
 Fetch all four files from `vm/` in `Build-Pilled/BYOH` at the release named in
 the [top-level README](../README.md#release). Check `SHA256SUMS` against the hash

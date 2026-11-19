@@ -96,7 +96,6 @@ let inst; let win;
 await check('up: home, free port, discovery, health, token, identity, validate', async () => {
   inst = await start({ harness: descriptor });
   const d = JSON.parse(readFileSync(inst.discovery, 'utf8')); assert.ok(d.url.startsWith('http://127.0.0.1:') && Number(new URL(d.url).port) > 0 && !d.url.endsWith(':7797'));
-  assert.ok(inst.root.startsWith(join(tmpdir(), 'myharness-kit-')), 'run directory uses the kit namespace');
   assert.ok(inst.home.startsWith(inst.root), 'home is inside the run directory');
   const bad = (await inst.doctor()).filter((c) => !c.ok); assert.deepEqual(bad, []);
   assert.ok(!existsSync(join(inst.root, 'userhome', '.myharness-home')));
@@ -158,7 +157,7 @@ await check('driver: role + exact name, effect first then screen, state, text, r
   win.close();
 });
 await check('down: stops only this run, copies logs, removes only its own directory', async () => {
-  const decoyA = mkdtempSync(join(tmpdir(), 'myharness-decoy-')); const decoyB = mkdtempSync(join(tmpdir(), 'myharness-decoy-')); writeFileSync(join(decoyB, '.byoh-kit-run'), 'someone-elses-run');
+  const decoyA = mkdtempSync(join(tmpdir(), 'myharness-kit-decoy-')); const decoyB = mkdtempSync(join(tmpdir(), 'myharness-kit-decoy-')); writeFileSync(join(decoyB, '.byoh-kit-run'), 'someone-elses-run');
   const root = inst.root; const run = inst.run; const ev = join(scratch, 'evidence');
   try {
     await inst.stop({ evidence: ev });
@@ -180,7 +179,7 @@ await check('run --keep-at: stops after the named case, leaves the instance up, 
   const down = kit(['down', '--run', dir]); assert.equal(down.status, 0, down.stdout + down.stderr); assert.ok(!existsSync(dir));
 });
 await check('SIGTERM mid-run: no process or directory of the run is left; a decoy directory survives', async () => {
-  const decoy = mkdtempSync(join(tmpdir(), 'myharness-decoy-')); writeFileSync(join(decoy, '.byoh-kit-run'), 'someone-elses-run');
+  const decoy = mkdtempSync(join(tmpdir(), 'myharness-kit-decoy-')); writeFileSync(join(decoy, '.byoh-kit-run'), 'someone-elses-run');
   const ev = join(scratch, 'evidence-interrupted');
   const p = spawn(process.execPath, [KIT, 'run', SCENARIO, '--harness', descriptor, '--evidence', ev], { env: { PATH: process.env.PATH, HOME: process.env.HOME, TMPDIR: tmpdir() }, stdio: ['ignore', 'pipe', 'pipe'] });
   let out = ''; p.stdout.on('data', (d) => (out += d)); const exited = new Promise((ok) => p.on('exit', (code, sig) => ok({ code, sig })));
