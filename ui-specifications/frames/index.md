@@ -10,7 +10,7 @@ frames: light mode is specified by values only. Text in a frame is the fixture
 control names, the spec wins. Layout numbers are in `layout/`; open only the
 frame you need.
 
-| Frame | Shows | Layout it is the reference for |
+| Frame | Shows | Layout to take from it |
 | --- | --- | --- |
 | `F02-annotations.png` | Annotated reply | Numbered inline highlights and the annotation list above the composer |
 | `F03-bots-tree-menu.png` | Bot action menu | The anchored menu and its hover-revealed opener |
