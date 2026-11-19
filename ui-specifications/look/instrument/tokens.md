@@ -175,7 +175,7 @@ Colour and alpha only; offsets and blur are in roles.json.
 
 ## Shape and strength (paint)
 
-Corner radius is paint. Instrument uses 4 px on almost every surface (cards, buttons, inputs, menus, dialogs), 50 percent on the annotation badge, 1.5 px on status lamps, and 0 on full-bleed regions. Counts of roles per radius value: 4px x 49, 0px x 4, 5px x 2, 50% x 1, 2px x 1, 1.5px x 1. Rule width is 1.5 px for the main inset rule and 1 px for popovers and selected rows; shadow offsets and blur are in `roles.json`. A look may change radius and rule or shadow strength; it may not change a border width or anything else that moves a box.
+Corner radius is paint. Instrument uses 4 px on almost every surface (cards, buttons, inputs, menus, dialogs), 50 percent on the annotation badge, 1.5 px on status lamps, and 0 on full-bleed regions. Counts of roles per radius value: 4px x 52, 0px x 4, 5px x 2, 50% x 1, 2px x 1, 1.5px x 1. Rule width is 1.5 px for the main inset rule and 1 px for popovers and selected rows; shadow offsets and blur are in `roles.json`. A look may change radius and rule or shadow strength; it may not change a border width or anything else that moves a box.
 
 ## Fonts
 

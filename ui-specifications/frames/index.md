@@ -1,6 +1,6 @@
 # Frames
 
-27 dark screenshots, 2560 x 1590 pixels (a 1280 x 795 window at scale 2). All
+28 dark screenshots, 2560 x 1590 pixels (a 1280 x 795 window at scale 2). All
 are marked **Instrument paint, layout reference**: take geometry from them
 (sizes, positions, spacing, which parts exist). The colours and type in them
 are the Instrument look's only. Never copy a colour or a typeface from a frame
@@ -20,6 +20,7 @@ frame you need.
 | `F07-team-map.png` | Team map | Horizontal board, member cards, standalone column |
 | `F08-team-configuration.png` | Team configuration | Board plus the team form; the board's changed width |
 | `F09-model-picker.png` | Model picker | Grouped model list with filter and thinking controls |
+| `F10-sidebar-search.png` | Sidebar search results | Two flat sections (Bots, Threads), hit rows with snippets, the status line |
 | `F11-thread-search.png` | In-thread find | The find bar in the transcript chrome and the highlights |
 | `F13-config-identity.png` | Bot configuration, Identity | The accordion, the 88 mark and its controls |
 | `F14-config-system.png` | Bot configuration, System prompt (wide) | The wide panel: editor beside the read-only preview |

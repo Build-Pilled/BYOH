@@ -82,5 +82,10 @@ sample day.
 - Changes (F49): a short history of instruction edits, newest first, with kinds
   `external` and `user`, one carrying the `prompt` pill; the selected change
   shows a diff of a few lines.
+- Sidebar search (F10): the query `code` over the sample bots and threads. Bots
+  lists Code Reviewer. Threads lists "Project outline" (Plain, a two-line
+  snippet starting with the Code Reviewer message) and the active "Reading list
+  plan" (Firstmate, a three-line snippet cut with `…`). Status line "2 of 2
+  matching threads".
 - Skills & MCP (F06): one shared skill and one MCP server file.
 - Settings (F23): Appearance selected, with three theme cards.

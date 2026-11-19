@@ -43,7 +43,7 @@ sensibly and keep it inside the layout rules.
 | Open a menu, dialog or popover | Appears anchored (menus) or centred (dialogs) | Escape and an outside click close menus and popovers; a dialog puts focus in its first input |
 | Widen the panel | Panel 420 to 960, covering the transcript | transcript is 540 with the narrow panel, 960 otherwise |
 | Expand a sidebar or panel section | The opened header shows its open state and file hint; a folder's chevron turns; `Show all N sessions` toggles to `Show fewer` | |
-| Search | In-thread find bar 960 x 50 with current and total; sidebar search shows hit rows with snippets | debounce not specified; no-match line for panel search |
+| Search | In-thread find bar 960 x 50 with current and total; sidebar search shows flat Bots and Threads sections, hit rows with snippets (frame F10) | debounce not specified; no-match line for panel search |
 | Model picker | Filter narrows the list; picking a model saves at once; thinking chips are a draft with Save | |
 | Edit a file | First edit shows the `unsaved` pill and enables Save; Save also runs on the platform save shortcut in the editor; an external change while dirty shows the conflict banner (Reload replaces the draft); a save problem shows a line under the bar | the save still happens, the line is a warning |
 | Attach files | Chips above the field, a 70 high row (908 x 70); Send enabled; a thumbnail opens the viewer | error and oversize states not specified |

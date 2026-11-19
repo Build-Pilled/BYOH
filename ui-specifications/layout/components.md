@@ -55,8 +55,50 @@ Which family fills each class is the look's choice.
   rail.
 - Tools group: five destination rows (Team map, Tasks, Routines, Skills & MCP,
   Changes) in the body face, then a Settings row with a gear at the bottom.
-- Sidebar search results replace the tree with hit rows and snippets under
-  their bot, and clear back to the tree.
+- Sidebar search (frame F10; roles `searchBox`, `searchResults`,
+  `searchSectionTitle`, `searchBotHit`, `searchHit`, `searchHitTitle`,
+  `searchHitMeta`, `searchHitSnippet`, `searchStatus`). Typing in the search
+  field replaces the tree (bots and sessions) with the results; the Tools
+  group and the Settings row stay where they are.
+  Emptying the field with its clear control (the platform's own search-field
+  clear, 9 x 9 at x = 285, shown only while text is present) brings the tree
+  back as it was.
+  - Search field (`searchBox`) 296 x 33.5 at x = 12, y = 44: 1 border, padding
+    0 x 10, gap 8, a 12.9 x 14 magnifier then the input (`genericInput`, 13 on
+    19.5, padding 6 x 0). While focused, the border takes the accent.
+  - Results (`searchResults`) start at x = 8, y = 85.5, 304 wide (294 when the
+    list scrolls), two sections stacked with no gap: **Bots**, then
+    **Threads**. The results are flat: hits are not grouped under a bot
+    heading, and no matched term is highlighted or marked in titles or
+    snippets. The hit's bot is only the left item of its meta line.
+  - Section heading (`searchSectionTitle`) 24 high, padding 2 8 4 12, label
+    face 12 on 18, strong, upper-case, tracking 0.96.
+  - Bot hit (`searchBotHit`) 304 x 36, padding 6 x 10, gap 10: a 24 x 24 bot
+    mark, then the bot name, 14 on 21, weight 500, one line, ellipsised. A bot
+    is listed when the query is in its name or id.
+  - Thread hit (`searchHit`) is 16 narrower than the results (288), padding
+    6 x 10, radius as a row, no gap between rows (the hover or active fill is
+    the only separator). Three lines, top to bottom: title (`searchHitTitle`,
+    14 on 21, weight 500, one line, ellipsised); meta (`searchHitMeta`, 11 on
+    16.5, 3 below the title) with the bot name at the left (ellipsised) and the
+    age at the right (`1m`, never shrinks), space between, gap 8; snippet
+    (`searchHitSnippet`, 12 on 18, 4 below the meta) wrapping at any point and
+    capped at 3 lines, with a leading or trailing `…` where the text is cut.
+    The snippet is the raw text as typed (markdown and callout markers show
+    unrendered); a title-only match has no snippet line. Row height by snippet
+    lines: none 52.5, one 74.5, two 92.5, three or more 110.5 (the cap).
+  - States: the active thread's row has a solid fill (`surface-button`);
+    hover shows a lighter fill (`surface-row-hover`). Neither moves a box.
+  - Status line (`searchStatus`) 26 high, 12 on 18, padding 2 12 6, 4 above,
+    in the faintest text step, under the last hit: `N of M matching threads`.
+    `Searching threads…` shows while the query loads (the query starts about
+    250 ms after the last key). With no thread hit it reads `No matching
+    threads.` in place of the count. The Bots section likewise shows `No
+    matching bots.` in the same style when no bot matches (no frame; each
+    section is then 54 high with its heading, and the whole results block 108). A `Show more threads` row follows the hits only when more
+    exist than are shown.
+  - Paint (fills, text steps, the focus border) is the look's: see
+    `look/instrument/roles.json`.
 
 ## 2. Conversation
 
