@@ -29,6 +29,13 @@ Give your coding agent a request like one of these:
 
 It tells you what the harness needs, sets up the isolated host, asks you a few questions, then builds and tests your harness. Your agent tells you when you can switch over to your new harness.
 
+<details>
+<summary>See guide</summary>
+
+![Make yourself a harness: your agent guides you through setup, questions, building, installation and your first chat](screenshots/setup-guide.png)
+
+</details>
+
 [View screenshots](screenshots/README.md)
 
 ## Release
@@ -97,6 +104,8 @@ The VM holds its memory while it runs. You can resize it later with a restart.
 
 The Firstmate idea and implementation are borrowed from Kun Chen's [Firstmate](https://github.com/kunchenguid/firstmate), with gratitude!
 Notice: [starter/NOTICE.md](starter/NOTICE.md).
+
+The setup guide is drawn with Kevin Ngo's [statechart-art](https://github.com/kevintngo/statechart-art) (MIT).
 
 ## Licence
 
