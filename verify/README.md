@@ -78,7 +78,7 @@ For mock directives and wire endpoints, see the header of `mock-model.mjs`;
 A command after `up` finds its run through `--run <dir>`, `BYOH_KIT_DIR`, or the only
 run this user has up. For `cli`, `engine` and `ui`, `--run <dir>` goes first; everything
 after it belongs to the tool. The descriptor is JSON:
-`{"cli": [argv…], "app": [electron, app-path…], "seed": [[cli args]…], "source": "<git dir>", "uiMap": "<absolute path>"}`. `uiMap` is optional: the same mapping JSON the [appearance checks'](../ui-specifications/checks/README.md) plan maps (keep one file, not two), which the window cases of `suite/ui-shell.mjs` read to find the composer, transcript, step list and result panel when they have no role and name.
+`{"cli": [argv…], "app": [electron, app-path…], "seed": [[cli args]…], "source": "<git dir>", "uiMap": "<absolute path>"}`. `uiMap` is not read by the kit, and the window cases of `suite/ui-shell.mjs` need it: the same mapping JSON the [appearance checks'](../ui-specifications/checks/README.md) plan maps (keep one file, not two), which the window cases of `suite/ui-shell.mjs` read to find the composer, transcript, step list and result panel when they have no role and name.
 The kit appends its own flags after `app[0]`. For each chosen engine it writes a wrapper
 into the run, sets `pi` and `claude` in `myharness.toml` to those wrappers, and the wrappers
 point the real engine at the mock. Every process of the run (daemon, CLI, app and
