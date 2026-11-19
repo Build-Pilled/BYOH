@@ -179,9 +179,9 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
         const keys=Object.keys(instrument.tokens).filter(k=>['accent','link','badge','on-accent'].includes(k)||/^mark-\d+$/.test(k)||k.startsWith('island-'));
         const own=Object.values(chosen.tokens).map(v=>v[mode].toLowerCase()),leaks=[];
         for(const key of keys) { const literal=token(instrument,key,mode);if(own.includes(literal.toLowerCase()))continue;
-          const target=rgb(literal); for(const n of b.data.boxes)for(const prop of n.painted)for(const value of n.paint[prop].match(/#[\da-f]{6}|rgba?\([^)]+\)/gi)??[])if(sameRGB(rgb(value),target))leaks.push({key,path:n.path,prop});
+          const target=rgb(literal); for(const n of [...b.data.boxes,...(b.data.pseudos??[])])for(const prop of n.painted)for(const value of n.paint[prop].match(/#[\da-f]{6}|rgba?\([^)]+\)/gi)??[])if(sameRGB(rgb(value),target))leaks.push({key,path:n.path,prop});
         }
-        assert.equal(leaks.length,0,JSON.stringify(leaks));return true;
+        assert.equal(leaks.length,0,JSON.stringify(leaks));return {scanned:['color','backgroundColor','backgroundImage','boxShadow','borders','outline','textDecorationColor','caretColor','SVG fill/stroke','::before/::after'].join(', ')};
       });
       await asyncRecord('C5',page.id,mode,'reduced motion','no running animation or transition',async()=>{
         await w.motion(true);await page.stage(w,{look:chosen.look,mode,reducedMotion:true});await w.ready();const reduced=await w.captureUI();save(id+'-reduced-motion.json',reduced);assert.equal(reduced.animations.length,0,JSON.stringify(reduced.animations));return true;

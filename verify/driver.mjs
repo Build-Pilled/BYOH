@@ -122,18 +122,20 @@ export async function connect({ port, urlPrefix = '', timeout = 20000 }) {
     this.scrollIntoView({ block: 'center' }); const g = document.createRange(); g.selectNodeContents(this);
     const rs = [...g.getClientRects()].filter((r) => r.width && r.height); return rs.length ? { l: rs[0].left, t: rs[0].top + rs[0].height / 2, r: rs.at(-1).right, b: rs.at(-1).top + rs.at(-1).height / 2 } : null; }` })).result.value;
 
-  let mediaScheme = 'dark', reducedMotion = 'no-preference';
-  const media = () => send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mediaScheme }, { name: 'prefers-reduced-motion', value: reducedMotion }] });
+  let mediaScheme = 'dark', reducedMotion = null;   // motion is emulated only once motion() has been called
+  const media = () => send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mediaScheme }, ...(reducedMotion ? [{ name: 'prefers-reduced-motion', value: reducedMotion }] : [])] });
+  let domains = false; const enableDomains = async () => { if (!domains) { await send('DOM.enable'); await send('CSS.enable'); domains = true; } };
   const captureElement = `function () {
     const rect = this.getBoundingClientRect(), s = getComputedStyle(this);
     const path = el => { const out=[]; for(;el?.parentElement;el=el.parentElement) out.unshift(el.tagName+':'+[...el.parentElement.children].indexOf(el)); return out.join('/'); };
     const geometry = Object.fromEntries(['fontSize','lineHeight','paddingTop','paddingRight','paddingBottom','paddingLeft','marginTop','marginRight','marginBottom','marginLeft','rowGap','columnGap','borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth','display'].map(k=>[k,s[k]]));
     return { path:path(this), rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height}, geometry,
-      painted: ['color','backgroundColor','boxShadow',...(this.namespaceURI==='http://www.w3.org/2000/svg'?['fill','stroke']:[]),...['Top','Right','Bottom','Left'].filter(k=>parseFloat(s['border'+k+'Width'])>0&&s['border'+k+'Style']!=='none').map(k=>'border'+k+'Color'),...(s.outlineStyle!=='none'?['outlineColor']:[])],
-      paint:Object.fromEntries(['color','backgroundColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','fontFamily','boxShadow','outlineColor','fill','stroke'].map(k=>[k,s[k]])),
+      painted: ['color','backgroundColor','backgroundImage','boxShadow','textDecorationColor','caretColor',...(this.namespaceURI==='http://www.w3.org/2000/svg'?['fill','stroke']:[]),...['Top','Right','Bottom','Left'].filter(k=>parseFloat(s['border'+k+'Width'])>0&&s['border'+k+'Style']!=='none').map(k=>'border'+k+'Color'),...(s.outlineStyle!=='none'?['outlineColor']:[])],
+      paint:Object.fromEntries(['color','backgroundColor','backgroundImage','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','fontFamily','boxShadow','outlineColor','textDecorationColor','caretColor','fill','stroke'].map(k=>[k,s[k]])),
       overflow:this.scrollWidth>this.clientWidth+1 || this.scrollHeight>this.clientHeight+1 };
   }`;
   async function mappedObject(target) {
+    await enableDomains();
     let backendDOMNodeId;
     if (target.selector) {
       // Explicit mapping for an unnamed region: IDs or data attributes only, never implementation classes.
@@ -151,7 +153,6 @@ export async function connect({ port, urlPrefix = '', timeout = 20000 }) {
     const fonts=await send('CSS.getPlatformFontsForNode',{nodeId:(await send('DOM.pushNodesByBackendIdsToFrontend',{backendNodeIds:[backendDOMNodeId]})).nodeIds[0]});
     return {...r.result.value,fonts:fonts.fonts};
   }
-  await send('DOM.enable'); await send('CSS.enable');
   return {
     errors, crashes,
     measure,
@@ -168,7 +169,10 @@ export async function connect({ port, urlPrefix = '', timeout = 20000 }) {
       return js(`(() => {
         const capture=${captureElement};
         const elements=[...document.querySelectorAll('*')].filter(e=>e.getBoundingClientRect().width && e.getBoundingClientRect().height && getComputedStyle(e).visibility==='visible');
-        const boxes=elements.map(e=>capture.call(e)); const texts=[]; const unsupported=[];
+        const boxes=elements.map(e=>capture.call(e)); const pseudos=[];
+        for(const e of elements) for(const which of ['::before','::after']) { const s=getComputedStyle(e,which); if(s.content==='none'||s.content==='normal') continue;
+          pseudos.push({path:capture.call(e).path+which,painted:['color','backgroundColor','backgroundImage','boxShadow','textDecorationColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','outlineColor'],paint:Object.fromEntries(['color','backgroundColor','backgroundImage','boxShadow','textDecorationColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','outlineColor'].map(k=>[k,s[k]]))}); }
+        const texts=[]; const unsupported=[];
         for(const el of elements) {
           const s=getComputedStyle(el);
           const own=[...el.childNodes].filter(n=>n.nodeType===3&&n.textContent.trim()).map(n=>n.textContent).join(' ').trim() || (['INPUT','TEXTAREA'].includes(el.tagName)?el.value:'');
@@ -177,7 +181,7 @@ export async function connect({ port, urlPrefix = '', timeout = 20000 }) {
           for(let p=el;p;p=p.parentElement) { const st=getComputedStyle(p); layers.push({background:st.backgroundColor,opacity:Number(st.opacity)}); opacity*=Number(st.opacity); if(st.backgroundImage!=='none'||st.mixBlendMode!=='normal'||st.filter!=='none'||st.backdropFilter!=='none') unsupported.push(capture.call(el).path); }
           texts.push({path:capture.call(el).path,text:own,color:s.color,family:s.fontFamily,layers,opacity,rect:capture.call(el).rect});
         }
-        return {boxes,texts,unsupported,animations:document.getAnimations().filter(a=>['running','pending'].includes(a.playState)).map(a=>({state:a.playState,target:a.effect?.target?capture.call(a.effect.target).path:null})),width:innerWidth,height:innerHeight,scale:devicePixelRatio};
+        return {boxes,pseudos,texts,unsupported,animations:document.getAnimations().filter(a=>['running','pending'].includes(a.playState)).map(a=>({state:a.playState,target:a.effect?.target?capture.call(a.effect.target).path:null})),width:innerWidth,height:innerHeight,scale:devicePixelRatio};
       })()`);
     },
     onConsoleError: (f) => errorHooks.push(f), onCrash: (f) => crashHooks.push(f),

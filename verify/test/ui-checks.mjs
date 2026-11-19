@@ -36,7 +36,7 @@ try {
   <form id="panel" hidden><label>Look<input aria-label="Look" value="instrument"></label><label>Seed<input aria-label="Seed" value="0"></label><label>View<input aria-label="View" value="page"></label><label>Fault<input aria-label="Fault" value="none"></label><button>Apply</button></form>
   <script>const packs=${JSON.stringify(packs)},patterns=${JSON.stringify(patterns)};let look='instrument',seed=0,view='page',fault='none';
   const panel=document.querySelector('#panel'),main=document.querySelector('main'),tile=document.querySelector('#tile');
-  function paint(){document.querySelector('#look-layer').textContent=':root { --display: #14171c; --text: #e3e7ed; --font-body: Inter; }'+(fault==='all'?' main { padding: 9px; }':'');const mode=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';for(const [k,v]of Object.entries(packs[look].tokens))document.documentElement.style.setProperty('--'+k,v[mode]);document.documentElement.style.setProperty('--font-body',look==='instrument'?'Literata':'Inter');
+  function paint(){document.querySelector('#look-layer').textContent=':root { --display: #14171c; --text: #e3e7ed; --font-body: Inter; }'+(fault==='all'?' main { padding: 9px; }':'');const mode=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';if(fault==='all'&&look==='lab')document.querySelector('#look-layer').textContent+=' main::before { content: ""; position: absolute; right: 0; top: 0; width: 4px; height: 4px; background: '+packs.instrument.tokens.accent[mode]+'; }';for(const [k,v]of Object.entries(packs[look].tokens))document.documentElement.style.setProperty('--'+k,v[mode]);document.documentElement.style.setProperty('--font-body',look==='instrument'?'Literata':'Inter');
   main.hidden=view!=='page';tile.hidden=view!=='mark';main.style.left=fault==='all'&&look==='lab'?'70px':'64px';main.style.color=fault==='all'&&look==='lab'?'rgb(90,90,90)':'';main.style.outline=fault==='all'&&look==='lab'?'3px solid '+packs.instrument.tokens.accent[mode]:'';
   tile.replaceChildren();patterns[fault==='all'?0:seed].forEach((ink,i)=>{const cell=document.createElement('div');cell.setAttribute('data-ui-check-cell','');cell.style.left=(i%6)*100/6+'%';cell.style.top=Math.floor(i/6)*100/6+'%';if(ink)cell.append(document.createElement('span'));tile.append(cell);});}
   addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='l'){e.preventDefault();panel.hidden=false;}});
@@ -66,7 +66,7 @@ try {
       const rows=result.results.filter(r=>r.check===check);const ok=rows.every(r=>r.pass);console.log(`${fault==='none'?'PASS':'FAIL expected'} ${check}: ${rows.filter(r=>r.pass).length}/${rows.length} assertions pass`);
       assert.ok(rows.length);assert.equal(ok,fault==='none',`${check}: ${JSON.stringify(rows.filter(r=>!r.pass))}`);
     }
-    if(fault==='all')assert.ok(result.results.some(r=>r.check==='C5'&&r.measure==='default paint leaks'&&!r.pass&&/accent/.test(r.error)),'a painted default accent must fail the C5 leak gate');
+    if(fault==='all')assert.ok(result.results.some(r=>r.check==='C5'&&r.measure==='default paint leaks'&&!r.pass&&/accent/.test(r.error)&&/::before/.test(r.error)),'a painted default accent, including on a pseudo-element, must fail the C5 leak gate');
     assert.equal(result.pass,fault==='none');assert.equal(result.complete,false,'a sample never completes setup');
   }
   console.log('PASS good build and assertion-level rejection for each of C1–C5; report.md and raw PNG/JSON retained');

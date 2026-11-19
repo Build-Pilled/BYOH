@@ -2,7 +2,8 @@
 
 Parts, sizes, paddings, gaps and states for every component. Sizes are CSS px
 at a 1280 by 795 window. Exact per-role numbers are in `layout.json`; the
-role name in `code` is the `data-role` name used there and in the checks.
+name in `code` is the layout key used there; the checks' mapping (see
+`checks/README.md`, Mapping) ties each key to an element of the build.
 Colours, corner radii, rule and shadow strength, glows and motion are never
 given here: they are paint and come from the look (Instrument's are in
 `look/instrument/roles.json` and `tokens.md`). Words such as muted, accent or

@@ -7,8 +7,9 @@ distinct and respect reduced motion?
 
 1. **Leak scan.** In every staged state and both modes, including each hover,
    focus, selected and open-menu or dialog variation, read the computed visible
-   paint of every rendered element: colours, borders, shadows, outlines and
-   SVG fill and stroke. Look for the Instrument-only values: the accent, the
+   paint of every rendered element and its `::before` and `::after`: colours,
+   background images and gradients, borders, shadows, outlines, text-decoration
+   and caret colours, and SVG fill and stroke. Look for the Instrument-only values: the accent, the
    link colour, the badge colour, the on-accent ink, the mark colours and the
    island fills (read their values from `look/instrument/tokens.json`). Pass
    when none is painted unless the chosen look's own token file contains the
