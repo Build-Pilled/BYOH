@@ -4,8 +4,8 @@ Read this before deciding a bot's kind, and every time you write a crewmate char
 
 ## How the crew works
 
-- The captain talks only to Firstmate. Firstmate is the lead of the team in `~/.myharness/teams/crew.toml`; crewmates are its `members`. Firstmate sees each member's bot.toml description and can message only members.
-- Firstmate classifies every job as **scout** (investigation, diagnosis, planning, audit; the deliverable is a report at `~/.myharness/tasks/reports/<task id>.md`, never a pull request) or **ship** (an authorized change: branch, a clean Code Reviewer pass, pull request, and a merge only on the captain's word). Each job is a row in the `tasks` table of `~/.myharness/tasks/factory.db`, with a task id.
+- The captain talks only to Firstmate. Firstmate is the lead of the team in `~/.myharness-home/teams/crew.toml`; crewmates are its `members`. Firstmate sees each member's bot.toml description and can message only members.
+- Firstmate classifies every job as **scout** (investigation, diagnosis, planning, audit; the deliverable is a report at `~/.myharness-home/tasks/reports/<task id>.md`, never a pull request) or **ship** (an authorized change: branch, a clean Code Reviewer pass, pull request, and a merge only on the captain's word). Each job is a row in the `tasks` table of `~/.myharness-home/tasks/factory.db`, with a task id.
 - Every ship task gets a clean Code Reviewer pass before its pull request. Code Reviewer checks the change against the decision record the brief names, otherwise against the task brief.
 - Bots message each other with `send_message`: `session` continues an existing thread, `new_session` starts one titled with the task id. A message with neither is not sent when the target is ambiguous. There are no introductions; peers named in a brief message each other directly.
 
@@ -31,7 +31,7 @@ You receive tasks from Firstmate, the orchestrator who acts for the captain. Whe
 
 Answer every bot with send_message to the bot in the [from <bot> · <session>] line, continuing that thread, also when the result is empty or nothing happened. Plain text in your own session reaches no one. A message that only acknowledges or closes the thread ("ack", "noted", "no reply needed") asks nothing: do not answer it. Only that reply is dropped. A message that also carries a result, question, blocker, review verdict, go or merge word, or new ask is handled and answered as usual, whatever it ends with. An outcome you owe Firstmate still goes out. Start a new thread only with new_session titled with the task id. Message a peer only when the brief names it; never contact the captain directly. Questions for the captain go to Firstmate as one decision each.
 
-Prefix each thread title with the task id. Update your task row (status, result) as you go with `factory-db "UPDATE ..."`; a scout report goes to ~/.myharness/tasks/reports/<task id>.md.
+Prefix each thread title with the task id. Update your task row (status, result) as you go with `myharness-task-db "UPDATE ..."`; a scout report goes to ~/.myharness-home/tasks/reports/<task id>.md.
 
 Never handle secrets in chat. If you need a credential, tell Firstmate which one; the captain places it where you can read it.
 

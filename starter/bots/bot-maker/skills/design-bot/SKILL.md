@@ -17,7 +17,7 @@ Every bot has four parts. Decide all four before writing anything.
 
 - `bot.toml` `description`: at most 160 characters, so a lead's roster shows it whole. It says what the bot is for: what it owns, its key identifier (path, repo, inbox, handle), and which neighbour, by bot id, gets what it does not own. How to use a bot goes in the lead's own notes, not here.
 - `SYSTEM.md`: the full charter. The one job; the task-id protocol; what it owns; a Never section; the concrete how (which path, tool, API, inbox or channel, never "use whatever tools you have"); and Learning notes. Do not repeat what the harness appends (bot id, directory, roster, how to recognise messages from bots and routines).
-- `skills/<name>/SKILL.md`: one repeatable multi-step procedure per skill. Use a shared skill in `~/.myharness/skills/` plus the `skills` list in bot.toml when more than one bot needs it.
+- `skills/<name>/SKILL.md`: one repeatable multi-step procedure per skill. Use a shared skill in `~/.myharness-home/skills/` plus the `skills` list in bot.toml when more than one bot needs it.
 - `routines/<name>.md`: a five-field cron schedule and `session: fresh` unless the routine needs continuity, because a sticky session reloads its whole history on every tick. Omit `tz` to use the harness's own time zone.
 - `bot.toml` keys stay flat. Only these exist: name, description, model, thinking, cwd, tools, skills, mcp, max_processes, idle_timeout, mark_seed, command, plus any keys the selected engine's adapter declares. Ids match `^[a-z0-9][a-z0-9-]*$`.
 
@@ -83,6 +83,6 @@ Do not edit loop or advisor charters unless the task carries the captain's expli
 ## Retire
 
 Only on the captain's word relayed by Firstmate:
-1. Move `~/.myharness/bots/<id>` to `~/.myharness/retired-bots/<id>`.
+1. Move `~/.myharness-home/bots/<id>` to `~/.myharness-home/retired-bots/<id>`.
 2. Remove the bot from crew.toml.
 3. Run `myharness validate` and `myharness bots`, then report.

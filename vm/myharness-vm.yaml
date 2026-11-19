@@ -1,4 +1,4 @@
-# The supplied VM: one Lima instance named myharness-vm. Spec: spec/vm.md. host-step.sh creates it.
+# The supplied VM: one Lima instance named myharness-vm. Spec: spec/vm.md. myharness-host-step.sh creates it.
 # Every provision step runs at every boot and is written check-then-act.
 # Root-managed files are rewritten from this template at boot, so drift inside the VM resets on restart.
 minimumLimaVersion: 2.3.0
@@ -7,7 +7,7 @@ base:
 - template:_images/debian-13   # the image list only: dated image with digest. template:debian-13 would mount the Mac home.
 
 vmType: vz
-cpus: 2              # host-step.sh sets cpus and memory from the Mac (spec/vm.md R3)
+cpus: 2              # myharness-host-step.sh sets cpus and memory from the Mac (spec/vm.md R3)
 memory: 4GiB
 disk: 100GiB         # sparse on the Mac; grows with use, never shrinks
 
@@ -37,7 +37,7 @@ portForwards:                # first match wins; the last rule keeps every other
 
 param:
   ENGINES: "claude,pi"       # the power answer: claude, pi or both
-  DATA_DISK: "no"            # yes only with host-step.sh --disk data (spec/vm.md R4)
+  DATA_DISK: "no"            # yes only with myharness-host-step.sh --disk data (spec/vm.md R4)
   CLAUDE_VERSION: "2.1.307"
   PI_VERSION: "0.99.1"
   NODE_VERSION: "26.12.1"
@@ -45,14 +45,14 @@ param:
 
 provision:
 - mode: data
-  path: /etc/myharness/egress.nft
+  path: /etc/myharness-config/myharness-egress.nft
   permissions: "644"
   content: |
     # Output rule for the bot user only (UID 1500). add+delete first, so one transaction replaces only
     # this table and a broken file changes nothing. Never enable the distribution's firewall service: it flushes every table.
-    add table inet myharness_egress
-    delete table inet myharness_egress
-    table inet myharness_egress {
+    add table inet myharness-egress
+    delete table inet myharness-egress
+    table inet myharness-egress {
       set private_v4 {
         type ipv4_addr
         flags interval
@@ -86,18 +86,18 @@ provision:
     Description=Output rule for the harness bot user
     DefaultDependencies=no
     Wants=network-pre.target
-    Before=network-pre.target user@1500.service myharness.service
-    AssertPathExists=/etc/myharness/egress.nft
+    Before=network-pre.target user@1500.service myharness-daemon.service
+    AssertPathExists=/etc/myharness-config/myharness-egress.nft
     [Service]
     Type=oneshot
     RemainAfterExit=yes
-    ExecStart=/usr/sbin/nft -c -f /etc/myharness/egress.nft
-    ExecStart=/usr/sbin/nft -f /etc/myharness/egress.nft
+    ExecStart=/usr/sbin/nft -c -f /etc/myharness-config/myharness-egress.nft
+    ExecStart=/usr/sbin/nft -f /etc/myharness-config/myharness-egress.nft
     # No ExecStop: stopping the unit never leaves a running bot user without the rule.
     [Install]
     WantedBy=multi-user.target
 - mode: data
-  path: /etc/systemd/system/user@1500.service.d/20-egress-guard.conf
+  path: /etc/systemd/system/user@1500.service.d/20-myharness-egress-guard.conf
   permissions: "644"
   content: |
     # The bot user's service manager never starts while the output rule is not active; it retries until it is.
@@ -109,7 +109,7 @@ provision:
     Restart=on-failure
     RestartSec=2
 - mode: data
-  path: /etc/systemd/system/myharness.service
+  path: /etc/systemd/system/myharness-daemon.service
   permissions: "644"
   content: |
     [Unit]
@@ -118,11 +118,11 @@ provision:
     After=myharness-egress.service network-online.target
     StartLimitIntervalSec=0
     [Service]
-    User=myharness
-    Group=myharness
-    WorkingDirectory=/home/myharness
-    Environment=HOME=/home/myharness
-    Environment=PATH=/usr/local/bin:/home/myharness/.local/bin:/usr/bin:/bin
+    User=myharness-user
+    Group=myharness-group
+    WorkingDirectory=/home/myharness-user
+    Environment=HOME=/home/myharness-user
+    Environment=PATH=/usr/local/bin:/home/myharness-user/.local/bin:/usr/bin:/bin
     ExecStartPre=+/usr/bin/systemctl is-active --quiet myharness-egress.service
     ExecStart=/usr/local/bin/myharness daemon
     Restart=on-failure
@@ -140,9 +140,9 @@ provision:
     Description=Nightly session tidy
     [Service]
     Type=oneshot
-    User=myharness
-    Group=myharness
-    Environment=HOME=/home/myharness
+    User=myharness-user
+    Group=myharness-group
+    Environment=HOME=/home/myharness-user
     Environment=PATH=/usr/local/bin:/usr/bin:/bin
     ExecStart=/usr/local/libexec/myharness-tidy-job
 - mode: data
@@ -157,7 +157,7 @@ provision:
     [Install]
     WantedBy=timers.target
 - mode: data
-  path: /etc/systemd/resolved.conf.d/90-myharness.conf
+  path: /etc/systemd/resolved.conf.d/90-myharness-dns.conf
   permissions: "644"
   content: |
     # No multicast name service: it would listen on every address.
@@ -165,7 +165,7 @@ provision:
     MulticastDNS=no
     LLMNR=no
 - mode: data
-  path: /etc/sysctl.d/90-myharness.conf
+  path: /etc/sysctl.d/90-myharness-inotify.conf
   permissions: "644"
   content: |
     fs.inotify.max_user_watches = 524288
@@ -178,7 +178,7 @@ provision:
     APT::Periodic::Unattended-Upgrade "1";
     Unattended-Upgrade::Automatic-Reboot "false";
 - mode: data
-  path: /etc/profile.d/myharness.sh
+  path: /etc/profile.d/myharness-shell.sh
   permissions: "644"
   content: |
     # A switched-user shell has no runtime directory, so `systemctl --user` could not reach the bus.
@@ -191,11 +191,11 @@ provision:
   content: |
     #!/bin/sh
     # Runs the deployed build, never a bot's working copy.
-    if [ ! -x /opt/myharness/src/bin/myharness ]; then
+    if [ ! -x /opt/myharness-deploy/src/bin/myharness ]; then
       echo "myharness: nothing is deployed yet; run the rebuild line" >&2
       exit 127
     fi
-    exec /opt/myharness/src/bin/myharness "$@"
+    exec /opt/myharness-deploy/src/bin/myharness "$@"
 - mode: data
   path: /usr/local/libexec/myharness-tidy-job
   permissions: "755"
@@ -204,7 +204,7 @@ provision:
     # Tidies only when no session is in use (spec/host.md R7). A daemon that is not running reports nothing in use.
     # A daemon that answers neither yes nor no leaves the night undone and logged.
     set -u
-    home="${MYHARNESS_HOME:-$HOME/.myharness}"
+    home="${MYHARNESS_HOME:-$HOME/.myharness-home}"
     port=7797
     token="$home/secrets/owner-token"
     api() { curl -sS -m 10 -H @<(printf 'Authorization: Bearer %s\n' "$(cat "$token")") "http://127.0.0.1:$port$1"; }
@@ -237,7 +237,7 @@ provision:
     # myharness.app.tar.gz and its .sha256 to $MYHARNESS_APP_OUT.
     set -uo pipefail
     umask 022
-    ADMIN="{{.User}}"; BOT=myharness; SRC=/opt/myharness/src; OUT=/opt/myharness/app/out; REPO=/home/myharness/myharness-src
+    ADMIN="{{.User}}"; BOT=myharness-user; SRC=/opt/myharness-deploy/src; OUT=/opt/myharness-deploy/app/out; REPO=/home/myharness-user/myharness-src
     force=0; commit=""
     for a in "$@"; do
       case "$a" in
@@ -250,9 +250,9 @@ provision:
     admin() { runuser -u "$ADMIN" -- env HOME="$(getent passwd "$ADMIN" | cut -d: -f6)" PATH=/usr/local/bin:/usr/bin:/bin "$@"; }
     fail() { echo "reason: $*" >&2; exit 1; }
     busy() {
-      systemctl is-active --quiet myharness.service || return 0
+      systemctl is-active --quiet myharness-daemon.service || return 0
       local out
-      out=$(runuser -u "$BOT" -- bash -c 'curl -sS -m 5 -H @<(printf "Authorization: Bearer %s\n" "$(cat ~/.myharness/secrets/owner-token)") http://127.0.0.1:7797/bots') \
+      out=$(runuser -u "$BOT" -- bash -c 'curl -sS -m 5 -H @<(printf "Authorization: Bearer %s\n" "$(cat ~/.myharness-home/secrets/owner-token)") http://127.0.0.1:7797/bots') \
         || { echo "busy: unknown (the daemon does not answer)"; exit 3; }
       local list
       list=$(jq -er '.bots | map(. as $b | ($b.live // [])[] | select(.running) | "busy: \($b.id)/\(.session)") | .[]?' <<<"$out" 2>/dev/null); local rc=$?
@@ -281,16 +281,16 @@ provision:
     arm() { line="ssh -n <admin name> sudo /usr/local/sbin/myharness-deploy"; [ -n "$previous" ] && echo "rollback: $line $previous"; echo "retry: $line $commit"; }
     trap 'rc=$?; [ "$rc" = 0 ] || arm; exit $rc' EXIT
     if [ "$force" = 0 ]; then echo "step: stop (asking again)"; busy; else echo "step: stop"; fi
-    systemctl stop myharness.service || fail "the service did not stop"
+    systemctl stop myharness-daemon.service || fail "the service did not stop"
     echo "step: build"
     ( cd "$SRC" && admin env MYHARNESS_APP_OUT="$OUT" sh -c 'npm ci --ignore-scripts && npm run build && npm run build:mac-app' ) || fail "the build failed"
-    [ -z "$(find /opt/myharness ! -user "$ADMIN" -print -quit)" ] || fail "a file under /opt/myharness is not owned by $ADMIN"
-    [ -z "$(find /opt/myharness ! -type l -perm /022 -print -quit)" ] || fail "a file under /opt/myharness is writable by others"
+    [ -z "$(find /opt/myharness-deploy ! -user "$ADMIN" -print -quit)" ] || fail "a file under /opt/myharness-deploy is not owned by $ADMIN"
+    [ -z "$(find /opt/myharness-deploy ! -type l -perm /022 -print -quit)" ] || fail "a file under /opt/myharness-deploy is writable by others"
     [ -s "$OUT/myharness.app.tar.gz.sha256" ] || fail "the build wrote no app archive"
     echo "step: start"
-    systemctl enable -q myharness.service; systemctl start myharness.service || fail "the service did not start"
+    systemctl enable -q myharness-daemon.service; systemctl start myharness-daemon.service || fail "the service did not start"
     for _ in $(seq 1 90); do
-      if runuser -u "$BOT" -- bash -c 'curl -fsS -m 2 -o /dev/null -H @<(printf "Authorization: Bearer %s\n" "$(cat ~/.myharness/secrets/owner-token)") http://127.0.0.1:7797/health' 2>/dev/null; then
+      if runuser -u "$BOT" -- bash -c 'curl -fsS -m 2 -o /dev/null -H @<(printf "Authorization: Bearer %s\n" "$(cat ~/.myharness-home/secrets/owner-token)") http://127.0.0.1:7797/health' 2>/dev/null; then
         trap - EXIT
         echo "deployed: $commit"; echo "app sha256: $(cut -d' ' -f1 "$OUT/myharness.app.tar.gz.sha256")"; exit 0
       fi
@@ -303,7 +303,7 @@ provision:
     set -euo pipefail
     export DEBIAN_FRONTEND=noninteractive
     die() { echo "myharness-provision: FAIL $*" >&2; exit 1; }
-    U=myharness; H=/home/$U; ID=1500
+    U=myharness-user; G=myharness-group; H=/home/$U; ID=1500
     [ "{{.UID}}" != "$ID" ] || die "the admin UID equals the bot UID"
 
     PKGS="ca-certificates curl git gh jq sqlite3 rsync nftables unattended-upgrades xz-utils xvfb xauth
@@ -336,52 +336,52 @@ provision:
       findmnt --verify --tab-file /etc/fstab.new >/dev/null 2>&1 || die "the new fstab does not validate"
       mv /etc/fstab.new /etc/fstab
     fi
-    sysctl -q -p /etc/sysctl.d/90-myharness.conf
+    sysctl -q -p /etc/sysctl.d/90-myharness-inotify.conf
     if ss -H -lun | grep -q ':5353 '; then systemctl restart systemd-resolved; fi
 
-    nft -c -f /etc/myharness/egress.nft || die "the output rule does not parse"
+    nft -c -f /etc/myharness-config/myharness-egress.nft || die "the output rule does not parse"
     systemctl daemon-reload
     systemctl enable -q --now myharness-egress.service
     systemctl is-active --quiet myharness-egress.service || die "the output rule is not active"
 
     # Optional data disk: the home lives on it. Nothing blocks boot on it; services refuse to start until it is mounted.
     if [ "{{.Param.DATA_DISK}}" = yes ]; then
-      D=/mnt/lima-mhhome
-      mountpoint -q "$D" || die "data disk mhhome is not mounted"
+      D=/mnt/lima-myharness-d
+      mountpoint -q "$D" || die "data disk myharness-d is not mounted"
       dev=$(findmnt -no SOURCE "$D")
-      B=/etc/myharness/home-fs-created
+      B=/etc/myharness-config/myharness-home-fs-created
       c=$(tune2fs -l "$dev" | sed -n 's/^Filesystem created: *//p')
       [ -s "$B" ] || printf '%s\n' "$c" > "$B"
       [ "$(cat "$B")" = "$c" ] || die "data disk was reformatted: created $c, baseline $(cat "$B")"
       install -d -m 0700 "$D/home"
       mkdir -p "$H"
       mountpoint -q "$H" || mount --bind "$D/home" "$H"
-      for u in myharness.service user@$ID.service; do
+      for u in myharness-daemon.service user@$ID.service; do
         mkdir -p "/etc/systemd/system/$u.d"
-        printf '[Service]\nExecStartPre=+/usr/bin/mountpoint -q %s\n' "$H" > "/etc/systemd/system/$u.d/10-home.conf.new"
-        mv "/etc/systemd/system/$u.d/10-home.conf.new" "/etc/systemd/system/$u.d/10-home.conf"
+        printf '[Service]\nExecStartPre=+/usr/bin/mountpoint -q %s\n' "$H" > "/etc/systemd/system/$u.d/10-myharness-home-guard.conf.new"
+        mv "/etc/systemd/system/$u.d/10-myharness-home-guard.conf.new" "/etc/systemd/system/$u.d/10-myharness-home-guard.conf"
       done
     fi
 
-    getent group "$U" >/dev/null || groupadd -g "$ID" "$U"
+    getent group "$G" >/dev/null || groupadd -g "$ID" "$G"
     if ! id "$U" >/dev/null 2>&1; then
       useradd -u "$ID" -g "$ID" -d "$H" -s /bin/bash -c "harness bots" "$U"
       passwd -l "$U" >/dev/null
     fi
-    [ "$(id -u "$U")" = "$ID" ] && [ "$(id -Gn "$U")" = "$U" ] || die "$U has the wrong UID or extra groups"
-    install -d -m 0700 -o "$U" -g "$U" "$H" "$H/.ssh"
-    install -m 0600 -o "$U" -g "$U" "{{.Home}}/.ssh/authorized_keys" "$H/.ssh/authorized_keys"
+    [ "$(id -u "$U")" = "$ID" ] && [ "$(id -Gn "$U")" = "$G" ] || die "$U has the wrong UID or extra groups"
+    install -d -m 0700 -o "$U" -g "$G" "$H" "$H/.ssh"
+    install -m 0600 -o "$U" -g "$G" "{{.Home}}/.ssh/authorized_keys" "$H/.ssh/authorized_keys"
     loginctl enable-linger "$U"
 
     # Places the rebuild line uses: admin-owned, writable by no one else.
-    install -d -m 0755 -o "{{.User}}" -g "$(id -gn {{.User}})" /opt/myharness /opt/myharness/src /opt/myharness/app /opt/myharness/app/out
+    install -d -m 0755 -o "{{.User}}" -g "$(id -gn {{.User}})" /opt/myharness-deploy /opt/myharness-deploy/src /opt/myharness-deploy/app /opt/myharness-deploy/app/out
 
     # The daemon's memory ceiling: five eighths of the VM's memory, rounded down to whole GiB.
     gib=$(awk '/MemTotal/ { printf "%d", ($2 / 1048576) + 0.999 }' /proc/meminfo)
     ceil=$(( gib * 5 / 8 )); [ "$ceil" -ge 1 ] || ceil=1
-    mkdir -p /etc/systemd/system/myharness.service.d
-    printf '[Service]\nMemoryHigh=%sG\n' "$ceil" > /etc/systemd/system/myharness.service.d/10-memory.conf.new
-    mv /etc/systemd/system/myharness.service.d/10-memory.conf.new /etc/systemd/system/myharness.service.d/10-memory.conf
+    mkdir -p /etc/systemd/system/myharness-daemon.service.d
+    printf '[Service]\nMemoryHigh=%sG\n' "$ceil" > /etc/systemd/system/myharness-daemon.service.d/10-myharness-memory.conf.new
+    mv /etc/systemd/system/myharness-daemon.service.d/10-myharness-memory.conf.new /etc/systemd/system/myharness-daemon.service.d/10-myharness-memory.conf
     systemctl daemon-reload
     systemctl enable -q --now myharness-tidy.timer
 
@@ -411,4 +411,4 @@ probes:
     set -eu
     [ -e /run/myharness-provisioned ]
     systemctl is-active --quiet myharness-egress.service
-    id -u myharness >/dev/null
+    id -u myharness-user >/dev/null

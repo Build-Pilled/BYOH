@@ -1,7 +1,7 @@
 #!/bin/sh
 # The pinned host step: the only thing from this repository that runs on the Mac (spec/vm.md, spec/onboarding.md R1).
 # Installs the pinned Lima under ~/.local, creates the VM, writes the SSH names and turns on start at login.
-# Removal: host-step.sh --remove [--keep-data-disk] [--yes] (spec/vm.md R11).
+# Removal: myharness-host-step.sh --remove [--keep-data-disk] [--yes] (spec/vm.md R11).
 set -eu
 
 LIMA_VERSION=2.3.0
@@ -9,8 +9,8 @@ LIMA_SHA256=b7af444bd8f91d3c307477e562f2cf3bd7595d62b9429185e4fa841563578cfc  # 
 LIMACTL="$HOME/.local/bin/limactl"
 LIMA_DIR="$HOME/.lima"
 MANIFEST="$HOME/.local/share/myharness-lima.files"
-SSH_FILE="$HOME/.ssh/myharness.conf"
-INCLUDE="Include ~/.ssh/myharness.conf"
+SSH_FILE="$HOME/.ssh/myharness-ssh.conf"
+INCLUDE="Include ~/.ssh/myharness-ssh.conf"
 HERE=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 
 say() { printf '%s\n' "$*"; }
@@ -18,15 +18,15 @@ die() { printf 'reason: %s\n' "$*" >&2; exit 1; }
 
 drop_include() {
   [ -f "$HOME/.ssh/config" ] || return 0
-  grep -vxF "$INCLUDE" "$HOME/.ssh/config" > "$HOME/.ssh/config.myharness.new" || true
-  chmod 600 "$HOME/.ssh/config.myharness.new"
-  mv "$HOME/.ssh/config.myharness.new" "$HOME/.ssh/config"
+  grep -vxF "$INCLUDE" "$HOME/.ssh/config" > "$HOME/.ssh/myharness-ssh-config.new" || true
+  chmod 600 "$HOME/.ssh/myharness-ssh-config.new"
+  mv "$HOME/.ssh/myharness-ssh-config.new" "$HOME/.ssh/config"
 }
 
 remove() {
   keep=0; yes=0
   for a in "$@"; do
-    case "$a" in --keep-data-disk) keep=1 ;; --yes) yes=1 ;; *) printf 'usage: host-step.sh --remove [--keep-data-disk] [--yes]\n' >&2; exit 2 ;; esac
+    case "$a" in --keep-data-disk) keep=1 ;; --yes) yes=1 ;; *) printf 'usage: myharness-host-step.sh --remove [--keep-data-disk] [--yes]\n' >&2; exit 2 ;; esac
   done
   say "This deletes the VM and the harness data inside it, unless VM backup was chosen or the data disk is kept."
   if [ "$yes" = 0 ]; then
@@ -37,19 +37,19 @@ remove() {
   if [ -x "$LIMACTL" ]; then
     LIMA_HOME="$LIMA_DIR" "$LIMACTL" autostart disable myharness-vm 2>/dev/null || true
     LIMA_HOME="$LIMA_DIR" "$LIMACTL" delete -f myharness-vm || die "could not delete myharness-vm; Lima files were kept"
-    if [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; then
+    if [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/myharness-d" ]; then
       # No force: Lima must refuse a disk still used by another instance.
-      LIMA_HOME="$LIMA_DIR" "$LIMACTL" disk delete mhhome || die "could not delete the harness data disk; Lima files were kept"
+      LIMA_HOME="$LIMA_DIR" "$LIMACTL" disk delete myharness-d || die "could not delete the harness data disk; Lima files were kept"
     fi
-  elif [ -e "$LIMA_DIR/myharness-vm" ] || { [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; }; then
-    die "the pinned limactl is missing; Lima files were kept. If you previously kept the data disk, it is the folder ~/.lima/_disks/mhhome; you may delete that folder yourself."
+  elif [ -e "$LIMA_DIR/myharness-vm" ] || { [ "$keep" = 0 ] && [ -e "$LIMA_DIR/_disks/myharness-d" ]; }; then
+    die "the pinned limactl is missing; Lima files were kept. If you previously kept the data disk, it is the folder ~/.lima/_disks/myharness-d; you may delete that folder yourself."
   fi
   [ ! -e "$LIMA_DIR/myharness-vm" ] || die "myharness-vm still exists; Lima files were kept"
-  rm -f "$SSH_FILE" "$HOME/.ssh/myharness_known_hosts"
+  rm -f "$SSH_FILE" "$HOME/.ssh/myharness-known-hosts"
   drop_include
   rm -rf "$HOME/Applications/myharness.app" "$HOME/Library/Application Support/myharness"
-  if [ "$keep" = 1 ] && [ -e "$LIMA_DIR/_disks/mhhome" ]; then
-    say "The data disk stays in ~/.lima/_disks/mhhome; you may delete that folder yourself when you no longer want the data."
+  if [ "$keep" = 1 ] && [ -e "$LIMA_DIR/_disks/myharness-d" ]; then
+    say "The data disk stays in ~/.lima/_disks/myharness-d; you may delete that folder yourself when you no longer want the data."
   fi
   # Look at entries rather than a successful-instance listing: broken instances
   # and instance links also need their shared key and image cache.
@@ -92,7 +92,7 @@ while [ $# -gt 0 ]; do
     --disk) DISK=${2:?}; shift 2 ;;
     --prevent-sleep) SLEEP=${2:?}; shift 2 ;;
     --memory) MEMORY=${2:?}; shift 2 ;;
-    *) printf 'usage: host-step.sh [--engines claude,pi] [--disk one|data] [--prevent-sleep yes|no] [--memory GiB] | --remove [--keep-data-disk] [--yes]\n' >&2; exit 2 ;;
+    *) printf 'usage: myharness-host-step.sh [--engines claude,pi] [--disk one|data] [--prevent-sleep yes|no] [--memory GiB] | --remove [--keep-data-disk] [--yes]\n' >&2; exit 2 ;;
   esac
 done
 case "$ENGINES" in claude|pi|claude,pi|pi,claude) ;; *) die "--engines takes claude, pi or both" ;; esac
@@ -140,16 +140,16 @@ fi
 [ "$("$LIMACTL" --version)" = "limactl version $LIMA_VERSION" ] || die "limactl is not at $LIMA_VERSION"
 
 say "step: create"
-"$LIMACTL" validate "$HERE/myharness.yaml" >/dev/null 2>&1 || die "the template does not validate"
+"$LIMACTL" validate "$HERE/myharness-vm.yaml" >/dev/null 2>&1 || die "the template does not validate"
 port=60022
 while lsof -nP -iTCP:"$port" -sTCP:LISTEN >/dev/null 2>&1; do port=$(( port + 1 )); done
 disk_set=""
 if [ "$DISK" = data ]; then
-  [ -e "$LIMA_DIR/_disks/mhhome" ] || "$LIMACTL" disk create mhhome --size 100GiB
-  disk_set='.additionalDisks=[{"name":"mhhome","format":true,"fsType":"ext4"}] | .param.DATA_DISK="yes"'
+  [ -e "$LIMA_DIR/_disks/myharness-d" ] || "$LIMACTL" disk create myharness-d --size 100GiB
+  disk_set='.additionalDisks=[{"name":"myharness-d","format":true,"fsType":"ext4"}] | .param.DATA_DISK="yes"'
 fi
 "$LIMACTL" create --name=myharness-vm --tty=false --cpus="$CPUS" --memory="$MEMORY" \
-  --set ".ssh.localPort=$port | .param.ENGINES=\"$ENGINES\"${disk_set:+ | $disk_set}" "$HERE/myharness.yaml"
+  --set ".ssh.localPort=$port | .param.ENGINES=\"$ENGINES\"${disk_set:+ | $disk_set}" "$HERE/myharness-vm.yaml"
 say "step: start (the first start takes several minutes)"
 "$LIMACTL" start myharness-vm --timeout=30m
 
@@ -157,18 +157,18 @@ say "step: ssh names"
 admin=$("$LIMACTL" shell --workdir / myharness-vm id -un)
 mkdir -p "$HOME/.ssh"; chmod 700 "$HOME/.ssh"
 {
-  for pair in "myharness myharness" "myharness-admin $admin"; do
+  for pair in "myharness-ssh myharness-user" "myharness-admin-ssh $admin"; do
     set -- $pair
     printf 'Host %s\n  HostName 127.0.0.1\n  Port %s\n  User %s\n' "$1" "$port" "$2"
     printf '  IdentityFile %s/_config/user\n  IdentitiesOnly yes\n  BatchMode yes\n' "$LIMA_DIR"
     printf '  ForwardAgent no\n  ForwardX11 no\n  ControlMaster no\n  ControlPath none\n'
-    printf '  StrictHostKeyChecking accept-new\n  UserKnownHostsFile ~/.ssh/myharness_known_hosts\n\n'
+    printf '  StrictHostKeyChecking accept-new\n  UserKnownHostsFile ~/.ssh/myharness-known-hosts\n\n'
   done
 } > "$SSH_FILE.new"
 chmod 600 "$SSH_FILE.new"; mv "$SSH_FILE.new" "$SSH_FILE"
 if ! grep -qxF "$INCLUDE" "$HOME/.ssh/config" 2>/dev/null; then
-  { printf '%s\n' "$INCLUDE"; cat "$HOME/.ssh/config" 2>/dev/null || true; } > "$HOME/.ssh/config.myharness.new"
-  chmod 600 "$HOME/.ssh/config.myharness.new"; mv "$HOME/.ssh/config.myharness.new" "$HOME/.ssh/config"
+  { printf '%s\n' "$INCLUDE"; cat "$HOME/.ssh/config" 2>/dev/null || true; } > "$HOME/.ssh/myharness-ssh-config.new"
+  chmod 600 "$HOME/.ssh/myharness-ssh-config.new"; mv "$HOME/.ssh/myharness-ssh-config.new" "$HOME/.ssh/config"
 fi
 
 say "step: start at login"
@@ -181,5 +181,5 @@ fi
 { printf 'prevent_sleep=%s\n' "$SLEEP"; printf 'memory=%s\ncpus=%s\n' "$MEMORY" "$CPUS"; } > "$LIMA_DIR/myharness-vm/myharness-host-step.env"
 
 say "step: check"
-sh "$HERE/check.sh" --mac
-say "result: ready. Next: ssh myharness"
+sh "$HERE/myharness-check.sh" --mac
+say "result: ready. Next: ssh myharness-ssh"

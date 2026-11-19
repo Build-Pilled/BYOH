@@ -265,7 +265,7 @@ export function writeTeam(kit, id, lead, members) {
   writeFileSync(join(kit.home, 'teams', `${id}.toml`), `name = ${JSON.stringify(id)}\n${lead ? `lead = ${JSON.stringify(lead)}\n` : ''}members = ${JSON.stringify(members)}\n`);
 }
 // The engine-facing send_message tool (messaging R1) driven through the mock: the bot's model calls it in this turn.
-export const SEND_TOOL = { pi: 'send_message', claude: 'mcp__myharness__send_message' };
+export const SEND_TOOL = { pi: 'send_message', claude: 'mcp__myharness-mcp__send_message' };
 // Mock directives inside the message (for the recipient's model) are written as \u005f in the JSON, so the mock does not also apply
 // them to the sender's own request; the engine decodes the JSON, and the recipient receives the plain directive.
 export async function botSends(kit, bot, sid, engine, args, log) {

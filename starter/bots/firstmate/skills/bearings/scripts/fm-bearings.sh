@@ -16,7 +16,7 @@
 # Landed rows:  <id> | <kind> | <status> | <YYYY-MM-DD HH:MM> | <result>
 #   <result> is the full result, newlines as spaces, or "-" if empty.
 #   A timestamp that is not valid unix seconds prints as "raw <value>".
-# Needs factory-db on PATH and fm-crew-state.sh beside this script.
+# Needs myharness-task-db on PATH and fm-crew-state.sh beside this script.
 set -euo pipefail
 since=24h
 [ "${1:-}" = --since ] && since=${2:-}
@@ -24,7 +24,7 @@ since=24h
 if [ "${BASH_REMATCH[2]}" = h ]; then secs=$((BASH_REMATCH[1] * 3600)); else secs=$((BASH_REMATCH[1] * 86400)); fi
 
 state=$("$(dirname "$0")/fm-crew-state.sh")
-export TITLES=$(factory-db -separator $'\t' \
+export TITLES=$(myharness-task-db -separator $'\t' \
   "SELECT id, replace(title, char(10), ' ') FROM tasks WHERE kind = 'decision' AND status = 'blocked';")
 pick() { awk -v want="$1" '
   BEGIN { n = split(ENVIRON["TITLES"], L, "\n")
@@ -32,7 +32,7 @@ pick() { awk -v want="$1" '
   NF { split($0, f, " [|] ")
        b = (f[1] in q || f[4] ~ /^gate captain /) ? "call" : f[3] == "underway" ? "underway" : "next"
        if (b == want) print (f[1] in q) ? $0 " | q \"" q[f[1]] "\"" : $0 }' <<<"$state"; }
-landed=$(factory-db -separator ' | ' "
+landed=$(myharness-task-db -separator ' | ' "
   SELECT id, kind, status, IFNULL(strftime('%Y-%m-%d %H:%M', IFNULL(updated_at, created_at), 'unixepoch', 'localtime'),
       'raw ' || IFNULL(updated_at, created_at)),
     IFNULL(NULLIF(replace(replace(result, char(13), ' '), char(10), ' '), ''), '-')

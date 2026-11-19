@@ -29,7 +29,7 @@ program.
 - **R2 — Pairing line.** Pairing is one command the person runs once in
   Terminal; the not-paired window shows it exactly, with the bot SSH name
   ([host](host.md) R3) filled in:
-  `( umask 077; d="$HOME/Library/Application Support/myharness"; mkdir -p "$d" && ssh -n <bot name> cat .myharness/secrets/owner-token > "$d/owner-token.new" && mv "$d/owner-token.new" "$d/owner-token" || { rm -f "$d/owner-token.new"; exit 1; } )`.
+  `( umask 077; d="$HOME/Library/Application Support/myharness"; mkdir -p "$d" && ssh -n <bot name> cat .myharness-home/secrets/owner-token > "$d/owner-token.new" && mv "$d/owner-token.new" "$d/owner-token" || { rm -f "$d/owner-token.new"; exit 1; } )`.
   On first onboarding the setup agent prints this same line, with the bot SSH
   name filled in, before the app is opened. The person runs it in Terminal;
   a successful copy and an acceptable local token file (R3) pass onboarding

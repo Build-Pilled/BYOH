@@ -1,8 +1,8 @@
 #!/bin/sh
 # The environment check (spec/host.md R10, R11). Reads only: it never starts, stops, installs or repairs anything,
 # and prints names, modes and types, never credential contents.
-#   check.sh --mac  [--bot <name>] [--admin <name>] [--own-host] [--login-stage]
-#   check.sh --host [--own-host] [--login-stage] [--engines claude,pi]
+#   myharness-check.sh --mac  [--bot <name>] [--admin <name>] [--own-host] [--login-stage]
+#   myharness-check.sh --host [--own-host] [--login-stage] [--engines claude,pi]
 # Each line: LEVEL id: message [fix: <reference>]. Any FAIL exits 1.
 set -u
 
@@ -13,7 +13,7 @@ PI_VERSION=0.99.1
 LIMACTL_SHA256=807fe2112a5524392153494f07b989eccd9f7c92bb45053966a2e83816631d3b   # bin/limactl inside the pinned Lima archive; recorded with the Lima pin
 LIMACTL="$HOME/.local/bin/limactl"
 
-PART=""; BOT=myharness; ADMIN=myharness-admin; OWN=0; LOGIN=0; ENGINES=""
+PART=""; BOT=myharness-ssh; ADMIN=myharness-admin-ssh; OWN=0; LOGIN=0; ENGINES=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --mac) PART=mac; shift ;;
@@ -23,10 +23,10 @@ while [ $# -gt 0 ]; do
     --own-host) OWN=1; shift ;;
     --login-stage) LOGIN=1; shift ;;
     --engines) ENGINES=${2:?}; shift 2 ;;
-    *) printf 'usage: check.sh --mac|--host [options]\n' >&2; exit 2 ;;
+    *) printf 'usage: myharness-check.sh --mac|--host [options]\n' >&2; exit 2 ;;
   esac
 done
-[ -n "$PART" ] || { printf 'usage: check.sh --mac|--host [options]\n' >&2; exit 2; }
+[ -n "$PART" ] || { printf 'usage: myharness-check.sh --mac|--host [options]\n' >&2; exit 2; }
 
 failed=0
 line() { # LEVEL id message [fix]
@@ -119,7 +119,7 @@ mac() {
     else line WARN M-disk "$f GiB free; VM disk at ${u:-unknown} GiB" P3; fi
   fi
   if vm_only M-fw; then
-    t=$(rssh "$ADMIN" sudo -n nft list table inet myharness_egress) || t=""
+    t=$(rssh "$ADMIN" sudo -n nft list table inet myharness-egress) || t=""
     if printf '%s' "$t" | grep -q 'hook output' && printf '%s' "$t" | grep -q 'meta skuid 1500 jump bots' && \
        printf '%s' "$t" | grep -q '192.168.0.0/16' && printf '%s' "$t" | grep -q 'meta nfproto ipv6 jump refuse'; then line PASS M-fw "the output rule is loaded with its positive UID match and refusals"
     else line FAIL M-fw "the output rule is missing or changed" P11; fi
@@ -170,7 +170,7 @@ host() {
     systemctl is-active --quiet "user@$(id -u).service" || bad="$bad user-manager"
     f=$(systemctl list-units --state=failed --no-legend --plain 2>/dev/null | awk '{print $1}' | tr '\n' ' ')
     [ -z "$f" ] || bad="$bad failed:$f"
-    if [ -x /opt/myharness/src/bin/myharness ]; then systemctl is-active --quiet myharness.service || bad="$bad daemon"; fi
+    if [ -x /opt/myharness-deploy/src/bin/myharness ]; then systemctl is-active --quiet myharness-daemon.service || bad="$bad daemon"; fi
     if [ -z "$bad" ]; then line PASS H-units "egress unit active and enabled, service manager running, no failed units"; else line FAIL H-units "$bad" P14; fi
   fi
 
@@ -230,13 +230,13 @@ host() {
   esac
   if [ -z "$bad" ]; then line PASS H-login "engine login files present with mode 0600"; else line "$lvl" H-login "not signed in yet:$bad" P21; fi
 
-  if [ -d /opt/myharness/src/.git ]; then
+  if [ -d /opt/myharness-deploy/src/.git ]; then
     # The bot may read the deployed checkout; Git's ownership check needs the exact path allowed.
-    d=$(git -c safe.directory=/opt/myharness/src -C /opt/myharness/src rev-parse HEAD 2>/dev/null)
-    if [ -n "$d" ] && systemctl is-active --quiet myharness.service; then line PASS H-build "the live daemon runs deployed commit $d"; else line FAIL H-build "the deployed checkout or the daemon is not healthy" R6; fi
+    d=$(git -c safe.directory=/opt/myharness-deploy/src -C /opt/myharness-deploy/src rev-parse HEAD 2>/dev/null)
+    if [ -n "$d" ] && systemctl is-active --quiet myharness-daemon.service; then line PASS H-build "the live daemon runs deployed commit $d"; else line FAIL H-build "the deployed checkout or the daemon is not healthy" R6; fi
   else line INFO H-build "nothing is deployed yet"; fi
 
-  if [ "$OWN" = 0 ] && [ -r /etc/myharness/home-fs-created ]; then
+  if [ "$OWN" = 0 ] && [ -r /etc/myharness-config/myharness-home-fs-created ]; then
     if mountpoint -q "$HOME"; then line PASS H-disk2 "the data disk is mounted at the bot home"; else line FAIL H-disk2 "the data disk is not mounted at the bot home" P13; fi
   fi
 }

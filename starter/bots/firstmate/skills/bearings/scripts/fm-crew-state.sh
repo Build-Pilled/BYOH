@@ -13,16 +13,16 @@
 # or starts with the id plus a space or colon (hand-offs use new_session titled with the id).
 # Messages that merely mention the id elsewhere (digests, reports) are ignored.
 # Searched with `myharness activity --grep <id>` from the row's created_at date.
-# Needs factory-db and myharness. created_at/updated_at are unix seconds.
+# Needs myharness-task-db and myharness. created_at/updated_at are unix seconds.
 set -euo pipefail
 where="status IN ('queued','underway','blocked')"
 if [ $# -ge 1 ]; then
   [[ $1 =~ ^[A-Za-z0-9._-]+$ ]] || { echo "fm-crew-state.sh: bad task id: $1" >&2; exit 2; }
   where="id = '$1'"
-  [ -n "$(factory-db "SELECT 1 FROM tasks WHERE $where")" ] || { echo "fm-crew-state.sh: no task $1" >&2; exit 1; }
+  [ -n "$(myharness-task-db "SELECT 1 FROM tasks WHERE $where")" ] || { echo "fm-crew-state.sh: no task $1" >&2; exit 1; }
 fi
 
-factory-db -separator $'\t' "
+myharness-task-db -separator $'\t' "
   SELECT id, kind, status, IFNULL(NULLIF(gate_kind,''),'-'), IFNULL(NULLIF(gate_ref,''),'-'),
     strftime('%s','now') - IFNULL(updated_at, created_at), date(created_at,'unixepoch','localtime')
   FROM tasks WHERE $where ORDER BY status, IFNULL(updated_at, created_at);" |

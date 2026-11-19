@@ -63,7 +63,7 @@ small; do not turn the Plain bot into another project worker.
   Do not install an unselected adapter's keys or an unsupported default model.
   Install starter/bots/, starter/teams/, starter/skills/ and starter/bin/ at the
   same paths under the home, preserving executable bits. This installs the
-  wrapper at `<home>/bin/factory-db`, executable and callable by bare name
+  wrapper at `<home>/bin/myharness-task-db`, executable and callable by bare name
   from bot processes ([engine contract](engine-contract.md) R7). Install
   starter/NOTICE.md as the single home-root NOTICE.md (R5).
   Installation is a plain copy, with no install-time placeholders or interview

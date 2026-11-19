@@ -12,7 +12,7 @@ Read `~/myharness-src/interview.json`: `{"schema": 1, "progress": "<last state p
 - If it is missing or does not parse, say so, quote the error, and stop. Do not rebuild it from memory or from questions.
 - If `progress` is `done`, say onboarding is complete, then follow the MEMORY.md line about deleting this skill.
 
-The setup agent's hand-over message names the blueprint folder. The first time you read that folder, write one line in `~/.myharness/bots/firstmate/MEMORY.md` recording its path; on a later resume, read that line. The onboarding rules are in that folder's `spec/onboarding.md` (R3 to R10). Read the section of each stage before you lead it. Read the bot and admin SSH names from `host` in the interview record, not from memory or a guessed default.
+The setup agent's hand-over message names the blueprint folder. The first time you read that folder, write one line in `~/.myharness-home/bots/firstmate/MEMORY.md` recording its path; on a later resume, read that line. The onboarding rules are in that folder's `spec/onboarding.md` (R3 to R10). Read the section of each stage before you lead it. Read the bot and admin SSH names from `host` in the interview record, not from memory or a guessed default.
 
 ## 2. First reply: prove the context
 
@@ -40,8 +40,8 @@ Never invent an answer the record does not hold. A question the record already a
 Whenever you hand the captain a command or a name, explain in plain words what
 the command does, where to run it, what it touches, and what each name refers
 to, even if the glossary component was explained before. For the supplied VM,
-`myharness-vm` is the Lima VM instance; `myharness` in `ssh myharness` is the SSH
-connection name for its bot user, and `myharness-admin` is the admin connection.
+`myharness-vm` is the Lima VM instance; `myharness-ssh` in `ssh myharness-ssh` is the SSH
+connection name for its bot user `myharness-user`, and `myharness-admin-ssh` is the admin connection.
 The `myharness` command itself is the harness CLI, not the Lima instance. Use
 the recorded SSH names for an own host. Explain rebuild/pairing effects without
 revealing token bytes; never pass along a bare command from tool output.

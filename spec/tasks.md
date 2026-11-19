@@ -44,7 +44,7 @@ owns the entry button.
   `node:sqlite` module of the pinned Node 26 (exact version; Node documents it for
   26 as release candidate, no flag needed), with no third-party SQLite package.
   The host also provides the `sqlite3` command and `jq` for the crew's skills:
-  the seeded `factory-db` wrapper and bearings scripts rely on them. A change
+  the seeded `myharness-task-db` wrapper and bearings scripts rely on them. A change
   of the Node pin re-proves the module before it lands.
 - **R3 — Reading.** Owner `GET /tasks` returns `{exists, tasks, pending}` from one
   consistent read of a read-only connection; a missing file is `exists: false`

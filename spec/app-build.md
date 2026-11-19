@@ -16,8 +16,8 @@ half that pulls, checks and swaps the app, rollback and replacement errors.
 
 - **R1 — Places.** The harness source is the Git repository `~/myharness-src`
   in the bot user's home, built and tested there by the person's agent. The
-  deployed code is a separate checkout, `/opt/myharness/src`, and the desktop app
-  output is `/opt/myharness/app/out/`; both are owned by the admin account and
+  deployed code is a separate checkout, `/opt/myharness-deploy/src`, and the desktop app
+  output is `/opt/myharness-deploy/app/out/`; both are owned by the admin account and
   writable by no one else. The deploy program is
   `/usr/local/sbin/myharness-deploy`, owned by root and installed with the host
   from the pinned BYOH tag, so no bot can edit it. The live daemon runs code only
@@ -58,7 +58,7 @@ half that pulls, checks and swaps the app, rollback and replacement errors.
      renderer (`npm run build`) and the desktop app (R4; `npm run build:mac-app`,
      which writes the archive and its hash to `$MYHARNESS_APP_OUT`). The checkout
      provides the executable `bin/myharness` the launcher runs,
-     and checks that nothing under `/opt/myharness` is owned by anyone but the
+     and checks that nothing under `/opt/myharness-deploy` is owned by anyone but the
      admin or writable by others.
   6. `start`: it starts the service, waits up to 90 seconds for an
      authenticated health answer, and prints the deployed commit and the Mac

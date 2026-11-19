@@ -8,10 +8,10 @@ A local sqlite database is the factory backlog. Chat is not the source of truth.
 
 ## Database path
 
-`~/.myharness/tasks/factory.db`
+`~/.myharness-home/tasks/factory.db`
 
 Create the parent directory if needed. Same path every time. Do not invent a second database.
-Scout reports live beside it in `~/.myharness/tasks/reports/`, one file per task id. Run every later query through `factory-db "<SQL>"` (the executable `bin/factory-db` under the selected harness home, on bot PATH); it never creates the file.
+Scout reports live beside it in `~/.myharness-home/tasks/reports/`, one file per task id. Run every later query through `myharness-task-db "<SQL>"` (the executable `bin/myharness-task-db` under the selected harness home, on bot PATH); it never creates the file.
 
 ## Schema
 
@@ -69,7 +69,7 @@ The schema is deliberately minimal: enough to route work and find its results. D
 
 ## Setup
 
-If `factory.db` does not exist, create it with `sqlite3 ~/.myharness/tasks/factory.db` and run the schema. If it exists, do not migrate inventively. Report the path to Firstmate.
+If `factory.db` does not exist, create it with `sqlite3 ~/.myharness-home/tasks/factory.db` and run the schema. If it exists, do not migrate inventively. Report the path to Firstmate.
 
 ## Intake
 

@@ -85,8 +85,8 @@ environment check.
   agent explains it: for it, the home survives deleting or rebuilding the VM;
   against it, a second disk file on the Mac that only grows, a late mount that
   needs start guards, and a name limit that otherwise reformats the disk at
-  every boot. With the data disk, its name is `mhhome` (11 characters at most,
-  P1) and the recipe refuses any other; services that need the home check that
+  every boot. The data disk is named `myharness-d` ("d" means disk; the name
+  must be at most 11 characters, P1) and the recipe refuses any other; services that need the home check that
   it is mounted before starting and retry on failure without a start limit,
   and nothing blocks boot on it (P13); the file system's creation time is
   recorded at creation and compared at every check (P1). Switching layouts
@@ -97,19 +97,20 @@ environment check.
   Pi login); a final rule ignores every other port on every guest
   address, TCP and UDP (P10). Claude Code's sign-in pastes a code and needs no
   port. Lima's SSH port on the Mac is fixed when the VM is created, so the SSH
-  names survive restarts. The host step writes `~/.ssh/myharness.conf` with two
-  names, `myharness` (the bot user) and `myharness-admin` (Lima's admin user),
+  names survive restarts. The host step writes `~/.ssh/myharness-ssh.conf` with two
+  names, `myharness-ssh` (the bot user) and `myharness-admin-ssh` (Lima's admin user),
   each with Lima's key, its port, agent forwarding off and connection sharing
-  off, and adds one `Include ~/.ssh/myharness.conf` line at the top of
+  off, and adds one `Include ~/.ssh/myharness-ssh.conf` line at the top of
   `~/.ssh/config` (created 0600 when absent, edited through a temporary file).
   These are the [host](host.md) R3 names for this VM.
-- **R6 — Accounts.** The bot user is `myharness`, UID 1500, with its own group,
+- **R6 — Accounts.** The bot user is `myharness-user`, UID 1500, with its own group
+  `myharness-group`, GID 1500,
   a locked password, no sudo, Lima's key in its authorized keys, and linger on
   so its services run without a login. Its home is mode 0700 and is never
   loosened (P30). The admin is Lima's default user, named after the Mac user,
   with password-less sudo; admin steps run with umask 022 and act as the bot
   user (`runuser`) for anything the bot owns (P29).
-- **R7 — Services.** The daemon is the system service `myharness.service`
+- **R7 — Services.** The daemon is the system service `myharness-daemon.service`
   running as the bot user from the deployed build ([app build](app-build.md)
   R1), installed and changed only by the admin. It starts only
   when the egress unit is active (and, with a data disk, when the home is
@@ -133,7 +134,7 @@ environment check.
   ([app pairing](app-pairing.md) R10 runs it; it also runs from Terminal). It
   takes no argument, or `--force`. Its steps, in order:
   1. `check`: `limactl` at its recorded absolute path and the instance
-     `myharness` exist; otherwise it fails.
+     `myharness-vm` exist; otherwise it fails.
   2. `already`: if the instance is already stopped it prints
      `result: already-stopped` and exits 0.
   3. `ask` (skipped only with `--force`): it asks the daemon at
@@ -176,9 +177,9 @@ environment check.
   when no other instance remains; otherwise the output says what was kept and
   why. A symlinked `~/.lima` and its target's shared contents stay, with output
   naming the link target; only the named harness instance and its data disk
-  are removed through Lima. `--keep-data-disk` keeps the harness's `mhhome`
+  are removed through Lima. `--keep-data-disk` keeps the harness's `myharness-d`
   disk; no other data disk is removed. After keeping it, the person may delete
-  the folder `~/.lima/_disks/mhhome` themselves; removal says so when keeping
+  the folder `~/.lima/_disks/myharness-d` themselves; removal says so when keeping
   the disk and when the pinned Lima is missing. It does not reinstall Lima or
   automatically delete that previously kept disk. Unrelated files are never recursively
   deleted to remove `~/.lima`. Removal states first, in the person's words,

@@ -1,17 +1,17 @@
 ---
 name: myharness-config
-description: Use when asked to create, inspect or change a bot, team, routine, skill or MCP server, or to have a bot woken at a set time (one-shot routine), including "check back in N minutes" or waiting for something to arrive. Explains the ~/.myharness layout.
+description: Use when asked to create, inspect or change a bot, team, routine, skill or MCP server, or to have a bot woken at a set time (one-shot routine), including "check back in N minutes" or waiting for something to arrive. Explains the ~/.myharness-home layout.
 ---
 # Configuring the harness
 
-The harness configuration is plain files under `~/.myharness`. Change it with your ordinary read, write and edit tools. Changes take effect immediately: a new bot directory is a new bot, a new team member can be messaged on the next turn, an edited SYSTEM.md is used on the next turn. Every change is recorded in the home's local git history, so the captain can see and revert it (`myharness log`).
+The harness configuration is plain files under `~/.myharness-home`. Change it with your ordinary read, write and edit tools. Changes take effect immediately: a new bot directory is a new bot, a new team member can be messaged on the next turn, an edited SYSTEM.md is used on the next turn. Every change is recorded in the home's local git history, so the captain can see and revert it (`myharness log`).
 
 Read the current files before changing them. Run `myharness validate` after writing; it reports TOML and front matter errors. Tell the captain what you changed, file by file.
 
 ## Layout
 
 ```
-~/.myharness/
+~/.myharness-home/
   bots/<id>/bot.toml          identity, model, tools, skills, mcp, limits
   bots/<id>/SYSTEM.md         the complete system prompt, nothing templated
   bots/<id>/skills/<name>/SKILL.md
@@ -36,8 +36,8 @@ model = "<copy from a working sibling's bot.toml>"   # omit for the engine's def
 thinking = "medium"                        # off, minimal, low, medium, high, xhigh, max; default: high
 cwd = "~/work/project"                     # default: the home directory
 tools = ["read", "grep", "find", "ls", "bash", "write", "edit"]
-skills = []                                # names under ~/.myharness/skills
-mcp = []                                   # names under ~/.myharness/mcp
+skills = []                                # names under ~/.myharness-home/skills
+mcp = []                                   # names under ~/.myharness-home/mcp
 max_processes = 3
 ```
 
@@ -94,7 +94,7 @@ The message the bot receives on each tick.
 Write `bots/<bot id>/routines/<name>.md` with `schedule: "YYYY-MM-DDTHH:MM"` (local time in the routine's zone) and `enabled: true`. Your bot id is in `$MYHARNESS_BOT`. It wakes a new session titled after the routine, so put everything that session needs in the body: what to check, where, and whom to tell.
 
 ```sh
-cat > "${MYHARNESS_HOME:-$HOME/.myharness}/bots/$MYHARNESS_BOT/routines/check-build.md" <<'EOF'
+cat > "${MYHARNESS_HOME:-$HOME/.myharness-home}/bots/$MYHARNESS_BOT/routines/check-build.md" <<'EOF'
 ---
 schedule: "2026-10-13T01:35"
 enabled: true

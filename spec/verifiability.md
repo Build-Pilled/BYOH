@@ -21,7 +21,7 @@ It adds neither a second pass/fail gate nor new suite cases.
 ### Seven harness seams
 
 1. **R1 — One home setting.** `MYHARNESS_HOME` selects the whole harness home
-   for the CLI, daemon and engine children. Its default is `~/.myharness`.
+   for the CLI, daemon and engine children. Its default is `~/.myharness-home`.
    Relative paths inside the harness configuration resolve against that home
    where specified, not the live default. Test runs also use a disposable OS
    HOME, app profile and engine state so engine login/configuration files cannot

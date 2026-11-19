@@ -12,7 +12,7 @@ import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const home = resolve(process.env.MYHARNESS_HOME ?? join(homedir(), '.myharness'));   // seam 1
+const home = resolve(process.env.MYHARNESS_HOME ?? join(homedir(), '.myharness-home'));   // seam 1
 const discovery = join(home, 'log', 'daemon.json'); const tokenFile = join(home, 'secrets', 'owner-token');
 const argv = process.argv.slice(2); const initLines = [];
 while (argv[0] === '--init-line') { initLines.push(argv[1]); argv.splice(0, 2); }

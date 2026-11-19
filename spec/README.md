@@ -30,7 +30,7 @@ they ask for no new tests or fault hooks.
   the screen. Pure UI changes use the accessibility tree for pass/fail and
   screenshots for visual judgement. Evidence is PNG and JSON per run. Mac-only
   evidence stays `mac-pending` until the user answers.
-- The command, home and environment prefix are `myharness`, `~/.myharness` and
+- The command, home and environment prefix are `myharness`, `~/.myharness-home` and
   `MYHARNESS_`; only the display name is user-selected. Production keeps the
   fixed names and ports these sections state; isolated verification uses a free
   port ([verifiability](verifiability.md)), not the live daemon.

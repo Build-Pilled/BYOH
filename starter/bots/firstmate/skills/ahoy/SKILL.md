@@ -39,7 +39,7 @@ A previous ahoy is a real captain message and may be the next interval boundary.
    A decision is closed only when a later visible response substantively resolves it: they chose an option, declined it, granted or denied the approval, skipped the decision (treat skip as decline and record the assumption you made), or otherwise directly addressed it.
    Deduplicate by substance.
    Also read the open decision rows, which outlive sessions:
-   `factory-db "SELECT id, title, prompt, gate_ref FROM tasks WHERE kind='decision' AND status='blocked'"`
+   `myharness-task-db "SELECT id, title, prompt, gate_ref FROM tasks WHERE kind='decision' AND status='blocked'"`
    Each row is an open decision even if this session never shows it. A visible decision and its row are one decision. If the visible session already resolves a row, do not ask it; close the row with that answer (project-management skill).
 5. Do not call GitHub, browsers or fleet snapshots. Write nothing except closing decision rows. Create no report. Do not guess live state beyond the last visible event.
 6. If nothing happened after the previous captain message but an older open decision remains (visible or in a row), report that decision instead of claiming nothing happened.

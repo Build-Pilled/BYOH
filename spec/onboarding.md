@@ -54,7 +54,7 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   except the pinned host step ([VM](vm.md) R2).
 - **R2 — Handoff.** When the environment check is green ([host](host.md) R10),
   the agent prints the command that opens a terminal on the host as the bot
-  user (`ssh myharness` for the supplied VM, otherwise the bot SSH name). The
+  user (`ssh myharness-ssh` for the supplied VM, otherwise the bot SSH name). The
   person signs in there with each engine they chose, using its own sign-in
   ([engine Pi](engine-pi.md), [engine Claude Code](engine-claude-code.md)), and
   starts their agent there with the repository at its pinned tag.
@@ -317,12 +317,12 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   earlier; the first-mention-only glossary rule below does not remove these
   explanations. Never pass through a bare "next command" from tool output.
   For the supplied VM, explain that `myharness-vm` is the Lima VM instance,
-  while `myharness` in `ssh myharness` is the SSH name connecting as the bot
-  user inside that VM, and `myharness-admin` connects as its admin account.
+  while `myharness-ssh` in `ssh myharness-ssh` is the SSH name connecting as the bot
+  user `myharness-user` inside that VM, and `myharness-admin-ssh` connects as its admin account.
   The bare `myharness` command runs the harness CLI; it is not a Lima instance
   name. A person's chosen display name labels their app, not an SSH connection.
-  For example, alongside `ssh myharness`, say: "Run this in Terminal on your
-  Mac to open a shell as the bot user in your VM. Here myharness is the SSH
+  For example, alongside `ssh myharness-ssh`, say: "Run this in Terminal on your
+  Mac to open a shell as the bot user in your VM. Here myharness-ssh is the SSH
   connection name; the Lima VM itself is named myharness-vm."
   Explain the effects and names in the rebuild and pairing lines as well,
   without exposing the token. For an own host, use the actual recorded names

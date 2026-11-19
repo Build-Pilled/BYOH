@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The verification kit: one isolated harness instance, usable as a library (the conformance suite) and a CLI (the skill).
-// Everything one run owns lives in ONE directory /tmp/byoh-XXXXXX (short: Chromium socket paths are capped at 108 bytes):
+// Everything one run owns lives in ONE directory /tmp/myharness-kit-XXXXXX (short: Chromium socket paths are capped at 108 bytes):
 // the harness home, a throwaway OS HOME/XDG, the engine state, the app profile, logs and state.json. Every process the run
 // starts carries BYOH_KIT_RUN=<run id> in its environment; that stamp, not a name or a port, is how the run finds its own
 // processes again. The kit decides only from files and file descriptors it can read (daemon.json, the token file,
@@ -79,7 +79,7 @@ function holders(root) {
 const LOOPBACK = ['0100007F', '00000000000000000000000001000000'];
 
 export function runDirs() {   // this user's live runs, found by marker file
-  return readdirSync(tmpdir()).filter((d) => /^byoh-/.test(d)).map((d) => join(tmpdir(), d)).filter((d) => { try { return statSync(d).uid === process.getuid() && existsSync(join(d, '.byoh-kit-run')); } catch { return false; } });
+  return readdirSync(tmpdir()).filter((d) => /^myharness-kit-/.test(d)).map((d) => join(tmpdir(), d)).filter((d) => { try { return statSync(d).uid === process.getuid() && existsSync(join(d, '.byoh-kit-run')); } catch { return false; } });
 }
 export function resolveRun(dir) {
   if (dir ?? process.env.BYOH_KIT_DIR) return dir ?? process.env.BYOH_KIT_DIR;
@@ -171,11 +171,11 @@ class Instance {
       const d = readJson(this.discovery); const h = await this.api('GET', '/health');
       ok(h.status === 200 && h.json?.ok === true && h.json.pid === d.pid && h.json.home === this.home && h.json.url === d.url && d.url === s.daemon.url, `GET /health: pid ${h.json?.pid} home ${h.json?.home} url ${h.json?.url} agree with daemon.json (${d.pid}, ${d.url}) and this run`);
       ok(listeners(Number(new URL(d.url).port)).every((a) => LOOPBACK.includes(a)), `daemon port ${new URL(d.url).port} listens on loopback only`);
-      const live = join(homedir(), '.myharness', 'log', 'daemon.json');
-      ok(!existsSync(live) || readJson(live).url !== d.url, 'this daemon is not the live installation (~/.myharness is only read)');
+      const live = join(homedir(), '.myharness-home', 'log', 'daemon.json');
+      ok(!existsSync(live) || readJson(live).url !== d.url, 'this daemon is not the live installation (~/.myharness-home is only read)');
     } catch (e) { ok(false, `identity check failed: ${e.message}`); }
     const t = statSync(this.tokenFile); ok((t.mode & 0o777) === 0o600 && (statSync(dirname(this.tokenFile)).mode & 0o777) === 0o700, `owner token at ${this.tokenFile}: mode ${(t.mode & 0o777).toString(8)}, ${t.size} bytes (never printed)`);
-    ok(!existsSync(join(this.root, 'userhome', '.myharness')), 'the throwaway HOME holds no .myharness');
+    ok(!existsSync(join(this.root, 'userhome', '.myharness-home')), 'the throwaway HOME holds no .myharness-home');
     if (s.app?.cdp) {
       ok(owned(s.app.pid, this.run), `app pid ${s.app.pid}, testing connection 127.0.0.1:${s.app.cdp}`);
       const l = listeners(s.app.cdp); ok(l.length && l.every((a) => LOOPBACK.includes(a)), `testing port ${s.app.cdp} listens on loopback only (${l.join(',')})`);
@@ -204,7 +204,7 @@ class Instance {
 }
 function removeRun(root, run) {   // the only deletion the kit does: its own directory, proven by marker, prefix and parent
   const real = realpathSync(root);
-  if (dirname(real) !== realpathSync(tmpdir()) || !basename(real).startsWith('byoh-') || readFileSync(join(real, '.byoh-kit-run'), 'utf8') !== run) fail(`refusing to delete ${root}: it is not this run's directory`);
+  if (dirname(real) !== realpathSync(tmpdir()) || !basename(real).startsWith('myharness-kit-') || readFileSync(join(real, '.byoh-kit-run'), 'utf8') !== run) fail(`refusing to delete ${root}: it is not this run's directory`);
   rmSync(real, { recursive: true, force: true });
 }
 
@@ -256,7 +256,7 @@ export async function start({ harness, engines = ['pi', 'claude'], models = 1, k
   checkNode();
   const dpath = typeof harness === 'string' ? harness : fail('start needs { harness: <descriptor.json> }'); const desc = readJson(dpath);
   if (!Array.isArray(desc.cli) || !desc.cli.length) fail(`${dpath}: "cli" must be a non-empty argv array`);
-  const run = Math.random().toString(36).slice(2, 10); const root = mkdtempSync(join(tmpdir(), 'byoh-'));
+  const run = Math.random().toString(36).slice(2, 10); const root = mkdtempSync(join(tmpdir(), 'myharness-kit-'));
   for (const d of ['logs', 'tmp', 'userhome', 'xdg/config', 'xdg/cache', 'xdg/data', 'xdg/state', 'bin']) mkdirSync(join(root, d), { recursive: true });
   writeFileSync(join(root, '.byoh-kit-run'), run);
   const source = desc.source ? (() => { try { const g = (...a) => execFileSync('git', ['-C', desc.source, ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); return `${g('rev-parse', '--short', 'HEAD')}${g('status', '--porcelain', '--untracked-files=no') ? ' (+ uncommitted changes)' : ''}`; } catch { return 'not a git checkout'; } })() : undefined;

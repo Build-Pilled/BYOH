@@ -42,7 +42,7 @@ server-file creation; [config-editors](config-editors.md) owns bot selection con
   definitions with a command use stdio (command, args, env); otherwise use HTTP
   (url, headers). `cwd`, Pi exposure and Pi timeout do not affect Claude's
   mapping; do not pretend these options are implemented by Claude. Reserve
-  server name `myharness` for the harness's own messaging server, launched as
+  server name `myharness-mcp` for the harness's own messaging server, launched as
   `myharness mcp` with scoped home/bot/session/API/token environment. A shared
   external definition with that name does not replace it. External tools use
   Claude's native names/sanitization. Built-in tool filtering does not remove
@@ -53,7 +53,7 @@ server-file creation; [config-editors](config-editors.md) owns bot selection con
   the requested protocol version (default `2025-06-18`) at initialization.
   Offer `send_message` only when actual team/bridge reach exists; recheck reach
   for calls in the daemon. Its arguments and routing are those of
-  [messaging](messaging.md). Claude sees `mcp__myharness__send_message`. Success
+  [messaging](messaging.md). Claude sees `mcp__myharness-mcp__send_message`. Success
   reports recipient/session; failure is a text tool result with `isError`, not
   a successful delivery. Tool-list changes reflect gained/lost peers without
   restarting the conversation. Protocol stdout contains no human log chatter.

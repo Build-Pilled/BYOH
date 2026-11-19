@@ -23,7 +23,7 @@ supplied VM implements it, and [daemon](daemon.md) owns the API credentials.
      or the supplied VM's single forward ([daemon](daemon.md) R1,
      [app pairing](app-pairing.md) R1).
 - **R2 — The bot user.** Bots, their engines and the daemon run as one bot user
-  (`myharness`, UID 1500 on the supplied VM) with only its own group, a
+  (`myharness-user`, UID 1500 on the supplied VM) with only its own group, a
   locked password and no sudo rule or admin group. System packages the
   person wants later are installed by the admin account on the person's word,
   with one command from the Mac through the admin name
@@ -41,7 +41,7 @@ supplied VM implements it, and [daemon](daemon.md) owns the API credentials.
   user's UID refuses connections to private IPv4 ranges (including the VM's
   gateway to the Mac's loopback, the person's LAN and carrier-grade NAT
   addresses) and all IPv6, allows DNS to the VM's own resolver, and allows the
-  public internet. It lives in its own firewall table `myharness_egress`, is loaded before the bot user's service manager and the daemon
+  public internet. It lives in its own firewall table `myharness-egress`, is loaded before the bot user's service manager and the daemon
   start, and both refuse to start without it (fail closed). When the pinned
   Lima offers a host-loopback block, it is on as well; the rule stays either
   way, because it also covers the LAN and IPv6. On an own host this rule is

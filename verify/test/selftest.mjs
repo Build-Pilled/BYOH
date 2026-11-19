@@ -19,7 +19,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 if (!arg('--in-fresh')) {   // ---- bootstrap: a fresh copy, nothing installed, scrubbed environment ----------------------------------------------------
   const repo = execFileSync('git', ['-C', HERE, 'rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
-  const fresh = mkdtempSync(join(tmpdir(), 'fhs-')); const tree = join(fresh, 'checkout'); mkdirSync(tree);
+  const fresh = mkdtempSync(join(tmpdir(), 'myharness-test-')); const tree = join(fresh, 'checkout'); mkdirSync(tree);
   if (process.argv.includes('--worktree')) {
     for (const f of execFileSync('git', ['-C', repo, 'ls-files', '-co', '--exclude-standard', '-z', '--', 'verify'], { encoding: 'utf8' }).split('\0').filter(Boolean)) { mkdirSync(dirname(join(tree, f)), { recursive: true }); cpSync(join(repo, f), join(tree, f)); }
   } else execFileSync('sh', ['-c', 'git -C "$1" archive HEAD verify | tar -x -C "$2"', 'sh', repo, tree]);
@@ -72,7 +72,7 @@ await check('mock: OpenAI and Anthropic formats, one directive language', async 
   const m = await startMock({ models: 3 });
   try {
     const oa = async (content, extra = {}) => (await fetch(`${m.url}/v1/chat/completions`, { method: 'POST', body: JSON.stringify({ model: 'x', stream: true, messages: [{ role: 'user', content }], ...extra }) })).text();
-    const an = async (content, extra = {}) => (await fetch(`${m.url}/v1/messages`, { method: 'POST', body: JSON.stringify({ model: 'x', stream: true, tools: [{ name: 'mcp__myharness__say' }], messages: [{ role: 'user', content }], ...extra }) })).text();
+    const an = async (content, extra = {}) => (await fetch(`${m.url}/v1/messages`, { method: 'POST', body: JSON.stringify({ model: 'x', stream: true, tools: [{ name: 'mcp__myharness-mcp__say' }], messages: [{ role: 'user', content }], ...extra }) })).text();
     const oaText = (s) => s.split('\n').filter((l) => l.startsWith('data: {')).map((l) => JSON.parse(l.slice(6)).choices[0]?.delta?.content ?? '').join('');
     const anText = (s) => s.split('\n').filter((l) => l.startsWith('data: {')).map((l) => JSON.parse(l.slice(6))).filter((e) => e.delta?.text).map((e) => e.delta.text).join('');
     assert.equal(oaText(await oa('[hdr]\nhello')), 'echo: hello'); assert.equal(anText(await an([{ type: 'text', text: '<system-reminder>x</system-reminder>' }, { type: 'text', text: 'hello' }])), 'echo: hello');
@@ -82,7 +82,7 @@ await check('mock: OpenAI and Anthropic formats, one directive language', async 
     assert.equal((await fetch(`${m.url}/v1/chat/completions`, { method: 'POST', body: JSON.stringify({ model: 'x', messages: [{ role: 'user', content: 'MOCK_FAIL' }] }) })).status, 400);
     assert.equal((await fetch(`${m.url}/v1/messages`, { method: 'POST', body: JSON.stringify({ model: 'x', stream: true, messages: [{ role: 'user', content: 'MOCK_FAIL' }] }) })).status, 400);
     const t0 = Date.now(); await oa('MOCK_SLOW 300'); assert.ok(Date.now() - t0 >= 280, 'MOCK_SLOW did not wait');
-    const tool = await an('MOCK_TOOL say {"text":"x"}'); assert.match(tool, /"name":"mcp__myharness__say"/); assert.match(tool, /"stop_reason":"tool_use"/);   // a bare tool name maps to the engine's prefixed one
+    const tool = await an('MOCK_TOOL say {"text":"x"}'); assert.match(tool, /"name":"mcp__myharness-mcp__say"/); assert.match(tool, /"stop_reason":"tool_use"/);   // a bare tool name maps to the engine's prefixed one
     assert.match(await oa('MOCK_TOOL say {"text":"x"}'), /"finish_reason":"tool_calls"/);
     assert.equal(oaText(await oa('', { messages: [{ role: 'user', content: 'MOCK_TOOL say {}' }, { role: 'assistant', content: null, tool_calls: [] }, { role: 'tool', content: 'result line\nmore' }] })), 'done: result line');
     assert.deepEqual((await (await fetch(`${m.url}/v1/models`)).json()).data.map((x) => x.id), ['mock-1', 'mock-2', 'mock-3']);
@@ -96,9 +96,10 @@ let inst; let win;
 await check('up: home, free port, discovery, health, token, identity, validate', async () => {
   inst = await start({ harness: descriptor });
   const d = JSON.parse(readFileSync(inst.discovery, 'utf8')); assert.ok(d.url.startsWith('http://127.0.0.1:') && Number(new URL(d.url).port) > 0 && !d.url.endsWith(':7797'));
+  assert.ok(inst.root.startsWith(join(tmpdir(), 'myharness-kit-')), 'run directory uses the kit namespace');
   assert.ok(inst.home.startsWith(inst.root), 'home is inside the run directory');
   const bad = (await inst.doctor()).filter((c) => !c.ok); assert.deepEqual(bad, []);
-  assert.ok(!existsSync(join(inst.root, 'userhome', '.myharness')));
+  assert.ok(!existsSync(join(inst.root, 'userhome', '.myharness-home')));
 });
 await check('engines: the real pi and the real claude run on the mock (no login)', async () => {
   const pi = await inst.engine('pi', ['-p', 'hello pi']); assert.equal(pi.code, 0, pi.stderr); assert.match(pi.stdout, /echo: hello pi/);
@@ -157,7 +158,7 @@ await check('driver: role + exact name, effect first then screen, state, text, r
   win.close();
 });
 await check('down: stops only this run, copies logs, removes only its own directory', async () => {
-  const decoyA = mkdtempSync(join(tmpdir(), 'byoh-decoy-')); const decoyB = mkdtempSync(join(tmpdir(), 'byoh-decoy-')); writeFileSync(join(decoyB, '.byoh-kit-run'), 'someone-elses-run');
+  const decoyA = mkdtempSync(join(tmpdir(), 'myharness-decoy-')); const decoyB = mkdtempSync(join(tmpdir(), 'myharness-decoy-')); writeFileSync(join(decoyB, '.byoh-kit-run'), 'someone-elses-run');
   const root = inst.root; const run = inst.run; const ev = join(scratch, 'evidence');
   try {
     await inst.stop({ evidence: ev });
@@ -179,7 +180,7 @@ await check('run --keep-at: stops after the named case, leaves the instance up, 
   const down = kit(['down', '--run', dir]); assert.equal(down.status, 0, down.stdout + down.stderr); assert.ok(!existsSync(dir));
 });
 await check('SIGTERM mid-run: no process or directory of the run is left; a decoy directory survives', async () => {
-  const decoy = mkdtempSync(join(tmpdir(), 'byoh-decoy-')); writeFileSync(join(decoy, '.byoh-kit-run'), 'someone-elses-run');
+  const decoy = mkdtempSync(join(tmpdir(), 'myharness-decoy-')); writeFileSync(join(decoy, '.byoh-kit-run'), 'someone-elses-run');
   const ev = join(scratch, 'evidence-interrupted');
   const p = spawn(process.execPath, [KIT, 'run', SCENARIO, '--harness', descriptor, '--evidence', ev], { env: { PATH: process.env.PATH, HOME: process.env.HOME, TMPDIR: tmpdir() }, stdio: ['ignore', 'pipe', 'pipe'] });
   let out = ''; p.stdout.on('data', (d) => (out += d)); const exited = new Promise((ok) => p.on('exit', (code, sig) => ok({ code, sig })));

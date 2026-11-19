@@ -1,5 +1,5 @@
 ---
-name: verify-myharness
+name: myharness-verify
 description: "Use while building the harness and before reporting a later harness change as working. Run the conformance suite on an isolated instance with the scripted model; drive the real CLI, API and desktop app and retain evidence without touching the live installation."
 ---
 # Verify the harness
@@ -53,7 +53,7 @@ user path; do not create conversations by writing session files. Seeded engine
 keys must be absent or bare defaults, so the kit can install its mock wrappers.
 
 Use a fresh evidence directory per run, outside both checkouts, the live
-`~/.myharness` and the kit's temporary run directory. For an agent with
+`~/.myharness-home` and the kit's temporary run directory. For an agent with
 `MYHARNESS_WORKSPACE`, put it below that workspace. Otherwise choose a disposable
 workspace explicitly. Point build/test caches and any prerequisite installation
 at that workspace too, not the live OS HOME. Do not install dependencies where

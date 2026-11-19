@@ -12,7 +12,7 @@ login locations; this layout does not relocate an engine's own login files.
 ## Required behaviour
 
 - **R1 — Selection and initialization.** `MYHARNESS_HOME` selects an absolute
-  resolved home; default `~/.myharness`. Expand `~` and `~/` against the OS home;
+  resolved home; default `~/.myharness-home`. Expand `~` and `~/` against the OS home;
   resolve other relative home overrides against the calling directory.
   `myharness init` creates missing home, `bots/`, `teams/`, `skills/`, `mcp/`,
   default `myharness.toml`, and a local Git history. Repeating it preserves an
@@ -26,7 +26,7 @@ login locations; this layout does not relocate an engine's own login files.
   `teams/<id>.toml`; shared `skills/<name>/SKILL.md`; `mcp/<name>.toml`;
   `bridges/<sorted-a>--<sorted-b>/link.toml` and `log.jsonl`; `log/daemon.json`;
   `log/app-outbox/<bot>%2F<session>.json`, the app's recovery copies of unsent input and the composer draft ([turns](turns.md) R8);
-  `bin/factory-db`, the executable wrapper installed by `init --examples`;
+  `bin/myharness-task-db`, the executable wrapper installed by `init --examples`;
   `secrets/owner-token`; the task table `tasks/factory.db`, created by the crew's
   project-management skill, and its edit journal `tasks/task-edits.jsonl`, created
   by the [Tasks](tasks.md) view's first save; `init` creates neither; and `session-archive/` as specified by

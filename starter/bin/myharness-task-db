@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# myharness-task-db - run SQL against the crew's task database; never waits for input, never creates the file.
+# Usage: myharness-task-db [sqlite3 flags ...] "<SQL>"   e.g. myharness-task-db -json "SELECT * FROM tasks WHERE id='X'"
+db=${MYHARNESS_HOME:-$HOME/.myharness-home}/tasks/factory.db
+[ $# -ge 1 ] || { echo 'usage: myharness-task-db [sqlite3 flags ...] "<SQL>"' >&2; exit 2; }
+[ -f "$db" ] || { echo "myharness-task-db: no database at $db" >&2; exit 1; }
+exec sqlite3 -bail "${@:1:$#-1}" "$db" "${!#}" </dev/null

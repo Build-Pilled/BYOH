@@ -12,7 +12,7 @@ The last 7 days. An ad hoc task may name its own window.
 
 ## Part A: friction
 
-1. List sessions from `~/.myharness/bots/*/sessions/*.json` whose `last_turn` falls in the window. Skip any file whose JSON is not an object. Skip retired bots and your own crew-healthcheck sessions. The `file` field points to the transcript; when it is a relative path, resolve it against that bot's `sessions/` directory. Skip sessions whose `file` is null.
+1. List sessions from `~/.myharness-home/bots/*/sessions/*.json` whose `last_turn` falls in the window. Skip any file whose JSON is not an object. Skip retired bots and your own crew-healthcheck sessions. The `file` field points to the transcript; when it is a relative path, resolve it against that bot's `sessions/` directory. Skip sessions whose `file` is null.
 2. Pull bot-to-bot traffic for the window with `myharness activity --since <window> --limit 500`.
 3. If nothing is in the window, skip to Part B.
 4. Split the transcripts across parallel subagents, one or a few each. Each reads only transcript lines whose timestamp falls in the window, filtered before reading (for example with `jq` or `grep`), never the whole file; of those, only the captain's or inbound bot turns and the replies right around them. Each returns friction items: bot, session id, a short quote, and what went wrong. Look for:
@@ -29,7 +29,7 @@ The last 7 days. An ad hoc task may name its own window.
 
 ## Part B: routine waste
 
-For each `~/.myharness/bots/*/routines/*.md`, read its front matter, its `<name>.runs.jsonl` run log and `myharness routines <bot>`. Flag it when it is:
+For each `~/.myharness-home/bots/*/routines/*.md`, read its front matter, its `<name>.runs.jsonl` run log and `myharness routines <bot>`. Flag it when it is:
 - **too frequent**: it runs more often than its output changes
 - **long chat**: it uses a sticky session whose transcript keeps growing, so every tick reloads that history
 - **noisy**: it sends filler or "nothing new" messages to an audience that does not need a liveness signal
@@ -40,7 +40,7 @@ Skip disabled routines unless they are dead or duplicates.
 
 ## Part C: charter size
 
-Count the words in each `~/.myharness/bots/*/SYSTEM.md` with `wc -w`. Flag every charter at or above 2500 words. This is an alert only: name the bot and its word count, and propose no trim unless asked.
+Count the words in each `~/.myharness-home/bots/*/SYSTEM.md` with `wc -w`. Flag every charter at or above 2500 words. This is an alert only: name the bot and its word count, and propose no trim unless asked.
 
 ## Proposals
 

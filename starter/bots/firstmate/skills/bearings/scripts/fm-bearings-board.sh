@@ -18,10 +18,10 @@
 #   charted        {id, title, filed:ISO, repo, dispatchable:false, reason: "" or "<status> · gate <kind> <ref>"}
 # repo: tasks.repo, else the first non-path entry of the project's repos, as owner/name; null
 # when unknown, and the template then shows the task id instead.
-# Needs factory-db and jq on PATH; fm-bearings.sh and fm-crew-state.sh beside this script.
+# Needs myharness-task-db and jq on PATH; fm-bearings.sh and fm-crew-state.sh beside this script.
 set -euo pipefail
 dir=$(cd "$(dirname "$0")" && pwd)
-OUT=${MYHARNESS_HOME:-$HOME/.myharness}/tasks/board/bearings.html
+OUT=${MYHARNESS_HOME:-$HOME/.myharness-home}/tasks/board/bearings.html
 since=24h
 [ "${1:-}" = --since ] && since=${2:-}
 digest=$("$dir/fm-bearings.sh" --since "$since")
@@ -38,7 +38,7 @@ rows=$(awk '
 
 # only the tasks the digest shows, so the query stays the size of the board, not of history
 ids=$(cut -f2 <<<"$rows" | sed "/^\$/d; s/'/''/g; s/.*/'&'/" | paste -sd, -)
-tasks=$(factory-db -json "SELECT id, kind, title, prompt, status, gate_kind, gate_ref, result, repo, project_id,
+tasks=$(myharness-task-db -json "SELECT id, kind, title, prompt, status, gate_kind, gate_ref, result, repo, project_id,
   IFNULL(updated_at, created_at) AS ts FROM tasks WHERE id IN (${ids:-''});")
 projects="[]"  # no projects table in the seed; repo comes from tasks.repo
 

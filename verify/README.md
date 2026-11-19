@@ -89,7 +89,7 @@ for `ui`. An interrupted or failed `run` keeps the logs and the results so far i
 
 ## Rules the kit keeps
 
-- A run owns one directory under the system temporary directory. `down` removes that
+- A run owns one `myharness-kit-<random>` directory under the system temporary directory. `down` removes that
   directory only after its marker file matches, and signals only processes that carry
   the run's stamp. It never uses a pattern or a process name. It refuses to delete while
   any process still holds a file in the directory.

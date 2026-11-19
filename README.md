@@ -40,6 +40,8 @@ It tells you what the harness needs, sets up the isolated host, asks you a few q
 
 ## Release
 
+> **Upgrade warning:** The new resource names are for new installs only; there is no in-place migration. Before installing a release with these names, remove an older installation using **that older release’s own remover**, not the new release’s remover. Save any data you want to keep before removal. The desktop app’s bundle, support folder and identifier are unchanged. The pinned release below predates this naming layout.
+
 v1.2.1
 SHA-256 of vm/SHA256SUMS: cd6fd678a4724adb065e6d97adbcc08545f0185c900326ae3a35f92944370a42
 

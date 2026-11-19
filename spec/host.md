@@ -89,7 +89,7 @@ the environment check, its resource warnings and the known-pitfalls list.
   reboots, upgrades or reconfigures an own host: Shutdown VM is unavailable for
   it ([settings](settings.md) R5). Before a planned reboot or shutdown the
   person stops the service through the admin name (for systemd,
-  `ssh -n <admin name> sudo systemctl stop myharness`), so the daemon's drain
+  `ssh -n <admin name> sudo systemctl stop myharness-daemon.service`), so the daemon's drain
   runs ([daemon](daemon.md) R1). Operating-system updates and reboots stay the
   person's.
 
@@ -102,7 +102,7 @@ the environment check, its resource warnings and the known-pitfalls list.
   | --- | --- |
   | R1 platform | Debian 13 arm64 on Apple's virtualization, pinned Node from its official build ([VM](vm.md) R1, R2). |
   | R2 persistence | System service with restart on failure ([VM](vm.md) R7), VM start at login ([VM](vm.md) R8). |
-  | R3 SSH names | `myharness` and `myharness-admin`, written by the host step ([VM](vm.md) R5). |
+  | R3 SSH names | `myharness-ssh` and `myharness-admin-ssh`, written by the host step ([VM](vm.md) R5). |
   | R4 virtual display | Xvfb, xauth and Electron's libraries in the template ([VM](vm.md) R1). |
   | R5 isolation floor | No host mounts, bot user without sudo, loopback daemon, egress rule ([VM](vm.md) R1, R6; [isolation](isolation.md) R4). |
   | R6 service environment | The launcher and the unit's PATH ([VM](vm.md) R7). |
@@ -143,7 +143,7 @@ the environment check, its resource warnings and the known-pitfalls list.
   | M-auto | mac | VM | start at login is enabled | WARN | P25 |
   | M-sleep | mac | VM | the prevent-sleep setting is on when the person chose it | WARN | P28 |
   | M-disk | mac | VM | at least 30 GiB free in the Mac home; VM disk allocation under 80 GiB measured with `du` | WARN | P3 |
-  | M-fw | mac | VM | through the admin name: table `myharness_egress` has its output hook, a positive match on the bot user's UID, and the private-range and IPv6 refusals | FAIL | P11, P12 |
+  | M-fw | mac | VM | through the admin name: table `myharness-egress` has its output hook, a positive match on the bot user's UID, and the private-range and IPv6 refusals | FAIL | P11, P12 |
   | H-os | host | all | glibc Linux on arm64 or x86_64; on the VM, Debian 13 and the pinned image digest | FAIL; on the VM the daily-image fallback is WARN | R1 |
   | H-user | host | all | the bot user has only its own group, `sudo -n true` fails, its services persist without a login (linger on systemd) | FAIL | R2 |
   | H-mounts | host | all | no 9p, virtiofs, sshfs, NFS or SMB mount of a Mac or personal folder | FAIL | P6 |
