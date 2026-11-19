@@ -4,7 +4,7 @@ Allowed range of each token group. The contrast and distinctness floors are chec
 
 | Group | Range |
 | --- | --- |
-| ladder | ground plus offset; dark ladder rises from the ground, light ladder falls from it; each step differs from its neighbour by at least 2 L* |
+| ladder | ground plus a lightness offset per step, taken from the default's offsets (`look/instrument/tokens.md`); steps keep the default's order of lightness, and no two steps that the default distinguishes are equal |
 | rule | visible against its surface but weaker than text-faint; alpha 0.05 to 0.6 for edges |
 | text | text, text-muted and text-faint each meet the contrast floors on every ladder step they sit on |
 | island | either equal to the ground tokens or a fixed dark panel; person-bubble contrasts with display |
@@ -22,4 +22,4 @@ Allowed range of each token group. The contrast and distinctness floors are chec
 | Weight | any weight inside the role's class |
 | Radius | 0 to 16 px, paint only |
 | Rule strength | width and alpha of inset rules and shadows; never a border width |
-| Motion | transform and opacity only; durations 0 to 400 ms; one duration scale that reduced motion sets to 0 |
+| Motion | transform and opacity only; any duration, with a looping animation allowed only for a working or streaming state; one duration scale that reduced motion sets to 0 |

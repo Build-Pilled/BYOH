@@ -1,8 +1,9 @@
 # Behaviours
 
 Trigger, change, numbers, and before and after pair where a frame exists.
-Numbers are CSS px and milliseconds measured on the default look. A look changes
-none of them. A line marked "not specified" gives no number: build it
+Numbers are CSS px. A look changes none of them. Durations, easings and the
+look of any animation are the look's (Instrument's are in
+`look/instrument/tokens.md`); only the fact that a change happens is fixed here. A line marked "not specified" gives no number: build it
 sensibly and keep it inside the layout rules.
 
 ## Composer growth (frames F35 then F36)
@@ -37,11 +38,11 @@ sensibly and keep it inside the layout rules.
 
 | Trigger | Change | Numbers or note |
 | --- | --- | --- |
-| Reply streaming | A "Thinking" placeholder with a small bot mark; its text pulses | opacity 1, 0.35, 1 over 1400 ms, linear, endless; frame F38 |
-| Hover or focus on a row | The `...` opener, the bot Actions button and the folder `+` appear; message actions sit in the row under a card | no transition |
-| Open a menu, dialog or popover | Fades in anchored (menus) or centred (dialogs) | 150 ms ease, fill backwards; the recent-activity card 150 ms linear; Escape and an outside click close menus and popovers; a dialog puts focus in its first input |
+| Reply streaming | A "Thinking" placeholder with a small bot mark | frame F38 |
+| Hover or focus on a row | The `...` opener, the bot Actions button and the folder `+` appear; message actions sit in the row under a card | |
+| Open a menu, dialog or popover | Appears anchored (menus) or centred (dialogs) | Escape and an outside click close menus and popovers; a dialog puts focus in its first input |
 | Widen the panel | Panel 420 to 960, covering the transcript | transcript is 540 with the narrow panel, 960 otherwise |
-| Expand a sidebar or panel section | The opened header takes the accent fill; a folder's chevron turns; `Show all N sessions` toggles to `Show fewer` | no transition |
+| Expand a sidebar or panel section | The opened header shows its open state and file hint; a folder's chevron turns; `Show all N sessions` toggles to `Show fewer` | |
 | Search | In-thread find bar 960 x 50 with current and total; sidebar search shows hit rows with snippets | debounce not specified; no-match line for panel search |
 | Model picker | Filter narrows the list; picking a model saves at once; thinking chips are a draft with Save | |
 | Edit a file | First edit shows the `unsaved` pill and enables Save; Save also runs on the platform save shortcut in the editor; an external change while dirty shows the conflict banner (Reload replaces the draft); a save problem shows a line under the bar | the save still happens, the line is a warning |
@@ -56,9 +57,9 @@ sensibly and keep it inside the layout rules.
 | Routines view | Tabs, week navigation, today column outlined; Run now adds a run-log row | |
 | Select a change | Loads the diff and hash header; Revert asks the person first | |
 | Copy | Transient feedback in the action row; a code block's `Copy` is in its header strip | |
-| Switch the mode | Applies at once and reloads; every role is painted in both modes; light mode keeps its black panel and dialog islands | the islands are paint, see the look's tokens |
+| Switch the mode | Applies at once and reloads; every role is painted in both modes | which surfaces stay dark in light mode is the look's decision |
 | Scrolling | Transcript, editor, table, calendar and panel scroll independently | calendar 452 high with seven columns |
-| Reduced motion | Only the 150 ms fades and the 1400 ms pulse exist, and both stop | |
+| Reduced motion | Every animation and transition stops | |
 
 Not specified in this folder: scrolling while a reply streams, connection loss
 and restore, dragging team members and columns, narrow viewports.

@@ -18,7 +18,7 @@ palette loses it first.
 3. Keep chroma following the ground's tint: each step uses the ground's hue and
    a chroma that scales with lightness the way the ground does.
 4. Text steps: `text` at about 95 L* in dark and 5 in light; `text-muted` about
-   64 and 32; `text-faint` about 46 and 50. Rules: `rule` about 36 L* in dark
+   64 and 32; `text-faint` about 46 and 50 (held to 3:1 by C4). Rules: `rule` about 36 L* in dark
    and 66 in light; `rule-soft` 17 and 75. Convert back to the colour space the
    tokens use and write the hex.
 

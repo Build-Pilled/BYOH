@@ -42,7 +42,7 @@
    "background": [
     "{annotation-1}",
     "{annotation-2}",
-    "{callout-warning-bar}"
+    "{annotation-3}"
    ],
    "shadow": [
     "{shadow-badge} 0px 1px 3px 0px"
@@ -436,7 +436,7 @@
      "{callout-warning-edge}"
     ],
     "left": [
-     "{callout-warning-bar}"
+     "{annotation-3}"
     ],
     "bottom": [
      "{callout-warning-edge}"

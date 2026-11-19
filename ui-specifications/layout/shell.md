@@ -15,10 +15,10 @@ window; frames are that window at scale 2 (2560 by 1590 pixels).
 | Panel | right edge, below the header | 420 x 747 | 960 wide when widened, then it covers the transcript |
 
 Rules between regions are drawn as inset shadows, not as borders: every
-computed border width of a region is 0. The sidebar has a 1.5 px rule on its
-right edge, the header a 1.5 px rule on its bottom edge, each with a faint
-light inner line on the opposite edge. Rule and shadow colour and strength are
-paint; where they sit is layout.
+computed border width of a region is 0. The sidebar has a rule on its right
+edge and the header one on its bottom edge. Where a rule sits is layout; its
+colour, width and strength, and any inner highlight line, are paint
+(`look/instrument/roles.json` gives Instrument's).
 
 ## Spacing scale
 
@@ -52,7 +52,7 @@ window itself never scrolls. The composer's field shows a scrollbar only at its 
 | Layout (this folder, fixed) | Look (a look folder, swappable) |
 | --- | --- |
 | Region sizes and positions; row heights; mark boxes (32, 28, 20 and 88); lamps 8 x 8; button, input and card sizes | All colours: surfaces, rules, text, accents, status, callouts, annotation, mark palette |
-| Padding, margin, gap, grid, z-order, scroll behaviour, the top-strip rule | Rule and shadow colour and strength; glows |
+| Padding, margin, gap, grid, z-order, scroll behaviour, the top-strip rule; where each rule sits | Rule and shadow colour, width and strength; glows |
 | Border widths, display, position, flex and grid structure | Corner radius |
 | Font size, line height, text case and weight class per role | Font families, exact weight within the class, tracking within 0.04 em, OpenType features, font metric overrides |
 | Component parts, states and behaviour; accessibility tree; all text | Motion: durations, easings, idle and working animation of marks (transform and opacity only), reduced-motion handling |

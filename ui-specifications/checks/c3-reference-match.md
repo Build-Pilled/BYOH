@@ -12,7 +12,7 @@ frames and layout values?
 3. Compare picture to frame: convert both to grayscale, compute SSIM over 8 x 8
    windows. Record the score per frame.
 4. Compare geometry to `layout/layout.json`: for every `data-role` element, its
-   rectangle against the role's observed sizes and the frame's position.
+   rectangle against the role's variants in `layout.json` and the frame's position.
 5. For the light mode, which has no frames, compare the computed colours of
    every role against `look/instrument/roles.json` resolved with the light
    token values.

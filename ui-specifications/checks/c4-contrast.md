@@ -19,13 +19,14 @@
 
 | Measure | Pass when |
 | --- | --- |
-| Text and muted text on display and chassis | at least 4.5:1 |
-| Link colour on display | at least 4.5:1 (should) |
-| Any rendered text node | at least 4.5:1 for text at 14 px or smaller; at least 3:1 above 18.66 px or 14 px strong |
+| `text` and `text-muted` on `display` and `chassis` | at least 4.5:1 |
+| `link` on `display` | at least 4.5:1 (should) |
+| Every rendered text node whose colour is `text`, `text-muted`, `link` or a callout ink, at any size and weight | at least 4.5:1 |
+| Every rendered text node whose colour is `text-faint` (placeholders, timestamps, empty-state and footer lines) | at least 3:1 |
 | Status colours | every pair at least 20 delta E apart in both modes |
 | Callout bars | every pair at least 20 delta E apart |
 | Callouts and status | the label and the words are present (a colour is never the only signal) |
 
-`text-faint` is for placeholders and timestamps; it is held to the rendered
-floor too, so on a raised row it fails if it falls below 3:1 where it is the
-only text.
+`text-faint` is the one step held to 3:1, because it carries only text that
+repeats what is already shown nearby; it never carries the only copy of an
+instruction or a state.

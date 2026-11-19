@@ -3,8 +3,10 @@
 Parts, sizes, paddings, gaps and states for every component. Sizes are CSS px
 at a 1280 by 795 window. Exact per-role numbers are in `layout.json`; the
 role name in `code` is the `data-role` name used there and in the checks.
-Colours are never given here: paint comes from the look (token names are in
-`look/instrument/roles.json`). Text of controls, names and the accessibility
+Colours, corner radii, rule and shadow strength, glows and motion are never
+given here: they are paint and come from the look (Instrument's are in
+`look/instrument/roles.json` and `tokens.md`). Words such as muted, accent or
+raised name a role the look paints. Text of controls, names and the accessibility
 tree come from the spec sections, which win where this folder and a frame show
 something different.
 
@@ -39,8 +41,7 @@ Which family fills each class is the look's choice.
   on a second line for leads; a one-line preview in the label face, ellipsised;
   right column with the age (`2M`, `NOW`) and the status lamp 8 x 8 at x = 286.
   Selected: raised surface and a 1 px rule.
-- Status lamps (`statusLight`): 8 x 8, 1.5 px radius, a same-colour glow of
-  8 px, no pulse. Working, unread and waiting-on-teammate each have their own
+- Status lamps (`statusLight`): 8 x 8. Working, unread and waiting-on-teammate each have their own
   token; idle shows no lamp. The words stay in the accessible name; colour is
   never the only signal.
 - Session row (`threadRow`) 266 x 29.5, indented 36, label face 13. The
@@ -58,10 +59,10 @@ Which family fills each class is the look's choice.
 
 ## 2. Conversation
 
-- Person message (`person`): right-aligned bubble, 4 px radius, up to
+- Person message (`person`): right-aligned bubble, up to
   672 wide, padding 10 x 16, body face 15 on 24.4. Its timestamp sits below
   (11, label face) with a copy glyph at its left.
-- Assistant message (`assistant`): a card with a 1.5 px inset rule, 4 px radius,
+- Assistant message (`assistant`): a card with an inset rule,
   padding 10 x 16; 500 wide while the 420 panel is open, up to 940 otherwise.
   Prose 15 on 24.4; a heading 16.5 on 26.8, strong.
 - Row under the card: copy glyph, fork glyph, time, model name in capitals,
@@ -74,13 +75,13 @@ Which family fills each class is the look's choice.
   up to 640 wide with a header strip (language, line count, `Copy` right) over
   the code; table (`table`, 878 wide when the panel is closed) with a raised
   header row and 1 px row rules; task-list bullets with checkbox glyphs;
-  blockquote with a 3 px left rule.
+  blockquote with a 3 px left rule (its width is layout).
 - Callouts (`callout`, and one per kind): five kinds, Note, Tip, Important,
   Warning, Caution. 878 x 70.2 minimum (640 and 468 when the panel is open),
-  a 4 px left bar and a 1 px border at 45 percent of the bar colour, a label
+  a 4 px left bar and a 1 px border in the kind's edge token, a label
   line in the label face (`calloutLabel`: 11, strong, upper-case, 0.66 px
   tracking) in the kind's ink, body in the body face 15 on 24.4, padding
-  10 x 14, radius 4. Each kind has its own bar, edge, background and ink token.
+  10 x 14. Each kind has its own bar, edge, background and ink token.
 - Find bar (`findBar`) 960 x 50 under the header: query, current of total,
   previous, next, close. Matches are highlighted; the current one stronger.
 
@@ -89,9 +90,8 @@ Which family fills each class is the look's choice.
 - At rest (`composer`) 960 x 57: paperclip (24 glyph, x about 330); one-line
   field (`draft`) 773 x 33, body face 15 on 22.5, placeholder "Message <bot>";
   a `Queue` text button right; Send (`send`) 32 x 32 at x = 1222, y = 745, 4 px
-  radius, up arrow. Idle (empty draft) it is muted and flat. With text it is
-  the accent fill with a 16 px glow, a light top edge and a 3 px dark bottom
-  edge. While a turn runs it becomes a white Stop square.
+  radius, up arrow. Idle (empty draft) it is flat. With text it is the primary
+  control. While a turn runs it becomes a Stop square.
 - Grown: see behaviours B01. Capped field 240 high, composer 264.
 - Attachments (`attachment`): a chip row inside the composer above the field,
   908 x 70 at 346, 668: an image thumbnail with a close badge top right, and a
@@ -113,7 +113,7 @@ Which family fills each class is the look's choice.
 - Expanded: the chevron turns down; a steps block (`toolSteps`) 672 x 90 sits
   below with a left rule; each step is a summary line (tool name strong, then
   the arguments muted) and, opened, a result panel (`toolResult`) 646 x 78,
-  code face 13, 4 px radius. The reply card below moves down by the block's
+  code face 13. The reply card below moves down by the block's
   height. Collapsed is the default once a reply settles.
 - Compaction divider (`compaction`): a row "Not in the model's context since
   <time> (compacted)" that toggles a bordered summary block.
@@ -122,7 +122,7 @@ Which family fills each class is the look's choice.
 
 - Anchored menu (`menu`) 190 x 292 (214.6 x 152 and 190 x 82 for shorter
   ones), anchored to the clicked button's edge (the bot action menu opens at
-  x = 282, y = 167), 4 px radius, items (`menuItem`) 178 x 35, separators, the
+  x = 282, y = 167), items (`menuItem`) 178 x 35, separators, the
   destructive item last. The same chassis serves New, session, folder and
   bridge menus.
 - Dialog (`dialog`) 460 wide (180, 340 or 362 high), centred, padding 20 x 22,
@@ -175,7 +175,7 @@ Which family fills each class is the look's choice.
 
 ## 7. Annotations
 
-Numbered badges (`annotationBadge` 20 x 20, 50 percent radius, 11 strong) mark
+Numbered badges (`annotationBadge` 20 x 20, 11 strong) mark
 the end of each highlighted range; the range gets a background in its slot's
 colour (thirteen slots exist, three are shown in the frame). The composer shows
 a chip (`annotationChip` 150.1 x 31.5, "3 annotations"). Hovering it opens the
