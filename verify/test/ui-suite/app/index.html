@@ -1,0 +1,68 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Stub harness</title>
+<style>
+  *{box-sizing:border-box}html,body{margin:0;height:100%;font:15px/22.5px sans-serif;background:#fff;color:#111}
+  #side{position:absolute;left:0;top:0;width:320px;height:100%;border-right:1px solid #ccc;padding:8px}
+  #side [role=treeitem]{display:block;padding:4px;cursor:pointer}
+  #main{position:absolute;left:320px;top:0;width:960px;height:100%}
+  #head{height:48px;padding:12px 20px;border-bottom:1px solid #ccc}
+  #transcript{position:absolute;left:0;top:48px;width:960px;height:747px;overflow:auto;padding:12px 20px 57px}
+  .msg{margin:0 0 12px;white-space:pre-wrap}
+  .worked{display:block;margin:0 0 8px;font:inherit;height:31.5px;padding:0 10px;border:1px solid #888;background:#fff;cursor:pointer}
+  .steps{margin:0;border-left:2px solid #888;padding-left:8px}
+  .steps .sum{display:block;font:inherit;border:0;background:none;padding:0;cursor:pointer;text-align:left}
+  .steps pre{margin:4px 0;padding:8px;background:#eee;font:13px/19.5px monospace}
+  #composer{position:absolute;left:0;bottom:0;width:960px;padding:6px 20px 18px;background:#fff;box-shadow:0 -1px #ccc;display:flex;align-items:flex-end;gap:8px}
+  #composer textarea{flex:1;margin:0;resize:none;border:0;box-shadow:inset 0 0 0 1px #888;padding:5.25px 8px;font:15px/22.5px sans-serif;height:33px;overflow-y:hidden;display:block}
+  #send{width:32px;height:32px;padding:0;flex:none}
+</style>
+<nav id="side" aria-label="Bots and threads" role="tree"></nav>
+<div id="main"><div id="head"></div></div>
+<script>
+  const mutant = new URLSearchParams(location.search).get('mutant') || '';
+  const el = (tag, attrs = {}, text = '') => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); e.textContent = text; return e; };
+  const get = (p) => fetch(p).then((r) => r.json());
+  let conv;
+  const refresh = () => get('/bots').then(({ bots }) => bots.forEach((b) => {
+    if (side.querySelector(`[aria-label="Bot ${b.id}"]`)) return;
+    const t = el('div', { role: 'treeitem', 'aria-label': `Bot ${b.id}` }, b.id); t.onclick = () => open(b.id); side.append(t);
+  }));
+  refresh(); setInterval(refresh, 500);
+  async function open(bot) {
+    const { sessions } = await get(`/bots/${bot}/sessions`); if (!sessions.length) return;
+    const sid = sessions.at(-1).id, s = await get(`/sessions/${bot}/${sid}`);
+    conv?.remove(); conv = el('div', { role: 'region', 'aria-label': `Conversation ${bot}/${sid}` }); conv.style.cssText = 'position:absolute;inset:0';
+    const tr = el('div'); tr.id = 'transcript'; conv.append(tr);
+    let n = 0;
+    for (const m of s.messages) {
+      if (m.steps) {
+        const gid = ++n; const chip = el('button', { 'aria-label': `Worked ${gid}`, 'aria-expanded': 'false', class: 'worked' }, `Worked for 0s, ${m.steps.length} step`);
+        const block = el('div', { class: 'steps', id: 'steps' }); block.hidden = true;
+        m.steps.forEach((st, i) => {
+          const sum = el('button', { 'aria-label': `Tool result ${i + 1}`, 'aria-expanded': 'false', class: 'sum' }, `${st.tool} ${st.arguments}`);
+          const pre = el('pre', { id: 'result' }, st.result); pre.hidden = true;
+          sum.onclick = () => { pre.hidden = !pre.hidden; sum.setAttribute('aria-expanded', String(!pre.hidden)); };
+          block.append(sum, pre);
+          if (mutant === 'tools-expanded') { pre.hidden = false; sum.setAttribute('aria-expanded', 'true'); }
+        });
+        chip.onclick = () => { block.hidden = !block.hidden; chip.setAttribute('aria-expanded', String(!block.hidden)); };
+        if (mutant === 'tools-expanded') { block.hidden = false; chip.setAttribute('aria-expanded', 'true'); }
+        tr.append(chip, block);
+      }
+      tr.append(el('div', { role: 'region', 'aria-label': `Message ${m.entry}`, class: 'msg' }, m.text));
+    }
+    const c = el('div'); c.id = 'composer';
+    const ta = el('textarea', { 'aria-label': 'Message', rows: '1', placeholder: `Message ${bot}` });
+    const send = el('button', { id: 'send', 'aria-label': 'Send' }, '↑'); send.disabled = true;
+    c.append(ta, send); conv.append(c); main.append(conv);
+    const CAP = mutant === 'no-cap' ? 1e6 : 240;
+    const fit = () => {
+      send.disabled = !ta.value.trim();
+      if (mutant !== 'fixed-composer') { ta.style.height = 'auto'; const h = Math.min(ta.scrollHeight, CAP); ta.style.height = `${h}px`; ta.style.overflowY = ta.scrollHeight > h ? 'auto' : 'hidden'; }
+      else ta.style.overflowY = 'auto';
+      tr.style.paddingBottom = `${mutant === 'no-reserve' ? 57 : c.offsetHeight}px`;
+    };
+    ta.addEventListener('input', fit); fit(); tr.scrollTop = tr.scrollHeight;
+  }
+</script>

@@ -43,7 +43,8 @@ Create a JSON descriptor outside the checkout and the live harness home:
   "cli": ["/absolute/path/to/built/myharness"],
   "app": ["/absolute/path/to/electron", "/absolute/path/to/built/app"],
   "seed": [["init", "--examples"]],
-  "source": "/absolute/path/to/harness-source"
+  "source": "/absolute/path/to/harness-source",
+  "uiMap": "/absolute/path/to/ui-map.json"
 }
 ```
 
@@ -54,6 +55,7 @@ Git checkout, not the blueprint. The kit runs `init` before the descriptor's see
 commands. Add only the seed/configuration needed for the existing scenario or
 user path; do not create conversations by writing session files. Seeded engine
 keys must be absent or bare defaults, so the kit can install its mock wrappers.
+`uiMap` is the absolute path of the same mapping JSON your appearance-check plan maps; keep one file. The kit ignores it, but the window cases of `suite/ui-shell.mjs` need it and fail without it.
 
 Use a fresh evidence directory per run, outside both checkouts, the live
 `~/.myharness-home` and the kit's temporary run directory. For an agent with
