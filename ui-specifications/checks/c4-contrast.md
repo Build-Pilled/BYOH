@@ -25,7 +25,7 @@
 | Every rendered faint text node, at any size and weight | at least 3:1, except the exact Instrument-only pairs below |
 | Status colours | every pair at least 20 delta E apart in both modes |
 | Callout bars | every pair at least 20 delta E apart, except the Instrument-only pair below |
-| Callouts and status | the label and the words are present (a colour is never the only signal) |
+| Callouts and status | callout labels are visible; status words are in accessible names, not visible lamp captions (colour is never the only signal) |
 
 ## Instrument-only faint exceptions
 

@@ -34,10 +34,9 @@
 .brow .chev{position:absolute;left:8px;top:50%;margin-top:-6px;width:12px;height:12px;color:var(--muted)}
 .brow .mkslot{position:absolute;left:30px;width:32px;height:32px}
 .brow .name{position:absolute;left:66px;width:150px;height:22px;font:var(--fw-name) var(--fs-name)/20px var(--ff-ui);letter-spacing:var(--body-ls)}
-.brow .prev{position:absolute;left:66px;width:150px;height:18px;font:var(--fw-ui) var(--fs-prev)/18px var(--ff-data);font-feature-settings:var(--data-feat);color:var(--muted)}
+.brow .prev{position:absolute;left:66px;right:68px;height:18px;font:var(--fw-ui) var(--fs-prev)/18px var(--ff-data);font-feature-settings:var(--data-feat);color:var(--muted)}
 .brow .age{position:absolute;right:10px;top:9px;width:50px;text-align:right}
-.brow .stat{position:absolute;right:10px;width:100px;height:16px;display:flex;justify-content:flex-end;align-items:center;gap:7px}
-.stat .w{font:var(--lbl-fw) 10px/16px var(--ff-label);letter-spacing:var(--lbl-ls);text-transform:uppercase;font-feature-settings:var(--lbl-feat);color:var(--muted)}
+.brow .stat{position:absolute;right:10px;width:8px;height:16px;display:flex;justify-content:flex-end;align-items:center;gap:7px}
 .light{width:8px;height:8px;border-radius:var(--dot-rad);background:var(--c);box-shadow:0 0 var(--dot-glow) color-mix(in srgb,var(--c) calc(var(--glow)*100%),transparent);flex:none}
 .leadb{display:inline-flex;align-items:center;gap:4px;font:var(--lbl-fw) 10.5px/16px var(--ff-label);letter-spacing:var(--lbl-ls);text-transform:uppercase;font-feature-settings:var(--lbl-feat);color:var(--badge)}
 .leadb svg.i{width:11px;height:11px}
@@ -96,9 +95,9 @@
 
 /* Shared presentation renderers. The token set selects paint; geometry above never changes. */
 .stage:not([data-look="instrument"]) svg.i{fill:currentColor;stroke:none}
-.stage[data-status="ring"] .light{border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1.75px var(--c)}
-.stage[data-status="circle"] .light{border-radius:50%;box-shadow:0 0 0 2.5px color-mix(in srgb,var(--c) 22%,transparent)}
-.stage[data-status="diamond"] .light{border-radius:0;box-shadow:none;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+:is(.stage,.status-legend)[data-status="ring"] .light{border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1.75px var(--c)}
+:is(.stage,.status-legend)[data-status="circle"] .light{border-radius:50%;box-shadow:0 0 0 2.5px color-mix(in srgb,var(--c) 22%,transparent)}
+:is(.stage,.status-legend)[data-status="diamond"] .light{border-radius:0;box-shadow:none;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
 .stage[data-surface="flatTone"] .card{box-shadow:none}
 .stage[data-surface="raisedSoft"] .card{box-shadow:inset 0 1px 0 var(--edge-light),0 4px 18px var(--shadow-card)}
 .stage[data-surface="page"] .card{background:var(--display);box-shadow:none}

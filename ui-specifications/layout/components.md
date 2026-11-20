@@ -39,11 +39,12 @@ Which family fills each class is the look's choice.
   width, with an inset rule.
 - Bot row (`botRow`), 294 x 75 at x = 8 (56 high when collapsed to one line):
   chevron; mark 32 x 32 at x = 38; name (body face, strong) with the LEAD badge
-  on a second line for leads; a one-line preview in the label face, ellipsised;
+  on a second line for leads; a one-line preview in the label face, ellipsised up to the age column;
   right column with the age (`2M`, `NOW`) and the status lamp 8 x 8 at x = 286.
   Selected: raised surface and a 1 px rule.
 - Status lamps (`statusLight`): 8 x 8. Working, unread and waiting-on-teammate each have their own
-  token; idle shows no lamp. The words stay in the accessible name; colour is
+  token; idle shows no lamp. Show the lamp only, never a visible status caption.
+  The words stay in the accessible name; colour is
   never the only signal.
 - Session row (`threadRow`) 266 x 29.5, indented 36, label face 13. The
   selected row has a 1 px outline and a `...` Session actions opener that

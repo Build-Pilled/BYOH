@@ -53,8 +53,9 @@ original values for this look, not values copied from another palette.
 
 Both modes are in `tokens.json`. Faint text reaches 3:1; all other text reaches
 4.5:1 on its effective background, at every size, without exceptions. Status
-words and callout labels remain. A callout keeps a visible boundary: bar, tint
-edge or outline. Colour never replaces the words.
+words stay in accessible names, never as visible captions beside the lamps;
+callout labels remain visible. A callout keeps a visible boundary: bar, tint
+edge or outline. Colour never replaces the accessible status name or the callout label.
 Fonts are bundled, with open licences: see [the font manifest](../../choice/fonts/README.md).
 Nothing is fetched while drawing. Export uses the light variant. Mode selection
 is still System/Dark/Light; accepting a look neither adds a config key nor
