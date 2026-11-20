@@ -34,7 +34,7 @@ R6) apply inside a callout without exception.
   both dark and light mode the label text SHOULD meet a 4.5:1 contrast ratio
   against its own box background. Exact colours follow the chosen look
   ([appearance mode](appearance-mode.md) R5); a user's palette choice may not
-  remove the label or the boundary of the box.
+  remove the label. A callout keeps a visible boundary: bar, tint edge or outline.
 - **R5 — Safety unchanged.** Raw HTML in a callout is shown as text, never run.
   Links open only on an explicit click through the shell's link rules;
   non-local images stay inert with no fetch ([shell](ui-shell.md) R5); local

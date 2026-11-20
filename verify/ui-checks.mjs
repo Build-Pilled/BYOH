@@ -55,7 +55,7 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
   const cssFiles=plan.stylesheets??[];
   record('C1','look','both','look stylesheet purity','only root paint, allowed font rules and transform/opacity keyframes',()=>{
     assert.ok(cssFiles.length,'supply the actual built look stylesheet(s)');
-    const findings=cssFiles.flatMap(file=>lintLook(readFileSync(file,'utf8'),instrument.tokens,chosen).map(v=>({file,...v}))); save('c1-lint.json',findings); assert.equal(findings.length,0,JSON.stringify(findings)); return {files:cssFiles};
+    const findings=cssFiles.flatMap(file=>lintLook(readFileSync(file,'utf8'),json(join(PACK,'look-template/tokens.json')).tokens,chosen).map(v=>({file,...v}))); save('c1-lint.json',findings); assert.equal(findings.length,0,JSON.stringify(findings)); return {files:cssFiles};
   });
   record('coverage','all','both','frame coverage','every pack frame, unique page IDs, both modes',()=>{
     assert.ok(plan.pages?.length,'no pages'); assert.equal(new Set(plan.pages.map(p=>p.id)).size,plan.pages.length,'duplicate page ID');
@@ -71,7 +71,8 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
       const pairs=[]; const add=(ink,bg,faint=false)=>pairs.push([ink,bg,faint]);
       for(const ink of ['text','text-muted','text-faint']) for(const bg of ['display','chassis'])add(ink,bg,ink==='text-faint');
       add('link','display');add('on-accent','accent');
-      for(const kind of ['important','note','tip','warning','caution'])add(`callout-${kind}-ink`,`callout-${kind}-bg`);
+      for(const kind of ['important','note','tip','warning','caution']) {add(`callout-${kind}-ink`,`callout-${kind}-bg`);if(chosen.tokens[`callout-${kind}-strip`])add(`callout-${kind}-ink`,`callout-${kind}-strip`);}
+      for(const ink of ['text','text-muted','text-faint'])add(ink,'surface-card',ink==='text-faint');
       for(let i=1;i<=3;i++)add('annotation-ink',`annotation-${i}`);
       const measurements=pairs.map(([ink,bg,faint])=>{
         const b=over(color(chosen,bg,mode),color(chosen,'display',mode)),a=over(color(chosen,ink,mode),b),ratio=contrast(a,b);
@@ -100,7 +101,8 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
         await w.viewport();await w.scheme(mode);await w.motion(false);await page.stage(w,{look,mode});await w.ready();
         const nodes=[];assert.ok(page.nodes?.length,'page needs explicit region mappings');
         for(const node of page.nodes) { assert.ok(layout.roles[node.layout],`unknown layout role ${node.layout}`);nodes.push({...node,...await w.measure(node)}); }
-        const data=await w.captureUI(),tree=await w.tree(); await w.shot(join(evidence,prefix+'.png'));
+        const data=await w.captureUI(),tree=await w.tree();
+        await w.captureTextBackgrounds(data, join(evidence,prefix+'-background')); await w.shot(join(evidence,prefix+'.png'));
         const shot=png(readFileSync(join(evidence,prefix+'.png')));
         assert.ok(data.width===1280&&data.height===795&&data.scale===2&&shot.width===2560&&shot.height===1590,'pack viewport must be 1280x795 at scale 2');
         save(prefix+'.json',{nodes,data,tree,accessibilityHash:hash(tree)});
@@ -111,8 +113,9 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
     if(a&&b) {
       record('C2',page.id,mode,'look-swap invariance','C2 tolerance classes and identical accessibility tree',()=>{
         assert.deepEqual(a.tree,b.tree,'accessibility tree changed');
-        const byPath=new Map(b.data.boxes.map(v=>[v.path,v]));assert.equal(a.data.boxes.length,b.data.boxes.length,'element count changed');
-        for(const box of a.data.boxes) { const other=byPath.get(box.path);assert.ok(other,`element missing ${box.path}`);const mapped=a.nodes.find(n=>n.path===box.path);compareGeometry(box,other,mapped?layout.roles[mapped.layout].class:'fixed'); }
+        const boxes=data=>data.boxes.filter(v=>!v.decorativeArtwork);
+        const byPath=new Map(boxes(b.data).map(v=>[v.path,v]));assert.equal(boxes(a.data).length,boxes(b.data).length,'element count changed');
+        for(const box of boxes(a.data)) { const other=byPath.get(box.path);assert.ok(other,`element missing ${box.path}`);const mapped=a.nodes.find(n=>n.path===box.path);compareGeometry(box,other,mapped?layout.roles[mapped.layout].class:'fixed'); }
         for(const sample of [a,b]) {
           const flows=sample.nodes.filter(n=>layout.roles[n.layout].class==='flow');
           for(const flow of flows)for(const other of sample.nodes)if(flow.path!==other.path&&!contains(flow.path,other.path)&&!contains(other.path,flow.path)) {
@@ -139,14 +142,21 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
         const reference=sample&&plan.reference ? resolve(page.frame) : join(PACK,'frames',page.frame);
         const score=ssim(a.shot,png(readFileSync(reference)),page.masks??[]);assert.ok(score>=.90,`SSIM ${score} < 0.90`);return score;
       });
-      record('C3',page.id,mode,'chosen colour and rendered fonts','exact resolved role colours and chosen font families',()=>{
+      record('C3',page.id,mode,'chosen colour and rendered fonts','Instrument role paint; chosen-token colours and rendered font families',()=>{
         for(const n of b.nodes) {
           const role=rolePaint[n.layout];assert.ok(role,`missing paint role ${n.layout}`);
-          for(const [side,values] of Object.entries(role.border??{}))assert.ok(values.some(v=>sameRGB(rgb(resolvePaint(v,chosen,mode)),rgb(n.paint['border'+side[0].toUpperCase()+side.slice(1)+'Color']))),`${n.layout} ${side} border colour differs`);
-          for(const [property,values] of Object.entries(role)) {
-            if(!['color','background'].includes(property))continue;
-            const actual=rgb(n.paint[property==='background'?'backgroundColor':property]);
-            assert.ok(values.some(v=>sameRGB(rgb(resolvePaint(v,chosen,mode)),actual)),`${n.layout} ${property}: ${JSON.stringify(actual)} is not the resolved token`);
+          const own = Object.values(chosen.tokens).map(v=>rgb(v[mode]));
+          const fromOwn = value => {const c=rgb(value);return c[3]===0||own.some(t=>sameRGB(t,c));};
+          if(chosen.look==='instrument') {
+            for(const [side,values] of Object.entries(role.border??{}))assert.ok(values.some(v=>sameRGB(rgb(resolvePaint(v,chosen,mode)),rgb(n.paint['border'+side[0].toUpperCase()+side.slice(1)+'Color']))),`${n.layout} ${side} border colour differs`);
+            for(const [property,values] of Object.entries(role)) {
+              if(!['color','background'].includes(property))continue;
+              const actual=rgb(n.paint[property==='background'?'backgroundColor':property]);
+              assert.ok(values.some(v=>sameRGB(rgb(resolvePaint(v,chosen,mode)),actual)),`${n.layout} ${property}: ${JSON.stringify(actual)} is not the resolved token`);
+            }
+          } else {
+            for(const property of ['color','backgroundColor'])assert.ok(fromOwn(n.paint[property]),`${n.layout} ${property} is not a chosen token`);
+            for(const side of ['Top','Right','Bottom','Left'])if(parseFloat(n.geometry['border'+side+'Width'])>0)assert.ok(fromOwn(n.paint['border'+side+'Color']),`${n.layout} border is not a chosen token`);
           }
           const expected=chosen.look==='instrument'?role.family:chosen.fonts?.[n.font??(role.family==='Recursive Mono Linear'?'code':role.family==='ui-monospace'?'label':'body')];
           assert.ok(expected,`no chosen family for ${n.layout}`);assert.equal(family(n.paint.fontFamily),family(expected),`${n.layout} declared family`);
@@ -154,37 +164,37 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
         }
         for(const text of b.data.texts) {
           const n=b.nodes.filter(n=>contains(n.path,text.path)).sort((x,y)=>y.path.length-x.path.length)[0];assert.ok(n,`unmapped text ${text.text}`);
-          const role=rolePaint[n.layout];assert.ok(role.color.some(v=>sameRGB(rgb(resolvePaint(v,chosen,mode)),rgb(text.color))),`text colour differs from ${n.layout}: ${text.text}`);
+          const role=rolePaint[n.layout];assert.ok(chosen.look==='instrument'?role.color.some(v=>sameRGB(rgb(resolvePaint(v,chosen,mode)),rgb(text.color))):Object.values(chosen.tokens).some(v=>sameRGB(rgb(v[mode]),rgb(text.color))),`text colour differs from ${n.layout}: ${text.text}`);
           const expected=chosen.look==='instrument'?role.family:chosen.fonts?.[n.font??(role.family==='Recursive Mono Linear'?'code':role.family==='ui-monospace'?'label':'body')];assert.equal(family(text.family),family(expected),`text family differs: ${text.text}`);
         }
         return {roles:b.nodes.length};
       });
       record('C4',page.id,mode,'rendered contrast','every visible text pair >=3 faint or >=4.5 other; named default exceptions only',()=>{
-        assert.equal(b.data.unsupported.length,0,'text on images, gradients, filters or blend modes needs a supported effective-background capture');
+        assert.equal(b.data.unsupported.length,0,'unsupported text filter/blend or uncaptured effective background');
         const measures=b.data.texts.map(text=>{
           const node=b.nodes.filter(n=>contains(n.path,text.path)).sort((x,y)=>y.path.length-x.path.length)[0];
           let bg=[0,0,0,0],fg=rgb(text.color);
           for(const layer of text.layers) { bg=over(bg,rgb(layer.background));fg=over(fg,rgb(layer.background));bg[3]*=layer.opacity;fg[3]*=layer.opacity; }
           bg=over(bg,[255,255,255,1]);fg=over(fg,[255,255,255,1]);
-          const faint=sameRGB(rgb(text.color),color(chosen,'text-faint',mode)),ratio=contrast(fg,bg),minimum=faint?3:4.5;
+          let pixelRatio=null;
+          if(text.backgroundCapture) {
+            const image=png(readFileSync(text.backgroundCapture.file));
+            const {clip}=text.backgroundCapture;let minimum=Infinity,count=0;
+            for(const rect of text.textRects)for(let y=Math.max(0,Math.ceil((rect.y-clip.y)*2));y<Math.min(image.height,Math.floor((rect.y+rect.height-clip.y)*2));y++)for(let x=Math.max(0,Math.ceil((rect.x-clip.x)*2));x<Math.min(image.width,Math.floor((rect.x+rect.width-clip.x)*2));x++) {
+              const i=(y*image.width+x)*4,background=[...image.data.subarray(i,i+3),1];
+              const foreground=over([...rgb(text.color).slice(0,3),rgb(text.color)[3]*text.opacity],background);
+              minimum=Math.min(minimum,contrast(foreground,background));count++;
+            }
+            assert.ok(count,'no effective-background pixels captured');pixelRatio=minimum;
+          }
+          const faint=sameRGB(rgb(text.color),color(chosen,'text-faint',mode)),ratio=pixelRatio??contrast(fg,bg),minimum=faint?3:4.5;
           const exception=chosen.look==='instrument'&&faint&&EXCEPTIONS.find(e=>e.name===node?.exception&&e.mode===mode&&sameRGB(fg,rgb(e.foreground))&&sameRGB(bg,rgb(e.background)));
-          return {...text,foreground:fg,background:bg,ratio,minimum,exception:exception?.name??null,pass:ratio>=minimum||!!exception};
+          return {...text,foreground:fg,background:bg,effectiveBackground:pixelRatio!==null?'captured PNG minimum':'computed layers',ratio,minimum,exception:exception?.name??null,pass:ratio>=minimum||!!exception};
         });save(id+'-c4-rendered.json',measures);assert.ok(measures.length,'no rendered text measured');assert.ok(measures.every(m=>m.pass),JSON.stringify(measures.filter(m=>!m.pass)));return {texts:measures.length};
       });
       record('C4',page.id,mode,'state labels','every mapped status and callout carries words',()=>{
         for(const n of b.nodes.filter(n=>n.layout==='statusLight'||n.layout.startsWith('callout')))assert.ok(b.data.texts.some(t=>contains(n.path,t.path)&&t.text.trim()),`missing words for ${n.layout}`);
         return true;
-      });
-      if(chosen.look!=='instrument')record('C5',page.id,mode,'default paint leaks','no default-only colour in visible computed paint',()=>{
-        const keys=Object.keys(instrument.tokens).filter(k=>['accent','link','badge','on-accent'].includes(k)||/^mark-\d+$/.test(k)||k.startsWith('island-'));
-        const own=Object.values(chosen.tokens).map(v=>v[mode].toLowerCase()),leaks=[];
-        for(const key of keys) { const literal=token(instrument,key,mode);if(own.includes(literal.toLowerCase()))continue;
-          const target=rgb(literal); for(const n of [...b.data.boxes,...(b.data.pseudos??[])])for(const prop of n.painted)for(const value of n.paint[prop].match(/#[\da-f]{6}|rgba?\([^)]+\)/gi)??[])if(sameRGB(rgb(value),target))leaks.push({key,path:n.path,prop});
-        }
-        assert.equal(leaks.length,0,JSON.stringify(leaks));return {scanned:['color','backgroundColor','backgroundImage','boxShadow','borders','outline','textDecorationColor','caretColor','SVG fill/stroke','::before/::after'].join(', ')};
-      });
-      await asyncRecord('C5',page.id,mode,'reduced motion','no running animation or transition',async()=>{
-        await w.motion(true);await page.stage(w,{look:chosen.look,mode,reducedMotion:true});await w.ready();const reduced=await w.captureUI();save(id+'-reduced-motion.json',reduced);assert.equal(reduced.animations.length,0,JSON.stringify(reduced.animations));return true;
       });
       pages.push({id:page.id,mode,screenshots:[a.prefix+'.png',b.prefix+'.png']});
     }

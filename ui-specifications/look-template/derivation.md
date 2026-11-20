@@ -21,7 +21,7 @@ completion requirement for another look.
    rendered. Faint text reaches 3:1. Test on the selected and hover surfaces,
    not just the page ground. Instrument-only exceptions never carry over.
 5. Rule and shadow strength and radius are paint. Paper can remove an ordinary
-   inset frame; callouts still keep their identifying boundary. No border-width,
+   inset frame; a callout keeps a visible boundary: bar, tint edge or outline. No border-width,
    size or spacing change is permitted.
 
 ## Accent and links
@@ -56,3 +56,18 @@ bundled with its licence text, and measured against the default with fixed sizes
 `size-adjust` and ascent/descent overrides only if needed; identity overrides
 (`100%`, `normal`) are valid when the rendered swap check already passes.
 Motion is one of three presets of tokens only: none, functional, alive.
+
+## Presentation follows the material
+
+First name one philosophy; derive all seven settings from it. Lab uses line
+for marks and controls, tone for places and colour for meaning. Dusk uses soft
+volume and tinted light without drawn lines. Paper uses margin rules for
+passages, underlines for chosen/actionable words and lozenges for states.
+Never change geometry to strengthen the idea.
+
+Derive optional `callout-<kind>-strip` by compositing the bar at 18% in dark or
+16% in light over the card; check label contrast on the resulting strip as well
+as body contrast on neutral card. A full-tint boundary needs a distinguishable
+tint, not a line. Raised surfaces may use `shadow-card` and a top-edge highlight.
+Floating sheets may have contact shadows even when the page has none. A scrim
+is separate from sheet material: keep the dimmer visible in both modes.

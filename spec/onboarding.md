@@ -129,7 +129,8 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   compare; reduced motion disables Motion. Viewing is not choosing. The person
   may choose a row or ask for changes. “Something else?” is describe-your-own
   only, with no Mix or per-row Preview. Proposals cover colour, type, corner
-  radius, rule/shadow strength, motion and mark drawing without moving a box;
+  radius, rule/shadow strength, the seven presentation settings in look-and-palette
+  R2, motion and mark drawing without moving a box;
   aim for nothing annoying in 90 days of daily use. Iterate as
   [look and palette](look-and-palette.md) R1 says, never with pictures of the
   person's own app. The other four choices remain plain questions on that
@@ -387,7 +388,7 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
   | Suite | `handoff` | The conformance suite is the set of checks that decides whether your built harness meets the blueprint. |
   | Verification kit | `handoff` | The verification kit gathers screenshots and other evidence from a separate test instance so your agent can inspect its work. |
   | Virtual display | `stage-5-ui` | The virtual display lets your agent run and inspect the app on the host without showing you an unfinished window. |
-  | Palette | `interview-2` | A palette is the set of colours used throughout the app; a look adds optional typefaces, corner radius, rule/shadow strength, motion and bot-mark drawing without moving a box or changing how the app works. |
+  | Palette | `interview-2` | A palette is the set of colours used throughout the app; a look adds optional typefaces, corner radius, rule/shadow strength, icon family/style, status-indicator shape, callout style, in-flow/floating surface material, button style, selected/hover style and tag style, motion and bot-mark drawing without moving a box or changing how the app works. |
   | Instrument option | `interview-2` | Instrument is the name of the default-look option pictured in the gallery, which you can keep or use as a starting point. |
   | Mockup | `interview-2` | A mockup is a fixed example of the app shell used to compare colour, type, motion and marks, with a short recording or animated preview allowed for motion, not a picture of your own unfinished app. |
   | Pairing | `paired` | Pairing gives the desktop app the owner token it needs to access your daemon without exposing it to other pages. |

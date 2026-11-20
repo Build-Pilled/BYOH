@@ -30,7 +30,9 @@ support the module's JSON fetches. No CDN or outside request is used at runtime.
 
 `load.js` reads each `../look/<name>/tokens.json`. It exposes every colour as a
 CSS custom property with the same name, plus font, radius, inset-rule and motion
-parameters. The app must use these same token files, not sample pixel colours
+parameters, plus the seven presentation settings. Shared renderers in
+`stage.css` interpret them; icon glyphs come from the bundled official sets.
+All sessions opens a floating-surface sample inside the same fixed shell. The app must use these same token files, not sample pixel colours
 or a second hand-copied palette. Instrument's colour tokens are unchanged;
 its documented font, radius and mark defaults are adapted by the loader.
 
@@ -47,4 +49,4 @@ Query parameters: `look=instrument|lab|dusk|paper`, `mode=system|dark|light`,
 `motion=still|motion`; `stage=1` shows the live scene alone. The app, stage and
 mockup all consume the same named paint; these preview controls add no app UI.
 
-[Fonts and licences](fonts/README.md). [Visual completion checks](../checks/README.md).
+[Fonts and licences](fonts/README.md). [Icons and licences](icons/README.md). [Visual completion checks](../checks/README.md).

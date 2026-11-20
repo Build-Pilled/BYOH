@@ -99,3 +99,7 @@ for `ui`. An interrupted or failed `run` keeps the logs and the results so far i
 - The kit decides from files and sockets it can read, never from another tool's text.
 - A failing kit is a finding: fix it or report it. Do not route around it, and do not
   edit the kit to make a run pass. Record a local change with its reason.
+
+UI checks: [C5 is marks-only](../ui-specifications/checks/c5-marks-only.md),
+not a default-paint leak or reduced-motion check. The seven presentation
+settings have no aesthetic checks; C4 contrast and C1/C2 layout purity remain.

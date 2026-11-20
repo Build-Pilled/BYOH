@@ -8,12 +8,12 @@ that starts from this template.
 | Group | Range |
 | --- | --- |
 | ladder | use the default's offsets as a starting point, not a required order or formula; choose a coherent per-look hierarchy in both modes. Ground, selection, hover and islands remain visibly distinguishable where their state needs it. A page-like look may share card and page ground; hierarchy may use existing space and type instead of an added frame |
-| rule | visible against its surface but weaker than text-faint; alpha 0.05 to 0.6 for edges |
+| rule | zero strength on places is allowed; otherwise weaker than text-faint; edge alpha 0 to 0.6 |
 | text | text, text-muted and text-faint each meet the contrast floors on every ladder step they sit on |
 | island | either equal to the ground tokens or a fixed dark panel; person-bubble contrasts with display |
 | accent | one hue; on-accent meets contrast on accent; link meets contrast on display and surface-card |
 | status | four colours pairwise distinct in both modes, not distinguished by hue alone (words stay in the name) |
-| callout | five kinds pairwise distinct; bar visible on its background; ink meets contrast on its background |
+| callout | five kinds pairwise distinct; a visible boundary: bar, tint edge or outline; ink meets contrast on its effective background |
 | annotation | slots distinct from each other; ink meets contrast on every slot |
 | mark | nine identity slots with distinct colours, each visible on mark-ground when used; a single-ink renderer may paint occupied cells with one ink while preserving the seeded silhouette |
 | shadow | colour and alpha only |
@@ -26,3 +26,9 @@ that starts from this template.
 | Radius | 0 to 16 px, paint only |
 | Rule strength | width and alpha of inset rules and shadows; never a border width |
 | Motion | transform and opacity only; any duration; one duration scale that reduced motion sets to 0 |
+
+The seven `presentation` settings and their enumerated ranges are in
+[the template](README.md#seven-presentation-settings). They never resize or
+move a box. Icons require a named open-licence family/style and bundled licence;
+only square, circle, ring and diamond status shapes are allowed. Surface blur
+is paint on a ::before layer. Their aesthetics have no checks.

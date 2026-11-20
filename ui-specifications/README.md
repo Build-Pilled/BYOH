@@ -10,7 +10,8 @@ shape as the polished default, in any look.
   text size and line height, text case, parts, states and behaviour are the same
   in every look. They are in `layout/`.
 - **Look is swappable.** Colours, typefaces, motion, corner radius, rule and
-  shadow strength, and how bot marks are drawn are paint. They are in a look
+  shadow strength, the [seven presentation settings](look-template/README.md#seven-presentation-settings)
+  and how bot marks are drawn are paint. They are in a look
   folder. `look/instrument/` is the default look, written in the same token
   schema every look uses; `look-template/` is the empty skeleton for another.
 - **A look never moves a box.** A look may change anything that moves no

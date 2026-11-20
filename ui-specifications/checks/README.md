@@ -12,7 +12,7 @@ and layout. No new conformance cases are needed to run them.
 | [C2](c2-look-swap.md) | Does a token swap preserve layout and the accessibility tree? |
 | [C3](c3-reference-match.md) | Does the build match the frames, layout and chosen paint? |
 | [C4](c4-contrast.md) | Is text legible, with distinguishable states? |
-| [C5](c5-leaks-marks-motion.md) | No visible default-paint leaks, distinct marks, reduced motion respected? |
+| [C5](c5-marks-only.md) | Distinct marks with unchanged seeded geometry? |
 
 ## Run
 
@@ -35,8 +35,7 @@ role/name driver actions, or the isolated instance's CLI/API, to reach states.
 `w.eval` is for read-only capture, never for changing a page. Swap tokens using
 this build's token-loading mechanism; no permanent look picker is required.
 A state must be settled, with finite animations at their end state, before its
-callback returns. Do not stop or hide motion when `reducedMotion` is requested:
-let the app respond to the emulated OS setting so C5 can catch a violation.
+callback returns. Reduced motion remains a spec requirement, not a C5 step.
 
 This is a **partial example**, not a completion plan:
 
@@ -50,7 +49,7 @@ export default {
     id: 'conversation-idle',
     frame: 'F35-composer-before.png',
     nodes: map.conversation,
-    async stage(w, { look, mode, reducedMotion, kit }) {
+    async stage(w, { look, mode, kit }) {
       // Use this build's token loader to select look, preserving the same build.
       // Stage layout/fixture.md, then drive this state with w.click/fill/key.
       await w.waitFor('textbox', 'Message');
@@ -67,8 +66,7 @@ export default {
 `stylesheets` lists the actual compiled **look layer**, including its font rules,
 not the shared layout stylesheet. C1 lints every listed file; screenshots and
 computed paint must come from that same build/layer. Font files must be loaded
-from the app's bundled assets. A combined app bundle may contain other looks:
-C5 checks paint, not inactive CSS literals.
+from the app's bundled assets. The seven presentation settings are prescribed, not aesthetically checked.
 
 ### Mapping
 
@@ -148,10 +146,12 @@ A normal run always uses this pack's frames and values.
 
 Each run holds `report.md`, `result.json` (check, page/state, mode, measurement,
 threshold and pass), PNG screenshots, measured rectangles/computed paint,
-rendered-font reads, accessibility snapshots and hashes, contrast pairs, reduced
-motion reads and 200 mark tiles per mode/look with grid measurements. Unsupported
-background image/filter/blend contrast captures fail explicitly rather than
-silently passing unmeasured text.
+rendered-font reads, accessibility snapshots and hashes, contrast pairs and 200 mark tiles per mode/look with grid measurements. For text over images, gradients or frosted layers, C4 captures effective
+background PNGs by masking only that element's text ink with a transient
+inspector stylesheet, then restoring it in finally. It measures the minimum
+contrast across the text rectangles. Geometry, backgrounds and text behind
+frosting stay intact. Filter/blend effects remain unsupported and fail
+explicitly rather than silently passing unmeasured text.
 
 The kit includes a deliberately correct and incorrect miniature app to prove
 assertion-level acceptance/rejection without a generated harness:

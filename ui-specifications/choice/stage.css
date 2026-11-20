@@ -93,3 +93,52 @@
 
 .stage .card{box-shadow:inset 0 0 0 var(--rule-card) var(--rule)}
 .stage .ts,.stage .meta{font-size:11px;line-height:16.5px;text-transform:uppercase;letter-spacing:.88px}
+
+/* Shared presentation renderers. The token set selects paint; geometry above never changes. */
+.stage:not([data-look="instrument"]) svg.i{fill:currentColor;stroke:none}
+.stage[data-status="ring"] .light{border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1.75px var(--c)}
+.stage[data-status="circle"] .light{border-radius:50%;box-shadow:0 0 0 2.5px color-mix(in srgb,var(--c) 22%,transparent)}
+.stage[data-status="diamond"] .light{border-radius:0;box-shadow:none;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.stage[data-surface="flatTone"] .card{box-shadow:none}
+.stage[data-surface="raisedSoft"] .card{box-shadow:inset 0 1px 0 var(--edge-light),0 4px 18px var(--shadow-card)}
+.stage[data-surface="page"] .card{background:var(--display);box-shadow:none}
+.stage:not([data-look="instrument"]) .sess{background:transparent;box-shadow:none}
+.stage[data-selected="sideBar"] .brow.sel{background:transparent;box-shadow:inset 2px 0 0 var(--accent)}
+.stage[data-selected="fill"] .brow.sel{background:var(--accent-wash);box-shadow:none}
+.stage[data-selected="underline"] .brow.sel{background:transparent;box-shadow:none}
+.stage[data-selected="underline"] .brow.sel .name{ text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:4px}
+.stage[data-hover="toneStep"] .hov:hover{background:var(--surface-row-hover)}
+.stage[data-hover="fill"]:not([data-look="instrument"]) .hov:hover{background:var(--surface-row-hover)}
+.stage[data-hover="underline"] .hov:hover{background:transparent;text-decoration:underline;text-decoration-color:var(--text-faint);text-decoration-thickness:1px;text-underline-offset:4px}
+.stage[data-hover="underline"] .brow:hover{text-decoration:none}
+.stage[data-hover="underline"] .brow:hover .name{text-decoration:underline;text-decoration-color:var(--text-faint);text-decoration-thickness:1px;text-underline-offset:4px}
+.stage[data-hover="underline"] .brow.sel:hover .name{text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.stage[data-callout="headerStrip"] .co{background:linear-gradient(var(--strip) 0 28px,var(--surface-card) 28px);box-shadow:none;outline:1px solid var(--edge);outline-offset:-1px}
+.stage[data-callout="fullTint"] .co{background:var(--bg);box-shadow:none}
+.stage[data-callout="sideBar"] .co{background:transparent;box-shadow:inset 4px 0 0 var(--bar)}
+.co.note{--strip:var(--callout-note-strip);--edge:var(--callout-note-edge)}
+.co.tip{--strip:var(--callout-tip-strip);--edge:var(--callout-tip-edge)}
+.co.important{--strip:var(--callout-important-strip);--edge:var(--callout-important-edge)}
+.co.warning{--strip:var(--callout-warning-strip);--edge:var(--callout-warning-edge)}
+.co.caution{--strip:var(--callout-caution-strip);--edge:var(--callout-caution-edge)}
+.stage[data-button="outlined"] .pillb,.stage[data-button="outlined"] .ibtn{background:transparent;box-shadow:inset 0 0 0 1px var(--rule);color:var(--text)}
+.stage[data-button="outlined"] .send{background:transparent;color:var(--link);box-shadow:inset 0 0 0 1px var(--accent)}
+.stage[data-button="filledSoft"] .pillb,.stage[data-button="filledSoft"] .ibtn{background:var(--surface-button);box-shadow:none}
+.stage[data-button="filledSoft"] .send{background:var(--accent);color:var(--on-accent);box-shadow:0 3px 10px color-mix(in srgb,var(--accent) 25%,transparent)}
+.stage[data-button="underlined"] .pillb,.stage[data-button="underlined"] .ibtn{background:transparent;box-shadow:none;color:var(--text);text-decoration:underline;text-decoration-color:var(--text-faint);text-decoration-thickness:1px;text-underline-offset:4px}
+.stage[data-button="underlined"] .ibtn,.stage[data-button="underlined"] .pillb[aria-label]{box-shadow:inset 0 -1px 0 var(--text-faint)}
+.stage[data-button="underlined"] .send{background:transparent;color:var(--link);box-shadow:inset 0 -2px 0 var(--accent)}
+.stage[data-button="outlined"] .send:disabled{color:var(--text-faint);box-shadow:inset 0 0 0 1px var(--rule)}
+.stage[data-button="filledSoft"] .send:disabled{background:var(--send-idle);color:var(--text-faint);box-shadow:none}
+.stage[data-button="underlined"] .send:disabled{color:var(--text-faint);box-shadow:none}
+.stage[data-tag="plate"] .brow .leadb,.stage[data-tag="plate"] .tag,.stage[data-tag="plate"] .hdr .lead{background:var(--surface-raised);box-shadow:none;border-radius:0}
+.stage[data-tag="pill"] .brow .leadb,.stage[data-tag="pill"] .tag,.stage[data-tag="pill"] .hdr .lead{background:var(--accent-wash);box-shadow:none;border-radius:999px}
+.stage[data-tag="text"] .brow .leadb,.stage[data-tag="text"] .tag,.stage[data-tag="text"] .hdr .lead{background:transparent;box-shadow:none;border-radius:0}
+/* The fixed sample menu is opened with All sessions. Blur belongs to its paint layer,
+   never the container: fixed descendants must retain their viewport anchor. */
+.sample-menu{position:absolute;left:828px;top:44px;width:232px;padding:6px;border-radius:var(--radius-card);z-index:10;background:var(--menu-glass);box-shadow:inset 0 0 0 1px var(--rule-popover),0 12px 26px var(--shadow-menu);font:var(--fw-ui) 13px/23px var(--ff-ui);color:var(--text)}
+.menu-item{height:35px;padding:6px 10px;border-radius:var(--radius-control)}
+.stage[data-floating="flatEdge"] .floating{background:var(--surface-dialog);box-shadow:inset 0 0 0 1px var(--rule-popover)}
+.stage[data-floating="frosted"] .floating{background:transparent;box-shadow:0 12px 26px var(--shadow-menu);isolation:isolate}
+.stage[data-floating="frosted"] .floating::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--menu-glass);backdrop-filter:blur(var(--floating-blur));z-index:-1;pointer-events:none}
+.stage[data-floating="sheet"] .floating{background:var(--surface-dialog);box-shadow:0 1px 2px var(--shadow-menu),0 8px 26px var(--shadow-menu)}
