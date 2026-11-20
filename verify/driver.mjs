@@ -129,7 +129,7 @@ export async function connect({ port, urlPrefix = '', timeout = 20000 }) {
     const rect = this.getBoundingClientRect(), s = getComputedStyle(this);
     const path = el => { const out=[]; for(;el?.parentElement;el=el.parentElement) out.unshift(el.tagName+':'+[...el.parentElement.children].indexOf(el)); return out.join('/'); };
     const geometry = Object.fromEntries(['fontSize','lineHeight','paddingTop','paddingRight','paddingBottom','paddingLeft','marginTop','marginRight','marginBottom','marginLeft','rowGap','columnGap','borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth','display'].map(k=>[k,s[k]]));
-    return { path:path(this), rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height}, geometry,
+    return { path:path(this), decorativeArtwork:!!this.closest('svg[aria-hidden="true"]') && this!==this.closest('svg[aria-hidden="true"]'), rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height}, geometry,
       painted: ['color','backgroundColor','backgroundImage','boxShadow','textDecorationColor','caretColor',...(this.namespaceURI==='http://www.w3.org/2000/svg'?['fill','stroke']:[]),...['Top','Right','Bottom','Left'].filter(k=>parseFloat(s['border'+k+'Width'])>0&&s['border'+k+'Style']!=='none').map(k=>'border'+k+'Color'),...(s.outlineStyle!=='none'?['outlineColor']:[])],
       paint:Object.fromEntries(['color','backgroundColor','backgroundImage','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','fontFamily','boxShadow','outlineColor','textDecorationColor','caretColor','fill','stroke'].map(k=>[k,s[k]])),
       overflow:this.scrollWidth>this.clientWidth+1 || this.scrollHeight>this.clientHeight+1 };
@@ -177,12 +177,48 @@ export async function connect({ port, urlPrefix = '', timeout = 20000 }) {
           const s=getComputedStyle(el);
           const own=[...el.childNodes].filter(n=>n.nodeType===3&&n.textContent.trim()).map(n=>n.textContent).join(' ').trim() || (['INPUT','TEXTAREA'].includes(el.tagName)?el.value:'');
           if(!own) continue;
-          const layers=[]; let opacity=1;
-          for(let p=el;p;p=p.parentElement) { const st=getComputedStyle(p); layers.push({background:st.backgroundColor,opacity:Number(st.opacity)}); opacity*=Number(st.opacity); if(st.backgroundImage!=='none'||st.mixBlendMode!=='normal'||st.filter!=='none'||st.backdropFilter!=='none') unsupported.push(capture.call(el).path); }
-          texts.push({path:capture.call(el).path,text:own,color:s.color,family:s.fontFamily,layers,opacity,rect:capture.call(el).rect});
+          const layers=[]; let opacity=1,needsBackground=false,unsupportedEffect=false;
+          for(let p=el;p;p=p.parentElement) {
+            const st=getComputedStyle(p);layers.push({background:st.backgroundColor,opacity:Number(st.opacity)});opacity*=Number(st.opacity);
+            if(st.backgroundImage!=='none'||st.backdropFilter!=='none')needsBackground=true;
+            if(st.mixBlendMode!=='normal'||st.filter!=='none')unsupportedEffect=true;
+            for(const which of ['::before','::after']){const ps=getComputedStyle(p,which);if(!['none','normal'].includes(ps.content)) {
+              if(ps.backgroundImage!=='none'||ps.backgroundColor!=='rgba(0, 0, 0, 0)'||ps.backdropFilter!=='none')needsBackground=true;
+              if(ps.filter!=='none'||ps.mixBlendMode!=='normal')unsupportedEffect=true;
+            }}
+          }
+          const textRects=[];
+          for(const node of el.childNodes)if(node.nodeType===3&&node.textContent.trim()) {const range=document.createRange();range.selectNodeContents(node);for(const r of range.getClientRects())textRects.push({x:r.x,y:r.y,width:r.width,height:r.height});}
+          if(!textRects.length)textRects.push(capture.call(el).rect);
+          if(needsBackground||unsupportedEffect)unsupported.push(capture.call(el).path);
+          texts.push({path:capture.call(el).path,text:own,color:s.color,family:s.fontFamily,layers,opacity,rect:capture.call(el).rect,textRects,needsBackground,unsupportedEffect});
         }
         return {boxes,pseudos,texts,unsupported,animations:document.getAnimations().filter(a=>['running','pending'].includes(a.playState)).map(a=>({state:a.playState,target:a.effect?.target?capture.call(a.effect.target).path:null})),width:innerWidth,height:innerHeight,scale:devicePixelRatio};
       })()`);
+    },
+    // A transient inspector stylesheet removes only this element's text ink,
+    // not its background, layout or text behind a frosted layer. Always restored.
+    async captureTextBackgrounds(data, prefix) {
+      const candidates=data.texts.filter(t=>t.needsBackground && !t.unsupportedEffect);
+      if(!candidates.length)return;
+      await enableDomains();
+      const {frameTree}=await send('Page.getFrameTree');
+      const {styleSheetId}=await send('CSS.createStyleSheet',{frameId:frameTree.frame.id});
+      for(const [index,text] of candidates.entries()) {
+        const selector='html > '+text.path.split('/').map(p=>{const i=p.lastIndexOf(':');return p.slice(0,i)+':nth-child('+(Number(p.slice(i+1))+1)+')';}).join(' > ');
+        const xs=text.textRects.map(r=>r.x),ys=text.textRects.map(r=>r.y);
+        const x=Math.max(0,Math.floor(Math.min(...xs))),y=Math.max(0,Math.floor(Math.min(...ys)));
+        const right=Math.min(data.width,Math.ceil(Math.max(...text.textRects.map(r=>r.x+r.width))));
+        const bottom=Math.min(data.height,Math.ceil(Math.max(...text.textRects.map(r=>r.y+r.height))));
+        if(!(right>x&&bottom>y))continue;
+        const file=prefix+'-'+index+'.png',clip={x,y,width:right-x,height:bottom-y};
+        try {
+          await send('CSS.setStyleSheetText',{styleSheetId,text:selector+' {-webkit-text-fill-color:transparent!important;text-shadow:none!important;text-decoration-color:transparent!important}'});
+          await send('Page.captureScreenshot',{format:'png',clip:{...clip,scale:1}}).then(r=>writeFileSync(file,Buffer.from(r.data,'base64')));
+          text.backgroundCapture={file,clip};
+        } finally {await send('CSS.setStyleSheetText',{styleSheetId,text:''});}
+      }
+      data.unsupported=data.texts.filter(t=>t.unsupportedEffect||(t.needsBackground&&!t.backgroundCapture)).map(t=>t.path);
     },
     onConsoleError: (f) => errorHooks.push(f), onCrash: (f) => crashHooks.push(f),
     click: async (role, name, o = {}) => tap(await one(role, name, o.in)),

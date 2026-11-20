@@ -58,3 +58,9 @@ and light modes. That one pair, with those exact Instrument token values, is
 retained as a named exception to the 20 delta E threshold. Every other pair in
 Instrument, and every pair in every other look, including a user-invented look,
 must reach 20.
+
+For text on gradient strips or frosted layers, retain the effective-background
+PNG: the driver transiently masks only that element's text ink (not colour or
+layout), captures its background and restores the inspector stylesheet in
+finally. Use the minimum contrast over its text rectangles. Filters and blend
+modes remain explicit unsupported failures, never automatic passes.

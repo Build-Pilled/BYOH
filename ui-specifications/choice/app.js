@@ -45,7 +45,13 @@ var IC={
  doc:'<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
  copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7a2 2 0 002 2h3"/>',fork:'<path d="M7 4v8a4 4 0 004 4h6m-3-3l3 3-3 3M7 4v0"/>',
  wrench:'<path d="M14.5 6.5a4 4 0 005 5l-9.5 9.5a2.1 2.1 0 01-3-3z"/>',clip:'<path d="M20 11l-8.5 8.5a5 5 0 01-7-7L13 4a3.3 3.3 0 014.7 4.7L9.5 17a1.7 1.7 0 01-2.4-2.4L14 7.7"/>',up:'<path d="M12 19V6m-6 6l6-6 6 6"/>'};
-function ic(n,c){return '<svg class="i '+(c||'')+'" viewBox="0 0 24 24" aria-hidden="true">'+IC[n]+'</svg>'}
+function ic(n,c){return '<svg class="i '+(c||'')+'" data-icon="'+n+'" viewBox="0 0 24 24" aria-hidden="true">'+IC[n]+'</svg>'}
+function paintIcons(){
+ $$('#stage [data-icon]').forEach(function(svg){
+  var n=svg.dataset.icon,g=state.look==='instrument'?null:window.LOOK_ICONS[state.look][n];
+  svg.setAttribute('viewBox',g?g.viewBox:'0 0 24 24');svg.innerHTML=g?g.body:IC[n];
+ });
+}
 var SLOT_ROWS=[ // name, preview, state, status word, top, height, selected
  {n:'Firstmate',p:'The plan is ready.',s:'unread',w:'Unread',t:124,h:75,sel:1,lead:1,chev:'chev'},
  {n:'Bot Maker',p:'Needs your OK.',s:'attention',w:'Attention',t:261,h:56,chev:'chevr'},
@@ -86,6 +92,7 @@ function buildStage(){
  '<button class="pillb btn a" style="left:667px;top:10px;width:196px">Opus 5.5 <span class="tag">API</span><span class="mut">\u00b7 high</span> '+ic('chev')+'</button>'+
  '<button class="pillb btn a" style="left:872px;top:10px;width:28px;padding:0" aria-label="Prompt">'+ic('doc')+'</button>'+
  '<button class="pillb btn a" style="left:911px;top:10px;width:28px;padding:0" aria-label="Settings">'+ic('gear')+'</button></header>';
+ h+='<div class="sample-menu floating" hidden aria-label="Sessions sample"><div class="menu-item hov">Ready to publish</div><div class="menu-item hov">Reading notes</div><div class="menu-item hov">Earlier plan</div></div>';
  h+='<main><div class="person a">Is the reading list ready to publish?</div>'+
  '<div class="ts data a" style="left:1000px;top:121px;width:260px">'+ic('copy')+'11:32 AM</div>'+
  '<article class="card a arrive" aria-label="Firstmate reply"><p class="intro">Almost. Code Reviewer passed the last change and all 48 tests pass.</p>';
@@ -99,6 +106,10 @@ function paintMarks(){var look=state.look,mode=resolved();
  $$('#stage .mkslot').forEach(function(s){s.innerHTML=mark(+s.getAttribute('data-bot'),look,mode,32)})}
 function applyStage(){var st=$('#stage'),mode=resolved();
  st.setAttribute('data-look',state.look);st.setAttribute('data-mode',mode);st.setAttribute('data-motion',state.motion==='motion'&&!mqRM.matches?'on':'still');
+ var p=window.LOOK_SETS[ORDER.indexOf(state.look)].presentation;
+ st.dataset.status=p.statusShape;st.dataset.callout=p.callout;st.dataset.surface=p.surface.inFlow;st.dataset.floating=p.surface.floating;
+ st.dataset.button=p.button;st.dataset.selected=p.selection.selected;st.dataset.hover=p.selection.hover;st.dataset.tag=p.tag;
+ st.style.setProperty('--floating-blur',p.surface.floatingBlur+'px');paintIcons();
  st.dataset.arrival='off';st.dataset.markAnimation=window.LOOK_SETS[ORDER.indexOf(state.look)].markStyle.working;paintMarks();fit();
  [].forEach.call($$('#looks button'),function(b){b.setAttribute('aria-pressed',b.dataset.look===state.look)});
  [].forEach.call($$('#mode button'),function(b){b.setAttribute('aria-pressed',b.dataset.mode===state.mode)});
@@ -164,6 +175,9 @@ mqRM.addEventListener('change',function(){syncRM();applyStage()});
 function syncRM(){var b=$('#motion button[data-motion=motion]');b.disabled=mqRM.matches;if(mqRM.matches)state.motion='still';$('#rmnote').hidden=!mqRM.matches}
 window.addEventListener('resize',fit);
 buildStage();
+var sessionsButton=$$('#stage .pillb').find(function(b){return b.textContent.startsWith('All sessions')});
+sessionsButton.setAttribute('aria-expanded','false');
+sessionsButton.addEventListener('click',function(){var menu=$('#stage .sample-menu');menu.hidden=!menu.hidden;sessionsButton.setAttribute('aria-expanded',String(!menu.hidden))});
 var roles=window.PACK_LAYOUT.roles;
 function frame(role,id){return roles[role].variants.find(function(v){return v.frames.includes(id)})}
 function rect(selector,role,id){var v=frame(role,id),e=$(selector);Object.assign(e.style,{left:v.rect.x+'px',top:v.rect.y+'px',width:v.rect.width+'px',height:v.rect.height+'px'});e.dataset.role=role}

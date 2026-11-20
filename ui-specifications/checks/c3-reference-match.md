@@ -23,6 +23,6 @@ frames and layout values?
 | --- | --- |
 | Frame SSIM | at least 0.90 per frame |
 | Rectangle | each fixed role within 2 px of the frame in x, y, width and height |
-| Colours and fonts | exact for the chosen look: every computed colour and font family equals the look's resolved token or family |
+| Colours and fonts | exact for the chosen look: Instrument keeps the exact role-to-paint mapping; a non-default look uses colours from its own tokens and the chosen rendered font families, without enforcing Instrument paint placement |
 
 **Fail.** Any measure below its threshold. The agent fixes the page and runs again.

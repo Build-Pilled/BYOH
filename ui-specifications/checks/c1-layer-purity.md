@@ -7,8 +7,8 @@ browser is needed.
 
 **Pass when all hold:**
 
-1. Every custom property it declares is a token name of `look/instrument/tokens.json`,
-   or a font, motion, radius, rule-strength or mark-style parameter of the
+1. Every custom property it declares is a token name of `look-template/tokens.json`,
+   or a font, motion, radius, rule-strength, presentation or mark-style parameter of the
    template. No other custom property exists.
 2. Every selector is the root look selector (the root for dark, the root with
    the light-mode attribute for light). No component selector appears.

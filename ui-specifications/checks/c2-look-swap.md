@@ -24,4 +24,8 @@
 for every role; the two accessibility hashes are equal; no element, text or
 control exists in one run and not the other.
 
+Decorative descendants inside an aria-hidden SVG may change with the icon
+family or mark renderer; compare the outer SVG box, not its internal artwork.
+Mark identity and cell geometry remain covered by C5.
+
 No reference screenshot is needed. It holds whenever the look touches only paint.

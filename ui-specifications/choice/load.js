@@ -1,3 +1,4 @@
+import { instrumentPresentation } from './presentation.js';
 // These are the app's token files, not a second palette for the preview.
 const order = ['instrument', 'lab', 'dusk', 'paper'];
 const callouts = ['note', 'tip', 'important', 'warning', 'caution'];
@@ -10,12 +11,26 @@ try {
   const [layout, ...sets] = await Promise.all([
     read('../layout/layout.json'), ...order.map(k => read(`../look/${k}/tokens.json`))
   ]);
+  const manifest = await read('./icons/manifest.json');
+  const icons = {};
+  await Promise.all(['lab','dusk','paper'].map(async (look, i) => {
+    const family = ['material','phosphor','carbon'][i]; icons[look] = {};
+    await Promise.all(Object.keys(manifest[family]).map(async role => {
+      const url = new URL(`./icons/${family}/${role}.svg`, import.meta.url);
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Cannot load ${url}: ${response.status}`);
+      const svg = new DOMParser().parseFromString(await response.text(), 'image/svg+xml').documentElement;
+      icons[look][role] = {viewBox:svg.getAttribute('viewBox'), body:svg.innerHTML};
+    }));
+  }));
+  window.LOOK_ICONS = icons;
   const instrument = {
     description: {name:'Instrument', character:'Device. A black display, grey chassis and one backlit orange light.', tags:'Black and orange / serif with mono labels / no motion', day90:'The panel you stop noticing: nothing moves merely to be noticed.', fontCaption:'Literata (text), system monospace (labels), Recursive Mono (code)'},
     fonts:{body:'Literata, Georgia, serif', ui:'Literata, Georgia, serif', person:'Literata, Georgia, serif', label:'ui-monospace, "SF Mono", monospace', data:'ui-monospace, "SF Mono", monospace', code:'Recursive, ui-monospace, monospace', bodyWeight:400, strongWeight:600, labelWeight:600, tracking:'0', labelTracking:'.06em', bodyFeatures:'normal', labelFeatures:'normal', dataFeatures:'normal', codeVariations:'"MONO" 1, "CASL" 0'},
     radius:{control:4,card:4,callout:4},
     ruleStrength:{region:1.5,control:1.5,card:1.5,calloutEdge:.45,glow:.9,personShadow:.18,composerAccent:0,primaryTexture:1},
     motion:{preset:'none',durationScale:1,hoverDuration:0,arrivalDuration:0,easing:'linear',pressScale:1},
+    presentation:instrumentPresentation,
     markStyle:{cellShape:'square',gap:0,radius:0,tileRadius:5.12,ink:'multi',idle:'none',working:'none',duration:0}
   };
   const looks = {order, callouts};

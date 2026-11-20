@@ -1,0 +1,287 @@
+{
+  "material": {
+    "search": {
+      "glyph": "search",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "ad5c56babb9159154a6c440582ec740f5d804cb1f985df8ce03ea72a797b2655"
+    },
+    "pulse": {
+      "glyph": "vital_signs",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "bc8f205504885c84630b150f8b547dc67585075bf5ddb8fd32ca0f3862cb5401"
+    },
+    "swap": {
+      "glyph": "swap_horiz",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "5c446196499d4ff8c019ffd0df6b59896ae3e3a8fd1c1690536ac3c32fc36495"
+    },
+    "plus": {
+      "glyph": "add",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "5a57284a57b30921dfc40a144ef62d248ce70a643118bbb01050a23ec10e6ede"
+    },
+    "down": {
+      "glyph": "download",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "4a5a23d23e3f11dce8c9165bd1902281ae3bc868f6b379e09122da95a0b9d8de"
+    },
+    "chev": {
+      "glyph": "expand_more",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "ecd7d4e36d9d8fa354dd6f35df1f6ae4fa3b50fd9d351dae6bca38b446e21a1e"
+    },
+    "chevr": {
+      "glyph": "chevron_right",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "ab46d77d08aa0887e42c2d2e0d5e2af9422ceb1f8b0160aa0d56bc198881fe3b"
+    },
+    "crown": {
+      "glyph": "crown",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "eb3306802259712c0bc3bce88c3dae9a8fae4e5278634a171daed758d83f4e46"
+    },
+    "doc": {
+      "glyph": "description",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "0e220f28fd470d991ad0f033e6e32ba6b47136c5fbd885a4278dc5c92c19140f"
+    },
+    "gear": {
+      "glyph": "settings",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "e58dc420553cac69f4ee86b6ed48db8820461c0925b33a15daaeca7dcc7d8357"
+    },
+    "copy": {
+      "glyph": "content_copy",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "c798499a83aad824d7b566a35aa2f46837297c15ae9daf59b075bfb446a02da6"
+    },
+    "fork": {
+      "glyph": "fork_right",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "08c25530e9bc93e57666de5573920975931ed463b636e2b407b10008404d0ef1"
+    },
+    "wrench": {
+      "glyph": "build",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "08277995f2da735e1bb86303257d52fcd31d4e5387334ed06aea7580cd897138"
+    },
+    "clip": {
+      "glyph": "attach_file",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "89808d41f0d98c751e8c67e18f844a07a4db31fccbd95a79ae61e33db463e0fc"
+    },
+    "up": {
+      "glyph": "arrow_upward",
+      "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+      "sha256": "43006536e834b28ffc2fe6916d3ff5f56e37a62e9bbb111cc0317adc6b4919ee"
+    }
+  },
+  "phosphor": {
+    "search": {
+      "glyph": "magnifying-glass",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/magnifying-glass-duotone.svg",
+      "sourceSha256": "7a840ea2341e75cf1d9187e07223be4501d6c6078a064a4097be07c1b3a52fb6",
+      "sha256": "791ca202848d6690c82d4547111691d472cc60af129107413981701e1fe9f152"
+    },
+    "pulse": {
+      "glyph": "pulse",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/pulse-duotone.svg",
+      "sourceSha256": "fac71608af59b30ae8bfa560978ef9a7e149c9db72bf00cbd2cab741e535f919",
+      "sha256": "d892f1d7caf6b172d9bffa8160e82f6ab6994c7aea9cd491b287c8a200a1944d"
+    },
+    "swap": {
+      "glyph": "arrows-left-right",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/arrows-left-right-duotone.svg",
+      "sourceSha256": "1ea8373c8d554c21d238c77cc12ce452b1b3e0dc735ebef4c3444d17e1fd4019",
+      "sha256": "6e448c6c0557260fd0811209631631cb5cfc29238f4b1615cff725e6ec842166"
+    },
+    "plus": {
+      "glyph": "plus",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/regular/plus.svg",
+      "sourceSha256": "d688feb9dd2e41c1721d6906a05a2a42e18cd774762fe706d72b2bdfd91cddc4",
+      "sha256": "a76e22f7561e71530764406c1631a03990ba6d44162422aeecee0d2255d00be8"
+    },
+    "down": {
+      "glyph": "download-simple",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/download-simple-duotone.svg",
+      "sourceSha256": "e969fcca686c2de91e2afa4f5fbfd2212ae75d628cac11270a019b72442556dc",
+      "sha256": "0427a9237fc50776b6e854e7e36f9aea4a5c7e973b9a5eaeb6b5623cdedfe64b"
+    },
+    "chev": {
+      "glyph": "caret-down",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/caret-down-duotone.svg",
+      "sourceSha256": "de19eb20164c35680bef88cfa493573e847c33d352ccb603e308c8749e530d3c",
+      "sha256": "c9785044b7d744d0696a23af30b5012459245a137fd540bd8060e485d4fb7c18"
+    },
+    "chevr": {
+      "glyph": "caret-right",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/caret-right-duotone.svg",
+      "sourceSha256": "c964dc17e10e052ab15d22baf2c1cee691fde5513b1b3730e876a148f5098a14",
+      "sha256": "d28de6a04d735efb90a514442c890b4c4330b90e870d1bbbce24f0d183c7de7a"
+    },
+    "crown": {
+      "glyph": "crown-simple",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/crown-simple-duotone.svg",
+      "sourceSha256": "2c94d36c11b05485609e3e5bf7786336a34540064d90d2a52faf2937ec857647",
+      "sha256": "ab8dfc1044a2f9fd97e13f117f08c7bc8cc96e02e72726922437d61acd83c340"
+    },
+    "doc": {
+      "glyph": "file-text",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/file-text-duotone.svg",
+      "sourceSha256": "6b0867a397af11f3c0a66091a4e17e3c172a42f48812ba99fc8157d9093cb7ea",
+      "sha256": "91b72c586225d9938aeab54ee61e9ab3d1e10d02d0f8568e003b01d504708ac2"
+    },
+    "gear": {
+      "glyph": "gear-six",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/gear-six-duotone.svg",
+      "sourceSha256": "049e51d9b794d6b2649073414f90daed5ebadbebfcefb178170aef21c7ace330",
+      "sha256": "4d13947518c2c6d9ef45b740b056fec8fa905c7bcc70e3690562f52608c57058"
+    },
+    "copy": {
+      "glyph": "copy",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/copy-duotone.svg",
+      "sourceSha256": "587be2bbc922a32b5cbd06d39b04129fae4bd01d9ee240ba86f635f6285902a2",
+      "sha256": "976a1438e014375df347abc1bc403ff881ff0381007d9830a76e09c428f755d8"
+    },
+    "fork": {
+      "glyph": "git-fork",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/git-fork-duotone.svg",
+      "sourceSha256": "ceffc55235369119e48ad03bbc77ee2d36738432b404643aa7708fdebb39abab",
+      "sha256": "e3fc07060f64d07b07710f971a3f16fe618013d02c0870eb74f8fc0b3c18d13d"
+    },
+    "wrench": {
+      "glyph": "wrench",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/wrench-duotone.svg",
+      "sourceSha256": "67c0b89c2688777cc25a14a7f78c39fc5463f7bc5257f1393f46d48b36422716",
+      "sha256": "e9f9a88ea5a65bd6c372639ac21bf05dc00ca518c7ad2ecfbed177bd7b58ed3b"
+    },
+    "clip": {
+      "glyph": "paperclip",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/paperclip-duotone.svg",
+      "sourceSha256": "54e155b0d8c5c0cd63a1304b68f2d189553e50c9e66d434077e4bed90749e384",
+      "sha256": "c4b23c3b37b4cdb9be08a385c9074f8e6bef0b0348548a2ae671267eb50fc196"
+    },
+    "up": {
+      "glyph": "arrow-up",
+      "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/assets/duotone/arrow-up-duotone.svg",
+      "sourceSha256": "15ea3ef574110052e5a695d6e356c7f1649597d10f30b27eff251df8a6fe1d9f",
+      "sha256": "f7bcf3661a7d5fe26836a66247c4b1b1c8f6060e11760f8f9c7d05b421df51b6"
+    }
+  },
+  "carbon": {
+    "search": {
+      "glyph": "search",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/search.svg",
+      "sourceSha256": "b502bc849256c4061ddbbb0515c111ceb0e69b2995ca994d97cd7c4a644ec7f1",
+      "sha256": "cf703b52b81fa01daee381c37fe01034025ef736ff246d85e7d7c2b030f8e227"
+    },
+    "pulse": {
+      "glyph": "activity",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/activity.svg",
+      "sourceSha256": "c0fe421392a873febb4d8487047ce56f2ce7d41bc117da0d89dfa2b4e5ca16cc",
+      "sha256": "e2daee5a4d2672c96516e66ffbbd654ef028ae6ddad4708c2ad2cdaa83ee4ebc"
+    },
+    "swap": {
+      "glyph": "arrows--horizontal",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/arrows--horizontal.svg",
+      "sourceSha256": "35583cd4a68361ba2273a799195de37df69c29868f2857055e84eabc07b8f1df",
+      "sha256": "4386a708fdea766e613ebd5c8f0058f488bd9d4ef367433f6082472887c7df6f"
+    },
+    "plus": {
+      "glyph": "add",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/add.svg",
+      "sourceSha256": "8ba30cb11466f8ac3f0594c93c5000265a77bb3d113438344e0ffff66975c839",
+      "sha256": "fddaa9df62322404f2c84f3620c3fdadb88ac02ec69353b3b6e746d37458c35e"
+    },
+    "down": {
+      "glyph": "download",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/download.svg",
+      "sourceSha256": "98e30ad6b5dacf01f69c494a961957cee4a5fa05c54977b3f9dae230e46a0df5",
+      "sha256": "d839579b92373eb8cc88d4aac994262f95a0ee20d5ff5b6f3e0e3abdaa08d630"
+    },
+    "chev": {
+      "glyph": "chevron--down",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/chevron--down.svg",
+      "sourceSha256": "793492fb4ae42ddf0bf51d71863a41e6bec57155c9df7b35ddb4fe2f6b004451",
+      "sha256": "430a0e01147a72298e6df1f626cf81394040d7525a53ddef61e535e0d1d46d55"
+    },
+    "chevr": {
+      "glyph": "chevron--right",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/chevron--right.svg",
+      "sourceSha256": "9615311d9edf84e00419a6901726d12829fed53ff0fd19f3b7effe0a06ddf69a",
+      "sha256": "4a22d7128813cdb9719c6ef93fa1e3b4b452247326f80df3e6966035ded09e60"
+    },
+    "crown": {
+      "glyph": "star",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/star.svg",
+      "sourceSha256": "dfecc20b7a853da3a9c60efa1f0acc89b779fe70b1430e84b345dd1b84605f41",
+      "sha256": "95ab030edd7c7ff0d3c1d5450ddcd0211224f1b2d2a20178ae96bcf7b61d7e80"
+    },
+    "doc": {
+      "glyph": "document",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/document.svg",
+      "sourceSha256": "5b947a8c5a2a30bcb2c574d2d53c35b5bef2e2aae83fb2da557946fbc8156b7e",
+      "sha256": "95a3f11cebab25a0391b0840c8748fd5a38ff7530fd05cf59e9cfd8b18b928fe"
+    },
+    "gear": {
+      "glyph": "settings",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/settings.svg",
+      "sourceSha256": "fa8f42440fb69cae30d6223e3e1d06ed84e0282b4d5f593c2385ca624d4ed940",
+      "sha256": "a272d02e01b62daa842116486150e5d7f4914141db927dedff292055c977ddee"
+    },
+    "copy": {
+      "glyph": "copy",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/copy.svg",
+      "sourceSha256": "a38a2f8e68e87e321007205b619b997bfeb3e79a4612111c425238eec6a34c2f",
+      "sha256": "0ec2d668dad1dd2e4bbc3a7d9e4ab34ba177785cbf41ecccb8475e4c7afc9fde"
+    },
+    "fork": {
+      "glyph": "fork",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/fork.svg",
+      "sourceSha256": "b155ee1521b3a39aed6de400c1c2c60b9b7911d8fff6d04ad9cff3b60b9adcff",
+      "sha256": "4eabc77b145112c820840ce222613c22f3a3d2333848c9842583bdd8bddd3171"
+    },
+    "wrench": {
+      "glyph": "build-tool",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/build-tool.svg",
+      "sourceSha256": "fa78ef565ba033d69c8123c4d3b172f238d1b102dbe79da0811e2e71231b4673",
+      "sha256": "cb03557f0fed63b48483f7de51feda39ea74c8960c492bfa878afeb1a3e99af8"
+    },
+    "clip": {
+      "glyph": "attachment",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/attachment.svg",
+      "sourceSha256": "e7f37f911c49c0d42bf6b54a3fe61db663d288705af706f14efc2e8a85fd65ff",
+      "sha256": "f1927d6918eb3505492a5cee6eed77f4b9e91280d7c0cd92a3e4e9bd22bd65a2"
+    },
+    "up": {
+      "glyph": "arrow--up",
+      "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/packages/icons/src/svg/32/arrow--up.svg",
+      "sourceSha256": "5ef42a6b8f7d8c23fb9ee12d8165edb486475cd2d9c5ca7b75633cc5fe1fb22b",
+      "sha256": "a72f0baaa9c3c3629353b8b99517ef821ea1bea3868329ed6ba327a4244b9028"
+    }
+  },
+  "materialSource": {
+    "commit": "10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7",
+    "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/variablefont/MaterialSymbolsSharp%5BFILL,GRAD,opsz,wght%5D.ttf",
+    "fontSha256": "1fd72f99ec1f44ec461c74f99341c1dcfa8c140d7087a2902e747d4ee01e379b",
+    "settings": {
+      "wght": 300,
+      "opsz": 20,
+      "FILL": 0,
+      "GRAD": 0
+    },
+    "export": "fontTools 4.68.0 instantiateVariableFont, SVGPathPen with y flipped around unitsPerEm"
+  },
+  "materialLicence": {
+    "url": "https://raw.githubusercontent.com/google/material-design-icons/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/LICENSE",
+    "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+  },
+  "phosphorLicence": {
+    "url": "https://raw.githubusercontent.com/phosphor-icons/core/v2.0.8/LICENSE",
+    "sha256": "b5b1f1da112d18ea2147decfd48ddc1bf2b5aeb6c265381579340e95b15a2bb2"
+  },
+  "carbonLicence": {
+    "url": "https://raw.githubusercontent.com/carbon-design-system/carbon/v11.121.0/LICENSE",
+    "sha256": "037b3e9eaff51477b270e9082f54b99175e4dd893548654f00995045b68294b8"
+  }
+}

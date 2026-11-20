@@ -5,7 +5,8 @@ Classification: Choice (look and palette). Prerequisites: [appearance mode](appe
 ## Purpose
 
 Let the person decide how their harness looks: the colours, typefaces,
-motion, corner radius, rule/shadow strength and bot-mark drawing of its two variants (dark and light). This is the
+motion, corner radius, rule/shadow strength, bot-mark drawing and the seven
+presentation settings in R2, in two variants (dark and light). This is the
 one place the interview asks about aesthetics, using screenshots and mockups
 before the person sees their finished app. [Appearance mode](appearance-mode.md) owns the System,
 Dark and Light selector, which every harness has whether or not this choice is
@@ -50,7 +51,8 @@ their own meaning and only borrow the colours defined here.
   complete look tokens (including R3 roles) from the [UI pack](../ui-specifications/README.md),
   with the same layout values and token files used by the live stage and built
   app. Look proposals may change colours, typefaces, motion, corner radius,
-  rule/shadow strength and how bot marks are drawn, not layout, text or controls, so the mockups match the shell
+  rule/shadow strength, the seven presentation settings in R2 and how bot marks
+  are drawn, not layout, text or controls, so the mockups match the shell
   the agent builds. When a look includes motion, a short recording or animated
   preview may accompany its still mockups. The fixed page changes with the app
   layout; use its same shell for each proposal rather than inventing different layouts
@@ -67,12 +69,28 @@ their own meaning and only borrow the colours defined here.
   configuration ([appearance mode](appearance-mode.md) E3).
 - **R2 — What a look may change.** A look is a **palette** (one colour for each
   role in the R3 table, in two variants, dark and light) plus optional typefaces,
-  motion, corner radius, rule/shadow strength and bot-mark drawing. Radius and
+  motion, corner radius, rule/shadow strength, bot-mark drawing and seven
+  presentation settings: icon family/style, status-indicator shape, callout
+  style, in-flow/floating surface material, button style, selected/hover style
+  and tag style. Radius and
   rule/shadow strength are paint only: they must move no box. All element
   rectangles, padding, spacing, font sizes, line heights and border widths stay
   fixed as the [layout contract](../ui-specifications/layout/shell.md) specifies.
   Rules may vary as inset shadows, never by changing border widths. A look is a
   complete named token set in the pack schema, not only the R3 role table.
+  Its seven presentation settings follow one coherent design philosophy, not
+  seven independent decorations. Status shapes are only square, circle, ring
+  or diamond; the lamp remains 8 x 8 and its word remains. Icons stay inside
+  the existing icon box; tags keep the same 18 px box. Use clip-path, never
+  rotation of a laid-out box, for diamonds. Rings, bars, outlines and underlines
+  use inset shadows, outline or text-decoration, never new borders. Blur a
+  surface's ::before paint layer, not the container holding fixed popovers.
+  Instrument's existing appearance is the default of every setting; its
+  values and frames do not change. The settings and defaults are documented in
+  the [look template](../ui-specifications/look-template/README.md).
+  These new aesthetic settings are prescribed, not checked. C1 still accepts
+  only paint parameters; C2 still enforces boxes and the accessibility tree;
+  C4 still enforces contrast. C5 checks marks only. Reduced motion stays required.
   It may not rename, remove, reorder or
   restate any control, state or text, hide a status or callout label, or change
   what a control does. The accessibility tree of the app is the same under every
@@ -118,7 +136,7 @@ their own meaning and only borrow the colours defined here.
   are pairwise different; the
   five callout accents are pairwise different. Neither replaces the words that
   [status](status.md) R1 and [callouts](callouts.md) R4 require, and a palette
-  may not remove a callout's boundary.
+  keeps a visible callout boundary: bar, tint edge or outline.
 - **R7 — Whole app, light archive.** The palette applies to everything the app
   draws: sidebar, conversation, dialogs, menus, Settings, code, callouts and
   status lights. The [conversation export](conversation-export.md) archive always
@@ -128,7 +146,9 @@ their own meaning and only borrow the colours defined here.
   stylesheet, font, image, icon or script. The app does not read a look asset
   from a path chosen at run time. An absent bundled font falls back to the
   system stack and shows no error. Any look's fonts are bundled under an open
-  licence, with their licence texts.
+  licence, with their licence texts. Icons likewise come from named open-licence
+  families/styles, bundled from official releases with their licence texts;
+  bundle only the glyphs used by the app, never fetch them at runtime.
 - **R9 — Identity unchanged.** The mark seed still determines which mark a bot
   gets ([bots](bots.md) R5). A look may change how marks are drawn and animated,
   including drawing them as animated characters, provided each bot stays
@@ -160,7 +180,8 @@ belong to [appearance mode](appearance-mode.md) and the Settings frame to
 - **E5 — Missing font.** If a bundled font fails to load, text is drawn in the
   system stack, layout stays usable, and no request goes out to find another.
 - **E6 — Mockups and the Mac display.** Lavish mockups select a look
-  (colour, type, radius, rule/shadow strength, motion and marks), not proof that the person's app renders it
+  (colour, type, radius, rule/shadow strength, the seven presentation settings,
+  motion and marks), not proof that the person's app renders it
   correctly. App screenshots on the Linux test host remain the agent's own proof until onboarding `first-use`; neither
   they nor mockups prove how the Mac's display profile or real appearance
   setting shows the built app. Present that check at `first-use`; it stays

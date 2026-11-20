@@ -57,4 +57,5 @@ window itself never scrolls. The composer's field shows a scrollbar only at its 
 | Border widths, display, position, flex and grid structure | Corner radius |
 | Font size, line height, text case and weight class per role | Font families, exact weight within the class, tracking within 0.04 em, OpenType features, font metric overrides |
 | Component parts, states and behaviour; accessibility tree; all text | Motion: durations, easings, idle and working animation of marks (transform and opacity only), reduced-motion handling |
+| Icon/control/lamp/tag boxes and callout parts | Icon family/style; square, circle, ring or diamond lamps; callout style; in-flow/floating material; button, selected/hover and tag styles |
 | Which mark a bot has (the seed) and the mark's cell grid | How marks are drawn and animated inside the same box |

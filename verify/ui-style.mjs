@@ -3,7 +3,7 @@ export function lintLook(css, tokens, parameters = {}) {
   const failures=[], allowed=new Set(Object.keys(tokens).map(k=>'--'+k));
   const kebab=s=>s.replace(/[A-Z]/g,c=>'-'+c.toLowerCase());
   const add=(obj,prefix='')=>{for(const [k,v] of Object.entries(obj)){const name=prefix+kebab(k);if(v&&typeof v==='object'&&!Array.isArray(v))add(v,name+'-');else allowed.add('--'+name);}};
-  for(const key of ['fonts','motion','radius','ruleStrength','markStyle']) if(parameters[key]) add(parameters[key],kebab(key)+'-');
+  for(const key of ['fonts','motion','radius','ruleStrength','markStyle','presentation']) if(parameters[key]) add(parameters[key],kebab(key)+'-');
   // The colour-only default has these documented family parameters.
   ['body','label','code','ui','person','data'].forEach(k=>allowed.add('--font-'+k));
   const font=new Set(['font-family','src','font-weight','font-style','size-adjust','ascent-override','descent-override','line-gap-override']);
