@@ -35,7 +35,7 @@ shape as the polished default, in any look.
 | `look/instrument/roles.json` | Paint per role, every colour as a token name | You paint a role |
 | `look/instrument/marks.md` | How marks are built, and how Instrument draws them | You build bot marks |
 | `look/lab/`, `look/dusk/`, `look/paper/` | Published ideas, decided tokens, mark styles, both modes | You paint an alternative |
-| `choice/` | Live choice-page template, shared stage and bundled fonts/licences | You present the look question |
+| `choice/` | Live choice-page template, shared stage, bundled fonts/licences and bundled icons/licences | You present the look question |
 | `look-template/` | Empty token skeleton, ranges and derivation rules | You make another look |
 | `frames/` | 29 dark screenshots with a one-line index | You need to see a layout |
 | `checks/` | Five checks with exact procedures and thresholds | You verify a build |

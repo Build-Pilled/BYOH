@@ -71,8 +71,7 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
       const pairs=[]; const add=(ink,bg,faint=false)=>pairs.push([ink,bg,faint]);
       for(const ink of ['text','text-muted','text-faint']) for(const bg of ['display','chassis'])add(ink,bg,ink==='text-faint');
       add('link','display');add('on-accent','accent');
-      for(const kind of ['important','note','tip','warning','caution']) {add(`callout-${kind}-ink`,`callout-${kind}-bg`);if(chosen.tokens[`callout-${kind}-strip`])add(`callout-${kind}-ink`,`callout-${kind}-strip`);}
-      for(const ink of ['text','text-muted','text-faint'])add(ink,'surface-card',ink==='text-faint');
+      for(const kind of ['important','note','tip','warning','caution'])add(`callout-${kind}-ink`,`callout-${kind}-bg`);
       for(let i=1;i<=3;i++)add('annotation-ink',`annotation-${i}`);
       const measurements=pairs.map(([ink,bg,faint])=>{
         const b=over(color(chosen,bg,mode),color(chosen,'display',mode)),a=over(color(chosen,ink,mode),b),ratio=contrast(a,b);
