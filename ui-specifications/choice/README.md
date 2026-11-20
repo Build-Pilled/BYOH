@@ -14,6 +14,11 @@ support the module's JSON fetches. No CDN or outside request is used at runtime.
 - Match system / Dark / Light resolves only the preview's mode. Still / Motion
   controls motion; reduced motion disables Motion. Dusk animates only the working
   sample mark and working-state row specimens; idle sample marks rest.
+- Sample bot rows show only the status lamp, in the look's shape; the status
+  word stays in each row's accessible name. The one-line preview extends to
+  the age column. A single colour key below and outside the app sample names
+  Unread, Needs attention, Waiting and Working, using the current look's lamps
+  and resolved mode. This key is choice-page guidance, not built-app UI.
 - The full-size link opens the same scene alone at its current look and mode.
 - Something else? is describe-your-own only. There is no Mix or per-row Preview.
 - Ask for changes opens a local note. No request is sent. Controls stay mounted across comparison/selection: radio

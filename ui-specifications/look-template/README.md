@@ -77,7 +77,8 @@ of this descriptive table.
 - Bars, rings and underlines use box-shadow, outline or text-decoration, never
   border widths. Existing borders and the 4 px callout bar retain their widths;
   paint them transparent when unused. A callout keeps a visible boundary:
-  bar, tint edge or outline. Labels and status words stay.
+  bar, tint edge or outline. Callout labels stay visible; status words stay in accessible names,
+  never as visible captions beside the lamps.
 - A header strip is a background gradient with a 28 px stop, not an extra
   laid-out element. A uniform frame can use outline with offset -1 px.
 - Frosted glass blurs a ::before layer behind the content, never the container

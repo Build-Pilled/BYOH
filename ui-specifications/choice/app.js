@@ -77,7 +77,7 @@ function buildStage(){
   (r.lead?'<span class="leadb">'+ic('crown')+'Lead</span>':'')+
   '<span class="prev clip" style="top:'+(r.lead?49:30)+'px">'+r.p+'</span>'+
   '<span class="age data" style="top:'+(r.lead?10:9)+'px">Now</span>'+
-  '<span class="stat" style="top:'+(r.h-26)+'px"><span class="w">'+r.w+'</span><span class="light '+r.s+'" style="--c:var(--st-'+r.s+')"></span></span></div>';
+  '<span class="stat" aria-hidden="true" style="top:'+(r.h-26)+'px"><span class="light '+r.s+'" style="--c:var(--st-'+r.s+')"></span></span></div>';
   if(i===0){h+='<div class="sess hov a" aria-label="Session: Ready to publish"><span class="t clip">Ready to publish</span><span class="data">Now</span></div><div class="more a">Show all 3 sessions</div>'}
   if(i===2){h+='<div class="head a lbl" style="top:386px">Bots '+ic('chev')+'</div><div class="a lbl" style="left:280px;top:386px;width:20px;color:var(--muted)">'+ic('plus')+'</div>'}
  });
@@ -107,7 +107,10 @@ function paintMarks(){var look=state.look,mode=resolved();
 function applyStage(){var st=$('#stage'),mode=resolved();
  st.setAttribute('data-look',state.look);st.setAttribute('data-mode',mode);st.setAttribute('data-motion',state.motion==='motion'&&!mqRM.matches?'on':'still');
  var p=window.LOOK_SETS[ORDER.indexOf(state.look)].presentation;
- st.dataset.status=p.statusShape;st.dataset.callout=p.callout;st.dataset.surface=p.surface.inFlow;st.dataset.floating=p.surface.floating;
+ st.dataset.status=p.statusShape;
+ var legend=$('#status-legend');legend.dataset.look=state.look;legend.dataset.mode=mode;legend.dataset.status=p.statusShape;
+ $('#legend-mode').textContent=LOOKS[state.look].name+' · '+(mode==='dark'?'Dark':'Light');
+ st.dataset.callout=p.callout;st.dataset.surface=p.surface.inFlow;st.dataset.floating=p.surface.floating;
  st.dataset.button=p.button;st.dataset.selected=p.selection.selected;st.dataset.hover=p.selection.hover;st.dataset.tag=p.tag;
  st.style.setProperty('--floating-blur',p.surface.floatingBlur+'px');paintIcons();
  st.dataset.arrival='off';st.dataset.markAnimation=window.LOOK_SETS[ORDER.indexOf(state.look)].markStyle.working;paintMarks();fit();
@@ -136,7 +139,7 @@ function rowHTML(k){var L=LOOKS[k],mode=resolved(),marks='';
  '<div class="spec" data-look="'+k+'" data-mode="'+mode+'" data-mark-animation="'+window.LOOK_SETS[ORDER.indexOf(k)].markStyle.working+'">'+
  '<div class="sp"><div class="k">Text</div><div class="big">Aa 0123 Almost, all 48 tests pass</div></div>'+
  '<div class="sp"><div class="k">Code</div><div class="cd">readingList.add(book)</div><div class="lb2" style="margin-top:8px">'+L.fonts+'</div></div>'+
- '<div class="sp"><div class="k">Labels and data</div><div class="lb">Crew \u00b7 Working \u00b7 Opus 5.5</div><div class="lb2">11:32 AM \u00b7 6.2k tokens \u00b7 0123456789</div><div class="lb2" style="margin-top:8px">Motion: '+motionLine+'</div></div>'+
+ '<div class="sp"><div class="k">Labels and data</div><div class="lb">Crew \u00b7 Tools \u00b7 Opus 5.5</div><div class="lb2">11:32 AM \u00b7 6.2k tokens \u00b7 0123456789</div><div class="lb2" style="margin-top:8px">Motion: '+motionLine+'</div></div>'+
  '<div class="sp"><div class="k">The four starter marks, working state</div><div class="marks">'+marks+'</div></div>'+
  '<div class="d90"><b>Day 90</b>'+L.day90+'</div></div>'+shots+'</div>'+
  '<div class="actions"><button type="button" data-a="pick" data-look="'+k+'" aria-pressed="'+(state.chosen===k)+'">'+(state.chosen===k?'Chosen':'Choose')+'</button>'+
