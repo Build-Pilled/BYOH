@@ -41,7 +41,6 @@ frame you need.
 | `F46-routines-calendar.png` | Routines calendar | Seven-column weekly calendar and timed cards |
 | `F49-changes.png` | Changes | History list and full diff |
 | `F52-connection-lost.png` | Connection lost, Team map | Reference for the connection card's position and size only; its wording is the pack's (see `layout/behaviours.md`), not the text shown |
-
 | `F56-sent-annotations.png` | Sent person message with two annotations, one with a comment and one without | Faint wrapper except full-contrast item numerals, italic full-contrast selected quotes, full-contrast comment and preserved line breaks |
 
 Surfaces with no frame (hero reply, empty chat, skill suggestions, other
