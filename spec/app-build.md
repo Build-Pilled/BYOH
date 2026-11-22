@@ -6,8 +6,9 @@ Classification: Core. Prerequisites: [host](host.md),
 ## Purpose
 
 Let the person rebuild and restart their harness with one pasted Mac line,
-while the host does all the building: the Mac stays at Lima plus one app, with
-no Node and no checkout. This section owns the places code lives, the
+while the host does all the building: the Mac has Lima, one app, the SSH names
+file and VS Code with Microsoft's separately installed Remote - SSH extension,
+with no Node and no checkout. This section owns the places code lives, the
 line, the host half that deploys the daemon and builds the desktop app, the Mac
 half that pulls, checks and swaps the app, rollback and replacement errors.
 [Isolation](isolation.md) R6 states the trust edge this path carries.

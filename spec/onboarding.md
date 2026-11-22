@@ -21,7 +21,9 @@ default; [host](host.md) and [VM](vm.md) own what the host step installs;
 
 - **R1 — Before anything is installed.** The person's agent on the Mac first
   states, in a few lines, what the harness needs: an Apple Silicon Mac,
-  isolation from the computer the person works on, and for the supplied VM its
+  VS Code with Microsoft's Remote - SSH extension (`ms-vscode-remote.remote-ssh`,
+  installed separately) to open the bots' files, isolation from the computer
+  the person works on, and for the supplied VM its
   memory row for this Mac and a disk file that grows to at most 100 GiB
   ([VM](vm.md) R3). It then asks, in chat, the host-step questions:
   1. `power`: how the bots will be powered: Claude models through Claude Code

@@ -10,7 +10,8 @@ requirement in one pinned step on the Mac: Lima on Apple's virtualization,
 Debian 13 arm64, one VM for all bots. This section owns how that VM is
 created, sized, connected, started, kept awake, stopped cleanly and removed.
 It is the default way to meet the isolation requirement, not the only one. The Mac gets Lima with its start-at-login job, one app, the two SSH
-names, a private host-operation record/lock and, when chosen, the sleep setting. Removal saves are created only when removal is requested.
+names, VS Code with Microsoft's separately installed Remote - SSH extension,
+a private host-operation record/lock and, when chosen, the sleep setting. Removal saves are created only when removal is requested.
 
 The recipe is [`vm/`](../vm/README.md): the template, host step and its removal helpers, and the environment check.
 
