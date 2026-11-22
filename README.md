@@ -91,7 +91,7 @@ What sets BYOH apart?
 | A Lima VM running Debian 13, sized from your computer's memory (table below). Its disk grows with use, up to 100 GiB, and never shrinks on its own. | Use your own Linux machine (another VM, a VPS, a spare computer) if it passes the host check. We prove only our VM end to end; issues specific to your setup rely on your agent. |
 | Both engines: Claude Code on your Claude login, Pi signed in with ChatGPT etc. | Pick one, or use an API key or subscription for a named provider through Pi. |
 | An Electron desktop app. | Have your agent build another front end; the app's screen tests then no longer apply. |
-| VS Code with Microsoft's Remote - SSH extension (installed separately) on your computer. Browse the bots' files over SSH and open file links from the app with one click. | Copy path works without it. For another editor, have your agent change the app's link format; its file-opening screen test then changes with it. |
+| VS Code with Microsoft's Remote SSH extension on your computer. Browse the bots' files over SSH and open file links from the harness app with one click. | For another editor, have your agent change the app's link format; its file-opening screen test then changes with it. |
 | No backup by default: deleting the VM deletes your harness data. | Turn on VM backup during setup: your computer pulls a copy into a private repo. See [spec/vm-backup.md](spec/vm-backup.md). |
 
 | Your computer's memory | VM memory | Left for you | Bots working at once |
