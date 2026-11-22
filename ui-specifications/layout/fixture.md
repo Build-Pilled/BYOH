@@ -60,6 +60,25 @@ team map shows two columns, Crew (3) and Bots (1).
 - Annotation (F02): three annotations on the assistant text; the composer
   chip reads "3 annotations".
 
+## Sent annotations (F56)
+
+- Firstmate session `First version decisions`, selected; two sessions in all.
+  Sidebar preview: "I will keep the next step focused." Other bots stay folded.
+- Assistant reply, three numbered choices: "Storage: books stay on this device
+  and no account is needed."; "Adding a book: you type the title. There's no
+  cover search."; "Finished books: they move to a separate \"Done\" list."
+- Person typed text: "Please keep these two choices." Append the R4 annotations
+  block with its exact preamble. Both items cite that assistant reply's time
+  and opening "Storage: books stay on…". Item 1 selects the whole Storage
+  choice and comments "Keep this local-first approach." Item 2 selects the
+  whole Adding a book choice and has no comment. No repeated-text suffix.
+- Assistant reply after the sent input: "I will keep the next step focused."
+- Scroll to keep the entire sent annotation bubble visible, with its top at
+  y = 179 and closing tag visible. The three-choice reply is partly above the
+  viewport; the follow-up reply and empty composer remain below the bubble.
+  The bubble is at x = 578, width 672, height 434.375 CSS px. Source and send
+  times are dynamic values masked by the checks.
+
 ## Tasks
 
 | ID | Title | Kind | Status | Project | Gate |

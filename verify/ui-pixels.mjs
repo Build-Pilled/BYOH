@@ -56,6 +56,12 @@ export function cellPattern(tile, background) {
 export function rgb(value) {
   if (/^#[\da-f]{6}$/i.test(value)) return [1,3,5].map(i=>parseInt(value.slice(i,i+2),16)).concat(1);
   if(value === 'transparent') return [0,0,0,0];
+  const srgb=/^color\(srgb\s+([^()]+)\)$/.exec(value);
+  if(srgb) {
+    const parts=srgb[1].replace(/\//g,' ').trim().split(/\s+/).map(Number);
+    assert.ok([3,4].includes(parts.length)&&parts.every(v=>Number.isFinite(v)&&v>=0&&v<=1), `invalid sRGB colour ${value}`);
+    return [...parts.slice(0,3).map(v=>v*255),parts[3]??1];
+  }
   const m=/^rgba?\(([^)]+)\)$/.exec(value); assert.ok(m, `unsupported colour ${value}`);
   const parts=m[1].replace(/\//g,' ').split(/[ ,]+/).filter(Boolean).map((v,i)=>v.endsWith('%') ? parseFloat(v)*(i===3?.01:2.55) : Number(v));
   assert.ok(parts.length>=3 && parts.every(Number.isFinite), `invalid colour ${value}`); return [...parts.slice(0,3),parts[3]??1];

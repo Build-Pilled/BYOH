@@ -21,6 +21,8 @@ const EXCEPTIONS = [
   { name:'Selected-task time', mode:'dark', foreground:'#6c6c6c', background:'#262626' },
   { name:'Chassis detail', mode:'light', foreground:'#777777', background:'#cfd0d2' },
   { name:'Hovered-sidebar age', mode:'light', foreground:'#777777', background:'rgb(198.2 199.2 201.2)' },
+  { name:'Sent annotation wrapper', role:'annotationWrapper', mode:'dark', foreground:'#cccccc', background:'#ececec' },
+  { name:'Sent annotation wrapper', role:'annotationWrapper', mode:'light', foreground:'color(srgb 0.16666666666666666 0.16666666666666666 0.16666666666666666)', background:'#111111' },
 ];
 export function compareGeometry(a,b,kind='fixed') {
   assert.deepEqual(a.geometry,b.geometry,'computed layout properties changed');
@@ -71,12 +73,15 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
       const pairs=[]; const add=(ink,bg,faint=false)=>pairs.push([ink,bg,faint]);
       for(const ink of ['text','text-muted','text-faint']) for(const bg of ['display','chassis'])add(ink,bg,ink==='text-faint');
       add('link','display');add('on-accent','accent');
+      if(chosen.tokens['faint-wrapper'])add('faint-wrapper','person-bubble',true);
       for(const kind of ['important','note','tip','warning','caution'])add(`callout-${kind}-ink`,`callout-${kind}-bg`);
       for(let i=1;i<=3;i++)add('annotation-ink',`annotation-${i}`);
       const measurements=pairs.map(([ink,bg,faint])=>{
         const b=over(color(chosen,bg,mode),color(chosen,'display',mode)),a=over(color(chosen,ink,mode),b),ratio=contrast(a,b);
-        const exception=chosen.look==='instrument'&&faint&&bg==='chassis'&&mode==='light'&&sameRGB(a,rgb('#777777'))&&sameRGB(b,rgb('#cfd0d2'));
-        return {ink,bg,ratio,minimum:faint?3:4.5,exception:exception?'Chassis detail':null};
+        const exception=chosen.look==='instrument'&&faint&&(
+          bg==='chassis'&&mode==='light'&&sameRGB(a,rgb('#777777'))&&sameRGB(b,rgb('#cfd0d2'))?'Chassis detail':
+          ink==='faint-wrapper'&&bg==='person-bubble'&&EXCEPTIONS.some(e=>e.name==='Sent annotation wrapper'&&e.mode===mode&&sameRGB(a,rgb(e.foreground))&&sameRGB(b,rgb(e.background)))?'Sent annotation wrapper':null);
+        return {ink,bg,ratio,minimum:faint?3:4.5,exception:exception||null};
       });save(`c4-token-pairs-${mode}.json`,measurements);
       assert.ok(measurements.every(v=>v.ratio>=v.minimum||v.exception),JSON.stringify(measurements.filter(v=>v.ratio<v.minimum&&!v.exception)));return measurements;
     });
@@ -186,8 +191,8 @@ export async function checkUI(w, plan, { evidence, sample=false }={}) {
             }
             assert.ok(count,'no effective-background pixels captured');pixelRatio=minimum;
           }
-          const faint=sameRGB(rgb(text.color),color(chosen,'text-faint',mode)),ratio=pixelRatio??contrast(fg,bg),minimum=faint?3:4.5;
-          const exception=chosen.look==='instrument'&&faint&&EXCEPTIONS.find(e=>e.name===node?.exception&&e.mode===mode&&sameRGB(fg,rgb(e.foreground))&&sameRGB(bg,rgb(e.background)));
+          const faint=sameRGB(rgb(text.color),color(chosen,'text-faint',mode))||(node?.layout==='annotationWrapper'&&!!chosen.tokens['faint-wrapper']&&sameRGB(rgb(text.color),color(chosen,'faint-wrapper',mode))),ratio=pixelRatio??contrast(fg,bg),minimum=faint?3:4.5;
+          const exception=chosen.look==='instrument'&&faint&&EXCEPTIONS.find(e=>e.name===node?.exception&&(!e.role||e.role===node?.layout)&&e.mode===mode&&sameRGB(fg,rgb(e.foreground))&&sameRGB(bg,rgb(e.background)));
           return {...text,foreground:fg,background:bg,effectiveBackground:pixelRatio!==null?'captured PNG minimum':'computed layers',ratio,minimum,exception:exception?.name??null,pass:ratio>=minimum||!!exception};
         });save(id+'-c4-rendered.json',measures);assert.ok(measures.length,'no rendered text measured');assert.ok(measures.every(m=>m.pass),JSON.stringify(measures.filter(m=>!m.pass)));return {texts:measures.length};
       });

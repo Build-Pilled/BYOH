@@ -7,7 +7,8 @@
 1. Pair check from tokens, in each mode: `text`, `text-muted` and `text-faint`
    against `display` and `chassis`; `link` against `display`; `on-accent`
    against `accent`; every callout ink against its background; `annotation-ink`
-   against each annotation slot.
+   against each annotation slot; when the optional `faint-wrapper` token is
+   supplied, pair it against `person-bubble` as faint text.
 2. Rendered check: in every fixture state and both modes, for every text node
    find its effective foreground (including alpha over what is behind it) and
    its effective background (the nearest painted surface, including the ladder
@@ -39,6 +40,8 @@ alpha backgrounds are composited in sRGB before calculating luminance.
 
 | Name | Mode | Foreground | Effective background | Ratio | Surface | Frame or frame's text-only variation |
 | --- | --- | --- | --- | --- | --- | --- |
+| Sent annotation wrapper | Dark | `#cccccc` | `#ececec` (`person-bubble`) | 1.359:1 | `annotationWrapper` only: sent annotation tags, preamble, item-header text and labels, not numerals, quotes or comments | F56 |
+| Sent annotation wrapper | Light | `color(srgb 0.16666666666666666 0.16666666666666666 0.16666666666666666)` | `#111111` (`person-bubble`) | 1.325:1 | `annotationWrapper` only, same subparts | Light values for F56 |
 | Selected-row age | Dark | `#6c6c6c` | `#2a2a2a` (`surface-raised`) | 2.733:1 | Selected bot and session rows, including the selected session in the finder | F35 sidebar; F41 finder |
 | Raised-control detail | Dark | `#6c6c6c` | `#2a2a2a` (`surface-raised`) | 2.733:1 | All sessions count, model thinking suffix, Worked step count | F35 header; F33 and F34 Worked chip |
 | Selected-task time | Dark | `#6c6c6c` | `#262626` (`surface-task-selected`) | 2.882:1 | Selected task row's faint time and empty-value cells | F05 |

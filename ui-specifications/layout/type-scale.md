@@ -116,3 +116,7 @@ Size, line height, weight class and text case per role. Families are never set h
 "mixed" means the role has both regular and strong samples (for example a selected row). A slash separates variants seen for one role, most frequent first.
 
 Face classes by role: label face for thread titles, timestamps, status and model labels, section headings, field labels, file paths and key hints; code face for code blocks, inline code, bare URLs, editors and diffs; body face for everything else.
+
+Sent annotation subparts `annotationWrapper`, `annotationQuote` and
+`annotationComment` inherit person type: 15 px / 24.375 px, regular, as typed.
+The selected quote alone is italic. See F56 and components section 7.

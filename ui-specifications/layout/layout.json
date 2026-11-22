@@ -19700,6 +19700,37 @@
      "display": "block",
      "position": "static",
      "frames": []
+    },
+    {
+     "rect": {
+      "x": 578,
+      "y": 179,
+      "width": 672,
+      "height": 434.375
+     },
+     "padding": [
+      10,
+      16,
+      10,
+      16
+     ],
+     "gap": {
+      "row": 0,
+      "column": 0
+     },
+     "borderWidths": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "fontSize": "15px",
+     "lineHeight": "24.375px",
+     "display": "block",
+     "position": "static",
+     "frames": [
+      "F56"
+     ]
     }
    ]
   },
@@ -32343,6 +32374,230 @@
      "frames": [
       "F33",
       "F34"
+     ]
+    }
+   ]
+  },
+  "annotationWrapper": {
+   "dataRole": "annotationWrapper",
+   "class": "flow",
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "variants": [
+    {
+     "rect": {
+      "x": 594,
+      "y": 238.75,
+      "width": 634.03125,
+      "height": 95.125
+     },
+     "padding": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "gap": {
+      "row": 0,
+      "column": 0
+     },
+     "borderWidths": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "fontSize": "15px",
+     "lineHeight": "24.375px",
+     "display": "inline",
+     "position": "static",
+     "frames": [
+      "F56"
+     ]
+    },
+    {
+     "rect": {
+      "x": 594,
+      "y": 336.25,
+      "width": 435.09375,
+      "height": 46.375
+     },
+     "padding": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "gap": {
+      "row": 0,
+      "column": 0
+     },
+     "borderWidths": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "fontSize": "15px",
+     "lineHeight": "24.375px",
+     "display": "inline",
+     "position": "static",
+     "frames": [
+      "F56"
+     ]
+    },
+    {
+     "rect": {
+      "x": 594,
+      "y": 433.75,
+      "width": 76.078125,
+      "height": 22
+     },
+     "padding": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "gap": {
+      "row": 0,
+      "column": 0
+     },
+     "borderWidths": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "fontSize": "15px",
+     "lineHeight": "24.375px",
+     "display": "inline",
+     "position": "static",
+     "frames": [
+      "F56"
+     ]
+    },
+    {
+     "rect": {
+      "x": 594,
+      "y": 506.875,
+      "width": 436.609375,
+      "height": 46.375
+     },
+     "padding": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "gap": {
+      "row": 0,
+      "column": 0
+     },
+     "borderWidths": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "fontSize": "15px",
+     "lineHeight": "24.375px",
+     "display": "inline",
+     "position": "static",
+     "frames": [
+      "F56"
+     ]
+    },
+    {
+     "rect": {
+      "x": 594,
+      "y": 580,
+      "width": 108.53125,
+      "height": 22
+     },
+     "padding": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "gap": {
+      "row": 0,
+      "column": 0
+     },
+     "borderWidths": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "fontSize": "15px",
+     "lineHeight": "24.375px",
+     "display": "inline",
+     "position": "static",
+     "frames": [
+      "F56"
+     ]
+    }
+   ]
+  },
+  "annotationQuote": {
+   "dataRole": "annotationQuote",
+   "class": "flow",
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "variants": []
+  },
+  "annotationComment": {
+   "dataRole": "annotationComment",
+   "class": "flow",
+   "fontSize": [
+    "15px"
+   ],
+   "lineHeight": [
+    "24.375px"
+   ],
+   "weightClass": "regular",
+   "variants": [
+    {
+     "rect": {
+      "x": 594,
+      "y": 458.125,
+      "width": 213.375,
+      "height": 22
+     },
+     "padding": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "gap": {
+      "row": 0,
+      "column": 0
+     },
+     "borderWidths": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "fontSize": "15px",
+     "lineHeight": "24.375px",
+     "display": "inline",
+     "position": "static",
+     "frames": [
+      "F56"
      ]
     }
    ]

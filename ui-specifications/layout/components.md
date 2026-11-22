@@ -228,6 +228,21 @@ list (`annotationPopup` 420 x 330): badge, quoted text, comment, Edit and
 Delete. The editor (`annotationEditor` 340 x 77 and up) is a popover with a
 textarea and Cancel and Save.
 
+The sent state is [F56](../frames/F56-sent-annotations.png), not the draft tray.
+The person's bubble keeps its 672 px maximum width, 10 px vertical / 16 px
+horizontal padding and 15 px / 24.375 px person type. Preserve the sent line
+breaks (`pre-wrap`, with long-token wrapping). Within the annotation block,
+tags, preamble, item-header text and `Selected:`/`Comment:` labels are faint;
+the item numerals (`1.`, `2.`, and so on) remain full contrast. Selected quotes
+are italic at full contrast; comments and typed text are normal at full
+contrast. Use real italic glyphs, not synthetic slant. Labels are on their own
+lines above their values; a blank line precedes each comment and separates
+items. An uncommented item has no comment label or comment lines. Literal text
+stays escaped; this rendering does not enable HTML or Markdown in the input.
+Paint the wrapper with optional `faint-wrapper`, falling back to `text-faint`
+when absent. Quotes, comments and item numerals keep person-text ink.
+See [annotations](../../spec/annotations.md) R4–R5 for the outgoing text.
+
 ## 8. Pages
 
 - Tasks: page heading and count; a filter rail (screens, search, chips with
