@@ -29,6 +29,7 @@
   --transparent: rgb(0 0 0 / 0);
   --text: #f2f2f2;
   --text-faint: #6c6c6c;
+  --faint-wrapper: #cccccc;
   --text-label: #808080;
   --text-muted: #9a9a9a;
   --island-card: #0e0e0e;
@@ -131,6 +132,7 @@
   --transparent: rgb(0 0 0 / 0);
   --text: #111111;
   --text-faint: #777777;
+  --faint-wrapper: color(srgb 0.16666666666666666 0.16666666666666666 0.16666666666666666);
   --text-label: #808080;
   --text-muted: #4c4c4c;
   --island-card: #0e0e0e;

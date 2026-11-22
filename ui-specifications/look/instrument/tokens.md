@@ -57,6 +57,15 @@ Three text steps over any surface.
 | `text-muted` | `#9a9a9a` | `#4c4c4c` | 63.6 / 32.3 |  | Secondary text, buttons |
 | `text` | `#f2f2f2` | `#111111` | 95.5 / 5.1 |  | Main text |
 
+The optional `faint-wrapper` token paints the sent annotation wrapper (F56).
+Instrument overrides it with `#cccccc` in dark mode and
+`color(srgb 0.16666666666666666 0.16666666666666666 0.16666666666666666)`
+in light mode: a 25% `text-faint` / 75% `person-bubble` mix in sRGB. The light
+value is 42.5/255 per channel, not an exact 8-bit hex. These exact pairs alone
+have the named Instrument-only C4 exception. Other looks use their existing
+`text-faint` unless they supply this optional override; their 3:1 floor stays.
+Do not substitute the ordinary faint step for Instrument's wrapper.
+
 ## Islands
 
 Surfaces and text that keep their own colour in light mode (black panels and dialogs) and the person bubble. Each look decides whether to keep islands.

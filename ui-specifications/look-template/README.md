@@ -1,7 +1,7 @@
 # Look template
 
 The empty token skeleton for a new look. A look is a complete token set: copy
-`tokens.json`, fill every token for both modes, and add the fonts, motion
+`tokens.json`, fill every required token for both modes, and add the fonts, motion
 and mark-style values, plus seven presentation settings driven by one coherent
 design philosophy. The shipped Lab, Dusk and Paper sets are complete examples. A look supplies tokens only; it never restyles a
 component and never touches a size, spacing, display, position or text case.
@@ -23,6 +23,12 @@ Steps:
 4. Choose fonts (open licence, bundled with their licence text), motion
    (none, functional or alive), the mark-style block and the seven presentation settings below.
 5. Render the look, then run the checks in `checks/`.
+
+The optional `faint-wrapper` override is used only for the sent annotation
+wrapper. Omit it to use the look's existing `text-faint` value; Lab, Dusk and
+Paper do so. If supplied, fill both modes. It must meet 3:1 against the person
+bubble in either case. Instrument alone keeps its measured exact-pair C4
+exception; never copy that exception or its low-contrast values to another look.
 
 ## Parameter blocks
 

@@ -2044,6 +2044,42 @@
    "radius": [
     "4px"
    ]
+  },
+  "annotationWrapper": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{faint-wrapper}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "annotationQuote": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{display}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
+  },
+  "annotationComment": {
+   "family": "Literata",
+   "weight": [
+    "400"
+   ],
+   "color": [
+    "{display}"
+   ],
+   "background": [
+    "{transparent}"
+   ]
   }
  }
 }

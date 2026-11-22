@@ -1,6 +1,6 @@
 # Frames
 
-29 dark screenshots, 2560 x 1590 pixels (a 1280 x 795 window at scale 2). All
+30 dark screenshots, 2560 x 1590 pixels (a 1280 x 795 window at scale 2). All
 are marked **Instrument paint, layout reference**: take geometry from them
 (sizes, positions, spacing, which parts exist). The colours and type in them
 are the Instrument look's only. Never copy a colour or a typeface from a frame
@@ -41,6 +41,8 @@ frame you need.
 | `F46-routines-calendar.png` | Routines calendar | Seven-column weekly calendar and timed cards |
 | `F49-changes.png` | Changes | History list and full diff |
 | `F52-connection-lost.png` | Connection lost, Team map | Reference for the connection card's position and size only; its wording is the pack's (see `layout/behaviours.md`), not the text shown |
+
+| `F56-sent-annotations.png` | Sent person message with two annotations, one with a comment and one without | Faint wrapper except full-contrast item numerals, italic full-contrast selected quotes, full-contrast comment and preserved line breaks |
 
 Surfaces with no frame (hero reply, empty chat, skill suggestions, other
 configuration sections, other Settings pages, other dialogs and menus, run

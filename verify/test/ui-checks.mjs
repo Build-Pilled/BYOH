@@ -38,7 +38,8 @@ try {
   <script>const packs=${JSON.stringify(packs)},patterns=${JSON.stringify(patterns)};let look='instrument',seed=0,view='page',fault='none';
   const panel=document.querySelector('#panel'),main=document.querySelector('main'),tile=document.querySelector('#tile');
   function paint(){document.querySelector('#look-layer').textContent=':root { --display: #14171c; --text: #e3e7ed; --font-body: Inter; }'+(fault==='all'?' main { padding: 9px; }':'');const mode=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';if(fault==='all'&&look==='lab')document.querySelector('#look-layer').textContent+=' main::before { content: ""; position: absolute; right: 0; top: 0; width: 4px; height: 4px; background: '+packs.instrument.tokens.accent[mode]+'; }';for(const [k,v]of Object.entries(packs[look].tokens))document.documentElement.style.setProperty('--'+k,v[mode]);document.documentElement.style.setProperty('--font-body',look==='instrument'?'Literata':'Inter');
-  main.querySelector('svg').innerHTML=look==='lab'?'<circle cx="8" cy="12" r="3"/><circle cx="16" cy="12" r="3"/>':'<circle cx="12" cy="12" r="6"/>';main.toggleAttribute('data-alternate',look==='lab');main.hidden=view!=='page';tile.hidden=view!=='mark';main.style.left=fault==='all'&&look==='lab'?'70px':'64px';main.style.color=fault==='all'&&look==='lab'?'rgb(90,90,90)':'';main.style.outline=fault==='all'&&look==='lab'?'3px solid '+packs.instrument.tokens.accent[mode]:'';
+  main.querySelector('svg').innerHTML=look==='lab'?'<circle cx="8" cy="12" r="3"/><circle cx="16" cy="12" r="3"/>':'<circle cx="12" cy="12" r="6"/>';main.toggleAttribute('data-alternate',look==='lab'&&view!=='wrapper');main.hidden=!['page','wrapper'].includes(view);tile.hidden=view!=='mark';main.style.left=fault==='all'&&look==='lab'?'70px':'64px';main.style.color=fault==='all'&&look==='lab'?'rgb(90,90,90)':'';main.style.outline=fault==='all'&&look==='lab'?'3px solid '+packs.instrument.tokens.accent[mode]:'';
+  if(view==='wrapper'){main.style.background=packs.instrument.tokens['person-bubble'][mode];main.style.color=fault==='wrong-ink'?(mode==='dark'?'#cdcdcd':'color(srgb 0.17 0.17 0.17)'):packs.instrument.tokens['faint-wrapper'][mode];}else main.style.background='';
   tile.replaceChildren();patterns[fault==='all'?0:seed].forEach((ink,i)=>{const cell=document.createElement('div');cell.setAttribute('data-ui-check-cell','');cell.style.left=(i%6)*100/6+'%';cell.style.top=Math.floor(i/6)*100/6+'%';if(ink)cell.append(document.createElement('span'));tile.append(cell);});}
   addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='l'){e.preventDefault();panel.hidden=false;}});
   panel.addEventListener('submit',e=>{e.preventDefault();look=panel.elements[0].value;seed=Number(panel.elements[1].value);view=panel.elements[2].value;fault=panel.elements[3].value;panel.hidden=true;document.activeElement.blur();paint();});matchMedia('(prefers-color-scheme: light)').addEventListener('change',paint);paint();</script>`;
@@ -75,6 +76,30 @@ try {
     }
     assert.equal(result.pass,fault==='none');assert.equal(result.complete,false,'a sample never completes setup');
   }
+  // One regression case: the exact sent-wrapper exception is bound to look, role,
+  // mapping name, mode and colour pair; it never licenses other faint text.
+  for(const [name,look,mappedRole,exception,fault,expected] of [
+    ['exact-wrapper','instrument','annotationWrapper','Sent annotation wrapper','none',true],
+    ['wrong-surface','instrument','display','Sent annotation wrapper','none',false],
+    ['unnamed-wrapper','instrument','annotationWrapper',undefined,'none',false],
+    ['wrong-ink','instrument','annotationWrapper','Sent annotation wrapper','wrong-ink',false],
+    ['other-look','lab','annotationWrapper','Sent annotation wrapper','none',false],
+  ]) {
+    const wrapperPaint={family:'Literata',color:['{faint-wrapper}'],background:['{person-bubble}']};
+    const plan={tokens:join(root,`ui-specifications/look/${look}/tokens.json`),stylesheets:[css],
+      reference:{layout:{roles:{annotationWrapper:roles.display,display:roles.display}},roles:{annotationWrapper:wrapperPaint,display:wrapperPaint}},
+      pages:[{id:name,frame:reference,nodes:[{layout:mappedRole,role:'main',name:'Proof page',exception}],stage:(w,o)=>stage(w,{...o,view:'wrapper',fault})}],
+      mark:async()=>{throw new Error('marks already proved above; this case isolates wrapper contrast');}};
+    const result=await checkUI(w,plan,{sample:true,evidence:join(out,name)});
+    const rendered=result.results.filter(r=>r.check==='C4'&&r.measure==='rendered contrast');
+    assert.equal(rendered.length,2,'both modes must be measured');
+    for(const row of rendered)assert.equal(row.pass,expected,`${name} ${row.mode}: wrapper contrast ${row.error??''}`);
+    if(expected)for(const mode of ['dark','light']) {
+      const reads=JSON.parse(readFileSync(join(out,name,`00-${mode}-c4-rendered.json`)));
+      assert.ok(reads.length&&reads.every(r=>r.exception==='Sent annotation wrapper'&&r.minimum===3&&r.ratio<3),'exact low-contrast pair must use only the named faint exception');
+    }
+  }
+  console.log('PASS sent annotation wrapper: exact pair in both modes only; wrong surface/name/ink/look rejected');
   console.log('PASS good build and assertion-level rejection for each of C1–C5; report.md and raw PNG/JSON retained');
 } finally {
   w?.close();server?.closeAllConnections();server?.close();stop();
