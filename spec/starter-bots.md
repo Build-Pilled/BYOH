@@ -18,7 +18,8 @@ small; do not turn the Plain bot into another project worker.
   three crew bots ship seeded from [`starter/`](../starter/), whose paths mirror
   the harness home. Firstmate has its charter, MEMORY.md and the skills ahoy,
   bearings (including its board page and scripts), lavish, project-management
-  and onboarding-resume. Bot Maker has its
+  and onboarding-resume, plus a heartbeat routine for a cheap look at in-flight
+  work three times a day. Bot Maker has its
   charter, design-bot skill (including crew-context.md and crewmate-template.md),
   crew-healthcheck skill and weekly crew-healthcheck routine. Code Reviewer has
   its charter. The shared myharness-config skill is assigned to Firstmate and
